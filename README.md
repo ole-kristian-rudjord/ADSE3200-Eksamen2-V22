@@ -13,4 +13,4 @@ Because the website is in such early development, bugs, errors and poor optimiza
 Once the main front-end parts of the main page is done and I have more experience with Spring and SQL, I will move on to the back-end.
 
 ## Links
-Website: https://ole-kristian-rudjord.github.io/ES-file-placeholder/
+Website: https://es-file-placeholder.herokuapp.com/
