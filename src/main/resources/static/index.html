@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES - Compare Shapes</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body id="compare-shapes">
+
+    <!-- Skip to content, for keyboards and screen readers -->
+    <a href="#main-content" id="skip-to-content">Skip to main content</a>
+
+    <!-- Navbar -->
+    <nav>
+        <div id="logo">Logo</div>
+        <ul>
+            <li><a href="index.html">Compare Shapes</a></li>
+            <li><a href="searchMouse.html">Search Mouse</a></li>
+            <li><a href="">Find Similar Shape</a></li>
+        </ul>
+        <button id="burger-icon-desktop" class="burger-icon">
+            <div class="burger-lines"></div>
+            <div class="burger-lines"></div>
+            <div class="burger-lines"></div>
+        </button>
+    </nav>
+    <button id="burger-icon-mobile" class="burger-icon">
+        <div class="burger-lines"></div>
+        <div class="burger-lines"></div>
+        <div class="burger-lines"></div>
+    </button>
+
+    <!-- covers screen with dark overlay on activated burger-menu -->
+    <div id="screen-cover"></div>
+
+    <!-- Side-menu(navbar) on mobile -->
+    <div id="side-menu">
+        <ul>
+            <div id="theme-options">
+                <button id="theme-option-light" class="theme-options-btn"></button>
+                <button id="theme-option-gray" class="theme-options-btn"></button>
+                <button id="theme-option-dark" class="theme-options-btn"></button>
+                <span id="theme-text-hover"></span>
+            </div>
+            <li class="mobile-navbar-item"><a href="index.html">Compare Shapes</a></li>
+            <li class="mobile-navbar-item"><a href="searchMouse.html">Search Mouse</a></li>
+            <li class="mobile-navbar-item"><a href="">Find Similar Shape</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a href="">Report error</a></li>
+            <li><a href="">Suggest<br>new shape</a></li>
+            <li><a href="">Updates &<br>announcements</a></li>
+            <button id="side-menu-close">Close<br>side-menu</button>
+        </ul>
+    </div>
+<!-- Most of HTML above is default across all pages -->
+
+    <div id="mobile-shapes-div">
+        <div class="shapes-div" id="main-content">
+            <div id="shape-top">
+                <div id="shape-top-container" title="top-view"></div>
+            </div>
+            <div id="shape-back-and-side">
+                <div id="shape-back">
+                    <div id="shape-back-container" title="back-view"></div>
+                </div>
+                <div id="shape-side">
+                    <div id="shape-side-container" title="side-view"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul id="error-messages-list"></ul>
+
+    <div id="mobile-bottom-div">
+        <div id="shape-tool">
+            <input type="text" list="add-new-shape-list" id="add-new-shape-input" placeholder="add new shape:">
+            <datalist id="add-new-shape-list"></datalist>
+            <div id="shape-tool-current-mice"></div>
+        </div>
+
+        <div id="shape-settings-grid">
+            <!-- size slider -->
+            <span id="shape-settings-size-text"><span id="shape-settings-size-text-minus" class="shape-settings-size-btn">-</span><span id="shape-settings-size-text-mobile-remove">size</span><span id="shape-settings-size-text-plus" class="shape-settings-size-btn">+</span></span>
+            <input id="shape-settings-size-slider" class="shape-settings-input" type="range" min="1" max="7" value="4" step="0.05">
+
+            <!-- vertical alignment -->
+            <span id="shape-settings-align-vertical-text" class="shape-settings-align-text">vertical align</span>
+            <div id="shape-settings-align-vertical-div" class="shape-settings-align-div">
+                <button id="shape-settings-align-vertical-btn-front" class="shape-settings-align-btn shape-settings-align-btn-left-side shape-settings-input"><span>front</span></button>
+                <button id="shape-settings-align-vertical-btn-center" class="shape-settings-align-btn shape-settings-input"><span>center</span></button>
+                <button id="shape-settings-align-vertical-btn-back" class="shape-settings-align-btn shape-settings-align-btn-right-side shape-settings-input"><span>back</span></button>
+            </div>
+
+            <!-- horizontal alignment -->
+            <span id="shape-text-align-horizontal" class="shape-settings-align-text">horizontal align</span>
+            <div id="shape-div-align-horizontal-div" class="shape-settings-align-div">
+                <button id="shape-settings-align-horizontal-btn-left" class="shape-settings-align-btn shape-settings-align-btn-left-side shape-settings-input"><span>left</span></button>
+                <button id="shape-settings-align-horizontal-btn-center" class="shape-settings-align-btn shape-settings-input"><span>center</span></button>
+                <button id="shape-settings-align-horizontal-btn-right" class="shape-settings-align-btn shape-settings-align-btn-right-side shape-settings-input"><span>right</span></button>
+            </div>
+            <button id="shape-settings-reset" class="shape-settings-input" title="Reset size and alignment"><span>&#8635;</span></button>
+        </div>
+    </div>
+</body>
+</html>

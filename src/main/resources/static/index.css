@@ -1,0 +1,812 @@
+/*-------------------------------------------------------
+---------------------------------------------------------
+
+                CSS content: Compare Shapes
+
+---------------------------------------------------------
+---------------------------------------------------------
+
+    Shape images
+
+        -Outline(stroke) & fill
+
+        -Top shape-view
+
+        -Back + side container
+            --Side shape-view
+            --Back shape-view
+
+---------------------------------------------------------
+
+    Shape tool
+
+        -Error messages
+
+        -Add new shape input
+
+        -Shape information
+            --Main div
+            --Sub div
+            --Close icon
+            --View is missing, information icon
+            --Mouse name
+            --Mouse dimensions
+            --Mouse weight
+            --Color selector
+
+---------------------------------------------------------
+
+    Shape-view settings
+
+        -Input transition, hover & focus
+
+        -Size settings
+            --Text
+            --Buttons
+            --Slider
+
+        -Alignment settings
+            --Text
+            --Div, containing buttons
+            --Buttons
+            --Text/Buttons positioning
+            --Alignment icons
+
+        -Size/Alignment reset
+
+---------------------------------------------------------
+
+    Media queries
+
+        -Laptops / smaller monitors
+
+        -Mobile
+            --Mobile-shapes div
+            --Mobile bottom-div
+                ---Shape tool
+                ---Shape settings
+
+-------------------------------------------------------*/
+
+
+
+
+
+/*------------------------
+    Shape images - start
+------------------------*/
+.shapes-div {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    gap: 5vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*outline: black dotted 1px;*/
+}
+.shapes-div svg {
+    /*filter: drop-shadow(0px 1px 0 white) drop-shadow(0px -1px 0 white)
+    drop-shadow(1px 0px 0 white) drop-shadow(-1px 0px 0 white);*/
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+
+/*--- Outline(stroke) & fill ---*/
+.SVG-main path {
+    stroke-width: 6;
+    stroke: var(--primaryColor);
+    fill: none;
+}
+.SVG-main-side path {
+    stroke-width: 7;
+}
+
+
+/*--- Top shape-view ---*/
+#shape-top {
+    position: relative;
+
+    /*outline: blue solid 1px;*/
+}
+#shape-top-container {
+    position: absolute;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /*outline: rgba(255,255,50,0.4) dotted 3px;*/
+}
+#shape-top-container svg {
+    position: absolute;
+}
+
+
+/*--- Back + side container ---*/
+#shape-back-and-side {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Back shape-view */
+#shape-back {
+    position: relative;
+    height: 50%;
+
+    /*outline: red solid 1px;*/
+}
+#shape-back-container {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 90%;
+
+    /*outline: rgba(255,255,50,0.4) dotted 3px;*/
+}
+#shape-back-container svg {
+    position: absolute;
+    bottom: 0;
+}
+
+/* Side shape-view */
+#shape-side {
+    position: relative;
+    height: 50%;
+    width: 100%;
+
+    /*outline: green solid 1px;*/
+}
+#shape-side-container {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+    /*outline: rgba(255,255,50,0.4) dotted 3px;*/
+}
+#shape-side-container svg {
+    position: absolute;
+    bottom: 0;
+}
+/*----------------------
+    Shape images - end
+----------------------*/
+
+
+
+
+
+/*----------------------
+    Shape tool - start
+----------------------*/
+#shape-tool {
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 5vh;
+    top: 20%;
+    right: 0;
+    padding-top: 10px;
+    padding-right: 2vw;
+    border-radius: 4px;
+    background-color: var(--themeBackgroundColor);
+
+    /*outline: purple solid 2px;*/
+}
+
+/*--- Error messages ---*/
+#error-messages-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1.5vh;
+    top: 0;
+    right: 2vw;
+    height: 17%;
+    text-align: right;
+
+    /*outline: red solid 1px;*/
+}
+.error-message-li {
+    display: block;
+    border-radius: 4px;
+    transform: translateY(-300%);
+    font-size: 0.86rem;
+    text-decoration: underline;
+    text-decoration-color: var(--primaryColor);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    color: var(--themeReverseColor);
+    opacity: 0;
+    transition: 650ms ease;
+    transition-property: transform, opacity;
+}
+
+/*--- Add new shape input ---*/
+#add-new-shape-input {
+    width: 275px;
+    padding: 6px 8px;
+    border: none;
+    border-top: transparent solid 2px;
+    border-bottom: var(--themeBorderColor) solid 2px;
+    cursor: pointer;
+    color: var(--themeReverseColor);
+    background-color: var(--themeBackgroundColor);
+    transition: 180ms ease;
+    transition-property: outline, border-bottom-color, background-color, border-radius;
+}
+#add-new-shape-input:focus {
+    outline: none;
+    border-bottom-color: var(--primaryColor);
+    border-radius: 6px;
+    background-color: var(--themeHoverColor);
+}
+
+/*--- Shape information ---*/
+#shape-tool-current-mice {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+/* Main div */
+.shape-information-div {
+    position: relative;
+    display: grid;
+    grid-template-columns: 255px 50px;
+    margin-right: -8px;
+    padding: 5px 8px 5px 3px;
+    border-radius: 4px;
+    outline: transparent solid 0;
+    font-size: 0.95rem;
+    background-color: var(--themeBackgroundColor);
+    transition: 120ms ease;
+    transition-property: outline;
+}
+/* Sub div */
+.shape-information-sub-div {
+    grid-column: 1/3;
+    grid-row: 1/3;
+    display: grid;
+    grid-template-columns: 30px 165px 60px;
+}
+/* Close icon */
+.shape-tool-close {
+    grid-column: 1/2;
+    left: 0;
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    border: none;
+    border-radius: 3px;
+    align-content: baseline;
+    font-size: 0.7rem;
+    text-align: center;
+    color: var(--themeReverseColor);
+    background-color: transparent;
+    opacity: 0.4;
+    cursor: pointer;
+
+    /*outline: red solid 1px;*/
+}
+/* View is missing, information icon */
+.view-missing-information {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    margin-bottom: -5px;
+    text-align: center;
+    color: var(--themeReverseColor);
+    opacity: 0.3;
+    cursor: pointer;
+}
+.view-missing-hover-text {
+    position: absolute;
+    display: none;
+    transform: translateX(-110%);
+    margin-top: -2px;
+    padding: 5px 8px;
+    border: var(--themeBorderColor) solid 1px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--themeReverseColor);
+    text-align: left;
+    background-color: var(--themeHoverColor);
+    opacity: 0;
+    cursor: text;
+    transition: 400ms ease;
+}
+/* Mouse name */
+.shape-information-name {
+    grid-column: 2/4;
+    grid-row: 1/2;
+    margin: auto 0;
+    text-align: left;
+    color: var(--themeReverseColor);
+
+    /*outline: red solid 1px;*/
+}
+/* Mouse dimensions */
+.shape-information-dimensions {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    margin: auto 0;
+    text-align: left;
+    color: var(--themeReverseColor);
+
+    /*outline: blue solid 1px;*/
+}
+.shape-information-dimensions span {
+    font-family: "Roboto Mono";
+}
+/* Mouse weight */
+.shape-information-weight {
+    grid-column: 3/4;
+    grid-row: 2/3;
+    margin: auto 0;
+    text-align: left;
+    color: var(--themeReverseColor);
+
+    /*outline: green solid 1px;*/
+}
+/* Color selector */
+.shape-tool-color {
+    grid-column: 2/3;
+    grid-row: 1/3;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    top: 0;
+    right: 0;
+    height: 50px;
+    width: 50px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.shape-tool-color:focus-visible {
+    outline: var(--themeBorderColor) solid 2px;
+    border-radius: 8px;
+    background-color: var(--themeHoverColor);
+}
+.shape-tool-color::-webkit-color-swatch {
+    border: var(--themeBorderColor) solid 2px;
+    border-radius: 4px;
+    transition: 60ms ease;
+}
+.shape-tool-color::-webkit-color-swatch:hover {
+    border-width: 4px;
+}
+.shape-information-weight,
+.shape-information-unit-weight,
+.shape-information-dimensions,
+.shape-information-unit-dimensions {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+/*--------------------
+    Shape tool - end
+--------------------*/
+
+
+
+
+
+/*-------------------------------
+    Shape-view settings - start
+-------------------------------*/
+#shape-settings-grid {
+    z-index: 2;
+    position: fixed;
+    display: grid;
+    column-gap: 3vw;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 3px 10px 2vh 8px;
+    border-radius: 6px 6px 0 0;
+    background-color: var(--themeBackgroundColor);
+
+    /*border: yellow solid 1px;*/
+}
+
+
+/*--- Input transition, hover & focus ---*/
+
+.shape-settings-input {
+    transition: 180ms ease;
+}
+.shape-settings-input:hover,
+.shape-settings-input:focus-visible {
+    background-color: var(--themeHoverColor);
+}
+
+
+/*--- Size settings ---*/
+
+/* Text */
+#shape-settings-size-text {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    margin: auto auto -2px auto;
+    text-align: center;
+    color: var(--themeReverseColor);
+}
+#shape-settings-size-text-minus {
+    margin-right: 1px;
+}
+
+/* Buttons */
+.shape-settings-size-btn {
+    padding: 0 5px;
+    border-radius: 4px;
+    font-weight: 600;
+    user-select: none;
+    cursor: pointer;
+    transition: 120ms ease;
+    transition-property: color, background-color;
+}
+.shape-settings-size-btn:hover {
+    color: var(--primaryColor);
+    background-color: var(--themeHoverColor);
+}
+
+/* Slider */
+#shape-settings-size-slider {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    -webkit-appearance: none;
+    height: 22px;
+    width: 180px; /* 3x btn-width */
+    margin-top: 4px;
+    border: var(--themeBorderColor) solid 2px;
+    border-radius: 4px;
+    background-color: var(--themeBackgroundColor);
+    cursor: pointer;
+}
+#shape-settings-size-slider:hover {
+    background-color: var(--themeHoverColor);
+}
+#shape-settings-size-slider:focus-visible {
+    border: var(--themeBorderColor) solid 4px;
+}
+#shape-settings-size-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    width: 29px;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    background: var(--primaryColor);
+    cursor: pointer;
+}
+#shape-settings-size-slider::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    width: 30px;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    background: var(--primaryColor);
+    cursor: pointer;
+}
+
+
+/*--- Alignment settings ---*/
+
+/* Text */
+.shape-settings-align-text {
+    margin: auto auto 1px auto;
+    text-align: center;
+    color: var(--themeReverseColor);
+}
+
+/* Div, containing buttons */
+.shape-settings-align-div {
+    display: flex;
+    padding-top: 3px;
+    color: var(--themeReverseColor);
+}
+
+/* Buttons */
+.shape-settings-align-btn {
+    display: table-cell;
+    height: 22px;
+    width: 60px;
+    outline: var(--themeBorderColor) solid 2px;
+    border: none;
+    color: var(--themeReverseColor);
+    background-color: var(--themeBackgroundColor);
+    cursor: pointer;
+}
+.shape-settings-align-btn:focus-visible {
+    outline-width: 3px;
+    border: var(--themeBorderColor) solid 1px;
+    border-radius: 2px;
+}
+.shape-settings-align-btn-left-side {
+    border-radius: 2px 0 0 2px;
+}
+.shape-settings-align-btn-right-side {
+    border-radius: 0 2px 2px 0;
+}
+
+/* Text/Button positioning */
+#shape-settings-align-vertical-text {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+#shape-settings-align-vertical-div {
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+#shape-text-align-horizontal {
+    grid-column: 3/4;
+    grid-row: 1/2;
+}
+#shape-div-align-horizontal-div {
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+
+/* Alignment icons */
+#shape-settings-align-vertical-text::after {
+    position: absolute;
+    padding-left: 3px;
+    content: '\2B0D';
+}
+#shape-text-align-horizontal::after {
+    position: absolute;
+    padding-left: 3px;
+    content: '\2B0C';
+}
+
+
+/*--- Size/alignment reset ---*/
+
+#shape-settings-reset {
+    position: absolute;
+    bottom: 0;
+    right: -3vw ;
+    height: 25px;
+    width: 25px;
+    margin-bottom: 2vh;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--themeReverseColor);
+    background-color: var(--themeBackgroundColor);
+    cursor: pointer;
+}
+/*-----------------------------
+    Shape-view settings - end
+-----------------------------*/
+
+
+
+
+
+/*-------------------------
+    Media queries - start
+-------------------------*/
+
+/*--- Laptops / smaller monitors ---*/
+/*@media only screen and (max-width: 1400px) and (min-width: 850px) {
+    .shapes-div {
+        gap: 2vw;
+        left: 15vw;
+        transform: translate(0, -50%); !* try vw! *!
+    }
+}*/
+
+
+/*--- Mobile ---*/
+@media only screen and (max-width: 850px) {
+
+    /*--- Mobile-shapes div ---*/
+    #mobile-shapes-div {
+        position: relative;
+        height: 50vh;
+        width: 100vw;
+    }
+
+
+    /*--- Mobile bottom-div, contains shape-tool and size + alignment settings ---*/
+    #mobile-bottom-div {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        bottom: 0;
+        height: 50vh;
+        width: 100%;
+        border-top: var(--themeHoverColor) solid 1px;
+        background-color: var(--themeBackgroundColor);
+
+        /*outline: red solid 1px;*/
+    }
+
+    /* Shape tool */
+    #shape-tool {
+        position: static;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 0;
+        align-items: inherit;
+        top: inherit;
+        right: inherit;
+        height: 50vh;
+        margin: 0 auto;
+        padding: 0;
+        border-radius: 0;
+        background-color: inherit;
+    }
+    #error-messages-list {
+        display: none;
+        /*top: 42vh;
+        right: inherit;
+        left: 2vh;
+        text-align: left;*/
+    }
+    #add-new-shape-input {
+        width: 230px;
+        margin-top: 3vh;
+    }
+    #shape-tool-current-mice {
+        grid-row: 2/3;
+        width: 230px;
+        gap: 3vh;
+        padding-top: 3vh;
+        overflow-x: hidden;
+        /*overflow-y: scroll;*/
+        scrollbar-color: var(--themeHoverColor) transparent;
+        scrollbar-width: thin;
+    }
+    ::-webkit-scrollbar {
+        width: 2px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--themeHoverColor);
+    }
+    .shape-information-div {
+        grid-template-columns: 46px 1fr;
+        padding: 0;
+    }
+    .shape-information-sub-div {
+        grid-column: 2/3;
+        display: grid;
+        grid-template-columns: 155px 1fr;
+    }
+    .shape-tool-color {
+        grid-column: 1/2;
+        grid-row: 1/4;
+        height: 100%;
+        width: 36px;
+    }
+    .shape-tool-close {
+        display: none;
+    }
+    .view-missing-information {
+        display: none;
+    }
+    .shape-information-name {
+        grid-column: 1/3;
+    }
+    .shape-information-dimensions {
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+    .shape-information-weight  {
+        grid-column: 2/3;
+        grid-row: 2/3;
+    }
+
+    /* Shape settings */
+    #shape-settings-grid {
+        position: fixed;
+        justify-content: center;
+        bottom: inherit;
+        left: inherit;
+        transform: inherit;
+        min-height: 10vh;
+        width: 100%;
+        padding: 0 0 3px 0;
+        border-top: var(--themeHoverColor) solid 1px;
+        border-radius: 0;
+        font-size: 0.78rem;
+    }
+    .shape-settings-input {
+        font-size: 0.78rem;
+    }
+    .shape-settings-input:hover,
+    .shape-settings-input:focus-visible {
+        background-color: inherit;
+    }
+    .shape-settings-align-btn {
+        height: 20px;
+        width: 50px;
+        outline-width: 1px;
+    }
+    .shape-settings-align-btn-left-side,
+    .shape-settings-align-btn-right-side {
+        width: 45px;
+    }
+    #shape-settings-size-text-mobile-remove {
+        display: none;
+    }
+    #shape-settings-size-text {
+        grid-column: inherit;
+        grid-row: inherit;
+        position: fixed;
+        display: flex;
+        flex-direction: column-reverse;
+        top: 50%;
+        right: 0;
+        margin: 0;
+        border: var(--themeHoverColor) solid 1px;
+        border-right: none;
+        font-size: 1rem;
+        background-color: var(--themeBackgroundColor);
+    }
+    #shape-settings-size-text-minus {
+        margin: 0;
+    }
+    .shape-settings-size-btn {
+        padding: 5px 10px;
+    }
+    .shape-settings-size-btn:hover {
+        color: inherit;
+        background-color: inherit;
+    }
+    #shape-settings-size-slider {
+        position: fixed;
+        display: none;
+        top: 0;
+        left: 0;
+        width: 80vw;
+        margin: 0;
+        border-width: 0;
+    }
+    #shape-settings-align-vertical-text {
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+    #shape-settings-align-vertical-div {
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+    #shape-text-align-horizontal {
+        grid-column: 2/3;
+        grid-row: 1/2;
+    }
+    #shape-div-align-horizontal-div {
+        grid-column: 2/3;
+        grid-row: 2/3;
+    }
+    #shape-settings-reset {
+        display: none;
+    }
+}
+/*-----------------------
+    Media queries - end
+-----------------------*/
