@@ -1,7 +1,7 @@
 package com.example.esfileplaceholderspringboot1.Controller;
 
 import com.example.esfileplaceholderspringboot1.Model.Mouse;
-import com.example.esfileplaceholderspringboot1.Service.CompareShapesService;
+import com.example.esfileplaceholderspringboot1.Service.GlobalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,26 +12,17 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-public class CompareShapesController {
+public class GlobalController {
 
     @Autowired
-    CompareShapesService CompareShapesService;
+    GlobalService GlobalService;
 
-    /*@GetMapping("/getAllMice")
+    @GetMapping("/getAllMice")
     public List<Mouse> getAllmice(HttpServletResponse response) throws IOException {
-        List<Mouse> mouseList = CompareShapesService.getAllMice();
+        List<Mouse> mouseList = GlobalService.getAllMice();
         if (mouseList == null) {
             response.sendError(HttpStatus.NOT_FOUND.value());
         }
         return mouseList;
-    }*/
-
-    @GetMapping("/getMouse")
-    public Mouse getMouse(/*Mouse mouse*/String mouse, HttpServletResponse response) throws IOException {
-        Mouse returningMouse = CompareShapesService.getMouse(mouse);
-        if (returningMouse == null) {
-            response.sendError(HttpStatus.NOT_FOUND.value());
-        }
-        return returningMouse;
     }
 }

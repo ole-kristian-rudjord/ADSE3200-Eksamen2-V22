@@ -508,6 +508,8 @@ $(function() {
             newOption.className = 'shape-tool-list-option';
             $('#add-new-shape-list').append(newOption);
         }
+    }).fail(function (status) {
+        createErrorMessage('There was an error with retrieving mice information from the database, please try again later.\nError: ' + status.status);
     });
 
 
@@ -805,10 +807,12 @@ $(function() {
             }
         }
         if (!mouseInUse) {
-            const mouseObject = {
+            /*const mouseObject = {
                 name: mouseName
-            }
-            $.get('/getMouse', mouseObject, function (mouse) { // gjør om slik at mouseName String ligger i url istedenfor å sendes som object
+            }*/
+            const replacedMouseName = mouseName.replace(/\s/g, 'RPspace').replace(/\+/g, 'RPplus').replace(/\-/g, 'RPminus');
+            console.log(replacedMouseName);
+            $.get('/getMouse?mouse='+replacedMouseName/*, mouseObject*/, function (mouse) {
                 currentlyViewedMiceSVG.push(mouse);
                 /*currentlyViewedMiceSVG.sort(function (a, b) {
                     return a.name.localeCompare(b.name);

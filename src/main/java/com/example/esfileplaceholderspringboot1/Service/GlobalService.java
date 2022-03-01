@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CompareShapesService {
+public class GlobalService {
 
     Logger errorLogger = LoggerFactory.getLogger(CompareShapesService.class);
 
     @Autowired
     JdbcTemplate db;
 
-    /*public List<Mouse> getAllMice() {
+    public List<Mouse> getAllMice() {
         String sql = "SELECT * FROM mice";
 
         try {
@@ -27,20 +27,6 @@ public class CompareShapesService {
         }
         catch (Exception e) {
             errorLogger.error("Error with getAllMice():\n" + e);
-            return null;
-        }
-    }*/
-
-    public Mouse getMouse(/*Mouse*/String mouse) {
-        String propperMouseName = mouse.replace("RPspace", " ").replace("RPplus", "+").replace("RPminus", "-");
-        String sql = "SELECT * FROM mice WHERE name=?";
-
-        try {
-            Mouse returningMouse = db.queryForObject(sql, new BeanPropertyRowMapper<>(Mouse.class), /*mouse.getName()*/ propperMouseName);
-            return returningMouse;
-        }
-        catch (Exception e) {
-            errorLogger.error("Error with getMouse():\n" + e);
             return null;
         }
     }

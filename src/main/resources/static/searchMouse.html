@@ -3,57 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <title>ES - Compare Shapes</title>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="searchMouse.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="index.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="searchMouse.js"></script>
 </head>
 <body id="compare-shapes" class="theme-background">
 
-    <!-- Navbar -->
-    <nav class="theme-background theme-bordered">
-        <div id="logo" class="theme-text">Logo</div>
-        <ul>
-            <li><a href="index.html" class="theme-text">Compare Shapes</a></li>
-            <li><a href="searchMouse.html" class="theme-text">Search Mouse</a></li>
-            <li><a href="" class="theme-text">Find Similar Shape</a></li>
-        </ul>
-        <button id="burger-icon-desktop" class="burger-icon">
-            <div class="burger-lines theme-reverse-color"></div>
-            <div class="burger-lines theme-reverse-color"></div>
-            <div class="burger-lines theme-reverse-color"></div>
-        </button>
-    </nav>
-    <button id="burger-icon-mobile" class="burger-icon">
-        <div class="burger-lines theme-reverse-color"></div>
-        <div class="burger-lines theme-reverse-color"></div>
-        <div class="burger-lines theme-reverse-color"></div>
+<!-- Skip to content, for keyboards and screen readers -->
+<a href="#main-content" id="skip-to-content">Skip to main content</a>
+
+<!-- Navbar -->
+<nav>
+    <div id="logo">Logo</div>
+    <ul>
+        <li><a href="index.html">Compare Shapes</a></li>
+        <li><a href="searchMouse.html">Search Mouse</a></li>
+        <li><a href="">Find Similar Shape</a></li>
+    </ul>
+    <button id="burger-icon-desktop" class="burger-icon">
+        <div class="burger-lines"></div>
+        <div class="burger-lines"></div>
+        <div class="burger-lines"></div>
     </button>
+</nav>
+<button id="burger-icon-mobile" class="burger-icon">
+    <div class="burger-lines"></div>
+    <div class="burger-lines"></div>
+    <div class="burger-lines"></div>
+</button>
 
-    <!-- covers screen with dark overlay on activated burger-menu -->
-    <div id="screen-cover"></div>
+<!-- covers screen with dark overlay on activated burger-menu -->
+<div id="screen-cover"></div>
 
-    <div id="side-menu" class="theme-background theme-bordered">
-        <ul>
-            <div id="theme-options">
-                <button id="theme-option-light" class="theme-options-btn theme-bordered"></button>
-                <button id="theme-option-gray" class="theme-options-btn theme-bordered"></button>
-                <button id="theme-option-dark" class="theme-options-btn theme-bordered"></button>
-                <span id="theme-text-hover" class="theme-text theme-bordered"></span>
-            </div>
-            <li class="mobile-navbar-item"><a href="index.html" class="theme-text">Compare Shapes</a></li>
-            <li class="mobile-navbar-item"><a href="searchMouse.html" class="theme-text">Search Mouse</a></li>
-            <li class="mobile-navbar-item"><a href="" class="theme-text">Find Similar Shape</a></li>
-            <li><a href="" class="theme-text">Contact</a></li>
-            <li><a href="" class="theme-text">Report error</a></li>
-            <li><a href="" class="theme-text">Suggest<br>new shape</a></li>
-            <li><a href="" class="theme-text">Updates &<br>announcements</a></li>
-            <button id="side-menu-close" class="theme-background theme-text">Close<br>side-menu</button>
-        </ul>
+<!-- Side-menu(navbar) on mobile -->
+<div id="side-menu">
+    <ul>
+        <div id="theme-options">
+            <button id="theme-option-light" class="theme-options-btn"></button>
+            <button id="theme-option-gray" class="theme-options-btn"></button>
+            <button id="theme-option-dark" class="theme-options-btn"></button>
+            <span id="theme-text-hover"></span>
+        </div>
+        <li class="mobile-navbar-item"><a href="index.html">Compare Shapes</a></li>
+        <li class="mobile-navbar-item"><a href="searchMouse.html">Search Mouse</a></li>
+        <li class="mobile-navbar-item"><a href="">Find Similar Shape</a></li>
+        <li><a href="">Contact</a></li>
+        <li><a href="">Report error</a></li>
+        <li><a href="">Suggest<br>new shape</a></li>
+        <li><a href="">Updates &<br>announcements</a></li>
+        <button id="side-menu-close">Close<br>side-menu</button>
+    </ul>
+</div>
+<button id="activate-filter-btn">Filter<span class="icon-span"> <i class="icon fa fa-filter"></i></span> </button>
+<div id="filter-main">
+    <div id="filter-buttons-div">
+        <button id="filter-btn-apply">Apply<span class="icon-span"><i class="icon fa fa-filter"></i></span></button>
+        <button id="filter-btn-reset">Reset<span class="icon-span"><i class="icon fa-solid fa-arrows-rotate"></i></span></button>
+        <button id="filter-btn-close">Close<span class="icon-span"><i class="icon fa-solid fa-xmark"></i></span></button>
     </div>
-    <!-- Most of HTML above is default across all pages -->
+    <div id="filter-content">
+        <button class="filter-heading-btn"><span>Brand&nbsp;&nbsp;<i class="category-icon fa-solid fa-copyright"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-brand" class="filter-expandable">
+            <div id="brand-select-all-div">
+                <input type="checkbox" id="brand-select-all">
+                <label for="brand-select-all">Select All</label>
+            </div>
+            <div id="brand-options-div">
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Zowie">
+                    <label for="brand-Zowie">Zowie</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Glorious">
+                    <label for="brand-Glorious">Glorious</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Logitech">
+                    <label for="brand-Logitech">Logitech</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Razer">
+                    <label for="brand-Razer">Razer</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Zowie2">
+                    <label for="brand-Zowie2">Zowie</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Glorious2">
+                    <label for="brand-Glorious2">Glorious</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Logitech2">
+                    <label for="brand-Logitech2">Logitech</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Razer2">
+                    <label for="brand-Razer2">Razer</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Zowie3">
+                    <label for="brand-Zowie3">Zowie</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Glorious3">
+                    <label for="brand-Glorious3">Glorious</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Logitech3">
+                    <label for="brand-Logitech3">Logitech</label>
+                </div>
+                <div class="brand-option">
+                    <input type="checkbox" id="brand-Razer3">
+                    <label for="brand-Razer3">Razer</label>
+                </div>
+            </div>
+        </div>
+        <button class="filter-heading-btn"><span>Length&nbsp;&nbsp;<i class="category-icon fa-solid fa-ruler-vertical"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-length" class="filter-expandable">
+            <div id="filter-length-div" class="filter-dimensions-div">
+                <input type="number" id="filter-length-min" class="filter-dimensions-min">
+                <div id="slider-range-length" class="filter-dimensions-slider"></div>
+                <input type="number" id="filter-length-max" class="filter-dimensions-max">
+            </div>
+        </div>
+        <button class="filter-heading-btn"><span>Width&nbsp;&nbsp;<i class="category-icon fa-solid fa-ruler-horizontal"></i></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-width" class="filter-expandable">
+            <div id="filter-width-div" class="filter-dimensions-div">
+                <input type="number" id="filter-width-min" class="filter-dimensions-min">
+                <div id="slider-range-width" class="filter-dimensions-slider"></div>
+                <input type="number" id="filter-width-max" class="filter-dimensions-max">
+            </div>
+        </div>
+        <button class="filter-heading-btn"><span>Height&nbsp;&nbsp;<i class="category-icon fa-solid fa-ruler"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-height" class="filter-expandable">
+            <div id="filter-height-div" class="filter-dimensions-div">
+                <input type="number" id="filter-height-min" class="filter-dimensions-min">
+                <div id="slider-range-height" class="filter-dimensions-slider"></div>
+                <input type="number" id="filter-height-max" class="filter-dimensions-max">
+            </div>
+        </div>
+        <button class="filter-heading-btn"><span>Weight&nbsp;&nbsp;<i class="category-icon fa-solid fa-weight-hanging"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-weight" class="filter-expandable">
+            <div id="filter-weight-div" class="filter-dimensions-div">
+                <input type="number" id="filter-weight-min" class="filter-dimensions-min">
+                <div id="slider-range-weight" class="filter-dimensions-slider"></div>
+                <input type="number" id="filter-weight-max" class="filter-dimensions-max">
+            </div>
+        </div>
+    </div>
 
-    <h1>Coming soon</h1>
+</div>
+<!-- Most of HTML above is default across all pages -->
+<!--<table id="mouse-table"></table>-->
+<table id="mouse-table"><thead><tr><td>Brand</td><td>Name</td><td>Length</td><td>Width</td><td>Height</td><td>Weight</td><td>Shape</td><td>Connectivity</td><td>Sensor</td><td>DPI</td><td>Polling Rate</td></tr></thead><tbody><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr></tbody></table>
 </body>
 </html>
