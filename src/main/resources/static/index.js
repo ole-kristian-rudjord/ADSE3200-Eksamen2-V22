@@ -69,16 +69,16 @@ $(function() {
 
 
     // Toggle burger menu on click
-    $('.burger-icon, #screen-cover, #side-menu-close').on('click', function () {
+    $('.burger-icon, #screen-cover-burger, #side-menu-close').on('click', function () {
         if ($('#side-menu').css('display') === 'none') {
             $('#side-menu').css('display', 'flex');
             setTimeout(function () {
                 $('#side-menu').css('transform', 'translate(0)');
-                $('#screen-cover').css('display', 'flex');
+                $('#screen-cover-burger').css('display', 'flex');
             });
         } else {
             $('#side-menu').css('transform', 'translate(110%)');
-            $('#screen-cover').css('display', 'none');
+            $('#screen-cover-burger').css('display', 'none');
             setTimeout(function () {
                 $('#side-menu').css('display', 'none');
             }, 200);

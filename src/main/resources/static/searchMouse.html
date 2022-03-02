@@ -38,7 +38,7 @@
 </button>
 
 <!-- covers screen with dark overlay on activated burger-menu -->
-<div id="screen-cover"></div>
+<div id="screen-cover-burger"></div>
 
 <!-- Side-menu(navbar) on mobile -->
 <div id="side-menu">
@@ -59,72 +59,75 @@
         <button id="side-menu-close">Close<br>side-menu</button>
     </ul>
 </div>
-<button id="activate-filter-btn">Filter<span class="icon-span"> <i class="icon fa fa-filter"></i></span> </button>
+
+<div id="screen-cover-filter"></div>
+
+<button id="activate-filter-btn"><span id="activate-filter-text">Filter</span><span class="icon-span"> <i class="icon fa fa-filter"></i></span> </button>
 <div id="filter-main">
-    <div id="filter-buttons-div">
+    <div id="filter-buttons-top" class="filter-buttons-div">
         <button id="filter-btn-apply">Apply<span class="icon-span"><i class="icon fa fa-filter"></i></span></button>
         <button id="filter-btn-reset">Reset<span class="icon-span"><i class="icon fa-solid fa-arrows-rotate"></i></span></button>
         <button id="filter-btn-close">Close<span class="icon-span"><i class="icon fa-solid fa-xmark"></i></span></button>
     </div>
     <div id="filter-content">
-        <button class="filter-heading-btn"><span>Brand&nbsp;&nbsp;<i class="category-icon fa-solid fa-copyright"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
-        <div id="filter-expandable-brand" class="filter-expandable">
-            <div id="brand-select-all-div">
-                <input type="checkbox" id="brand-select-all">
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-copyright"></i><span>Brand</span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-brand" class="filter-expandable filter-checkmarks">
+            <div id="brand-select-all-div" class="checkmarks-select-all">
+                <input type="checkbox" checked id="brand-select-all">
                 <label for="brand-select-all">Select All</label>
             </div>
-            <div id="brand-options-div">
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Zowie">
+            <div id="brand-options-div" class="checkmark-options-div">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Zowie">
                     <label for="brand-Zowie">Zowie</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Glorious">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Glorious">
                     <label for="brand-Glorious">Glorious</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Logitech">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Logitech">
                     <label for="brand-Logitech">Logitech</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Razer">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Razer">
                     <label for="brand-Razer">Razer</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Zowie2">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Zowie2">
                     <label for="brand-Zowie2">Zowie</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Glorious2">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Glorious2">
                     <label for="brand-Glorious2">Glorious</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Logitech2">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Logitech2">
                     <label for="brand-Logitech2">Logitech</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Razer2">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Razer2">
                     <label for="brand-Razer2">Razer</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Zowie3">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Zowie3">
                     <label for="brand-Zowie3">Zowie</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Glorious3">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Glorious3">
                     <label for="brand-Glorious3">Glorious</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Logitech3">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Logitech3">
                     <label for="brand-Logitech3">Logitech</label>
                 </div>
-                <div class="brand-option">
-                    <input type="checkbox" id="brand-Razer3">
+                <div class="brand-option checkmark-option">
+                    <input type="checkbox" checked id="brand-Razer3">
                     <label for="brand-Razer3">Razer</label>
                 </div>
             </div>
         </div>
-        <button class="filter-heading-btn"><span>Length&nbsp;&nbsp;<i class="category-icon fa-solid fa-ruler-vertical"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-ruler-vertical"></i><span>Length</span><i class="icon fa-solid fa-angle-down"></i></button>
         <div id="filter-expandable-length" class="filter-expandable">
             <div id="filter-length-div" class="filter-dimensions-div">
                 <input type="number" id="filter-length-min" class="filter-dimensions-min">
@@ -132,7 +135,7 @@
                 <input type="number" id="filter-length-max" class="filter-dimensions-max">
             </div>
         </div>
-        <button class="filter-heading-btn"><span>Width&nbsp;&nbsp;<i class="category-icon fa-solid fa-ruler-horizontal"></i></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-ruler-horizontal"></i><span>Width</span><i class="icon fa-solid fa-angle-down"></i></button>
         <div id="filter-expandable-width" class="filter-expandable">
             <div id="filter-width-div" class="filter-dimensions-div">
                 <input type="number" id="filter-width-min" class="filter-dimensions-min">
@@ -140,7 +143,7 @@
                 <input type="number" id="filter-width-max" class="filter-dimensions-max">
             </div>
         </div>
-        <button class="filter-heading-btn"><span>Height&nbsp;&nbsp;<i class="category-icon fa-solid fa-ruler"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-ruler"></i><span>Height</span><i class="icon fa-solid fa-angle-down"></i></button>
         <div id="filter-expandable-height" class="filter-expandable">
             <div id="filter-height-div" class="filter-dimensions-div">
                 <input type="number" id="filter-height-min" class="filter-dimensions-min">
@@ -148,7 +151,7 @@
                 <input type="number" id="filter-height-max" class="filter-dimensions-max">
             </div>
         </div>
-        <button class="filter-heading-btn"><span>Weight&nbsp;&nbsp;<i class="category-icon fa-solid fa-weight-hanging"></i></span><i class="icon fa-solid fa-angle-down"></i></button>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-weight-hanging"></i><span>Weight</span><i class="icon fa-solid fa-angle-down"></i></button>
         <div id="filter-expandable-weight" class="filter-expandable">
             <div id="filter-weight-div" class="filter-dimensions-div">
                 <input type="number" id="filter-weight-min" class="filter-dimensions-min">
@@ -156,11 +159,110 @@
                 <input type="number" id="filter-weight-max" class="filter-dimensions-max">
             </div>
         </div>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-computer-mouse"></i><span>Shape</span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-shape" class="filter-expandable filter-checkbox-buttons">
+            <div id="filter-shape-ambidextrous-div">
+                <label for="filter-shape-ambidextrous">Ambidextrous</label>
+                <input type="checkbox" checked name="filter-shape" id="filter-shape-ambidextrous" value="0">
+            </div>
+            <div id="filter-shape-ergonomic-div">
+                <label for="filter-shape-ergonomic">Ergonomic</label>
+                <input type="checkbox" checked name="filter-shape" id="filter-shape-ergonomic" value="1">
+            </div>
+        </div>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-rss"></i><span>Connectivity</span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-connectivity" class="filter-expandable filter-checkbox-buttons">
+            <div id="filter-shape-wired-div">
+                <label for="filter-shape-wired">Wired</label>
+                <input type="checkbox" checked name="filter-shape" id="filter-shape-wired" value="0">
+            </div>
+            <div id="filter-shape-wireless-div">
+                <label for="filter-shape-wireless">Wireless</label>
+                <input type="checkbox" checked name="filter-shape" id="filter-shape-wireless" value="1">
+            </div>
+        </div>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-gears"></i><span>Sensor</span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-sensor" class="filter-expandable filter-checkmarks">
+            <div id="sensor-select-all-div" class="checkmarks-select-all">
+                <input type="checkbox" checked id="sensor-select-all">
+                <label for="sensor-select-all">Select All</label>
+            </div>
+            <div id="sensor-options-div" class="checkmark-options-div">
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Zowie">
+                    <label for="sensor-Zowie">Zowie</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Glorious">
+                    <label for="sensor-Glorious">Glorious</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Logitech">
+                    <label for="sensor-Logitech">Logitech</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Razer">
+                    <label for="sensor-Razer">Razer</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Zowie2">
+                    <label for="sensor-Zowie2">Zowie</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Glorious2">
+                    <label for="sensor-Glorious2">Glorious</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Logitech2">
+                    <label for="sensor-Logitech2">Logitech</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Razer2">
+                    <label for="sensor-Razer2">Razer</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Zowie3">
+                    <label for="sensor-Zowie3">Zowie</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Glorious3">
+                    <label for="sensor-Glorious3">Glorious</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Logitech3">
+                    <label for="sensor-Logitech3">Logitech</label>
+                </div>
+                <div class="sensor-option checkmark-option">
+                    <input type="checkbox" checked id="sensor-Razer3">
+                    <label for="sensor-Razer3">Razer</label>
+                </div>
+            </div>
+        </div>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-braille"></i><span>DPI</span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-dpi" class="filter-expandable">
+            <div id="filter-dpi-div" class="filter-dimensions-div">
+                <input type="number" id="filter-dpi-min" class="filter-dimensions-min">
+                <div id="slider-range-dpi" class="filter-dimensions-slider"></div>
+                <input type="number" id="filter-dpi-max" class="filter-dimensions-max">
+            </div>
+        </div>
+        <button class="filter-heading-btn"><i class="category-icon fa-solid fa-wave-square"></i><span>Polling Rate</span><i class="icon fa-solid fa-angle-down"></i></button>
+        <div id="filter-expandable-pollingRate" class="filter-expandable">
+            <div id="filter-pollingRate-div" class="filter-dimensions-div">
+                <input type="number" id="filter-pollingRate-min" class="filter-dimensions-min">
+                <div id="slider-range-pollingRate" class="filter-dimensions-slider"></div>
+                <input type="number" id="filter-pollingRate-max" class="filter-dimensions-max">
+            </div>
+        </div>
     </div>
-
+    <div id="filter-buttons-bottom" class="filter-buttons-div">
+        <button id="filter-btn-open">Open<span class="icon-span"><i class="icon fa fa-unlock"></i></span></button>
+        <button id="filter-btn-collapse">Collapse<span class="icon-span"><i class="icon fa-solid fa-lock"></i></span></button>
+        <button id="filter-btn-help">Help<span class="icon-span"><i class="icon fa-solid fa-circle-question"></i></span></button>
+    </div>
 </div>
 <!-- Most of HTML above is default across all pages -->
 <!--<table id="mouse-table"></table>-->
-<table id="mouse-table"><thead><tr><td>Brand</td><td>Name</td><td>Length</td><td>Width</td><td>Height</td><td>Weight</td><td>Shape</td><td>Connectivity</td><td>Sensor</td><td>DPI</td><td>Polling Rate</td></tr></thead><tbody><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr></tbody></table>
+<table id="mouse-table"><thead><tr><td>Brand</td><td>Name</td><td>Length</td><td>Width</td><td>Height</td><td>Weight</td><td>Shape</td><td>Connectivity</td><td>Sensor</td><td>DPI</td><td>Polling Rate</td></tr></thead><tbody><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr></tbody></table>
 </body>
 </html>

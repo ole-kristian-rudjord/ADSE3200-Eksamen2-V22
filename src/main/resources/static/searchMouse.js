@@ -60,16 +60,16 @@ $(function() {
 
 
     // Toggle burger menu on click
-    $('.burger-icon, #screen-cover, #side-menu-close').on('click', function () {
+    $('.burger-icon, #screen-cover-burger, #side-menu-close').on('click', function () {
         if ($('#side-menu').css('display') === 'none') {
             $('#side-menu').css('display', 'flex');
             setTimeout(function () {
                 $('#side-menu').css('transform', 'translate(0)');
-                $('#screen-cover').css('display', 'flex');
+                $('#screen-cover-burger').css('display', 'flex');
             });
         } else {
             $('#side-menu').css('transform', 'translate(110%)');
-            $('#screen-cover').css('display', 'none');
+            $('#screen-cover-burger').css('display', 'none');
             setTimeout(function () {
                 $('#side-menu').css('display', 'none');
             }, 200);
@@ -179,17 +179,17 @@ $(function() {
         let result =
             "<thead>"+
                 "<tr>" +
-                    "<td>Brand</td>" +
-                    "<td>Name</td>" +
-                    "<td>Length</td>" +
-                    "<td>Width</td>" +
-                    "<td>Height</td>" +
-                    "<td>Weight</td>" +
-                    "<td>Shape</td>" +
-                    "<td>Connectivity</td>" +
-                    "<td>Sensor</td>" +
-                    "<td>DPI</td>" +
-                    "<td>Polling Rate</td>" +
+                    "<td class='string'>Brand</td>" +
+                    "<td class='string'>Name</td>" +
+                    "<td class='number'>Length</td>" +
+                    "<td class='number'>Width</td>" +
+                    "<td class='number'>Height</td>" +
+                    "<td class='number'>Weight</td>" +
+                    "<td class='string'>Shape</td>" +
+                    "<td class='string'>Connectivity</td>" +
+                    "<td class='string'>Sensor</td>" +
+                    "<td class='number'>DPI</td>" +
+                    "<td class='number'>Polling Rate</td>" +
                 "</tr>" +
             "</thead>" +
             "<tbody>";
@@ -210,89 +210,148 @@ $(function() {
 
             result +=
                 "<tr>" +
-                    "<td>" + mouse.brand + "</td>" +
-                    "<td>" + mouse.name + "</td>" +
-                    "<td>" + parseFloat(mouse.length) + "</td>" +
-                    "<td>" + parseFloat(mouse.width) + "</td>" +
-                    "<td>" + parseFloat(mouse.height) + "</td>" +
-                    "<td>" + parseFloat(mouse.weight) + "</td>" +
-                    "<td>" + shape + "</td>" +
-                    "<td>" + connectivity + "</td>" +
-                    "<td>" + mouse.sensor + "</td>" +
-                    "<td>" + parseFloat(mouse.maxDPI) + "</td>" +
-                    "<td>" + parseFloat(mouse.pollingRate) + "</td>" +
+                    "<td class='string'>" + mouse.brand + "</td>" +
+                    "<td class='string'>" + mouse.name.replace(/\-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
+                    "<td class='number'>" + parseFloat(mouse.length) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.width) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.height) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.weight) + "</td>" +
+                    "<td class='string'>" + shape + "</td>" +
+                    "<td class='string'>" + connectivity + "</td>" +
+                    "<td class='string'>" + mouse.sensor + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.maxDPI) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.pollingRate) + "</td>" +
                 "</tr>"
         }
         result += "</tbody>";
         $('#mouse-table').html(result);
     });
 
-
-
-    $('#filter-btn-apply').on('mouseover', function () {
-        $(this).css({
-            'outline-color': 'rgb(39, 93, 219)',
-            'box-shadow': '0 3px 0 2px rgb(23,55,131)'
+    $('#activate-filter-btn').on('click', function () {
+        $('#filter-main').css('display', 'flex');
+        setTimeout(function () {
+            $('#filter-main').css('transform', 'translateX(0)');
         });
-        $('.fa-filter').css({
-            'color': 'rgb(39, 93, 219)',
-            'font-size': '1.4rem'
-        });
-    }).on('mouseout', function () {
+        $(this).css('display', 'none');
+        $('#screen-cover-filter').css('display', 'block');
+    });
+
+    $('#filter-btn-apply').on('click', function () {
+
+    });
+
+    $('#filter-btn-reset').on('click', function () {
+
+    });
+
+    $('#filter-btn-close, #screen-cover-filter').on('click', function () {
+        $('#activate-filter-btn').css('display', 'block');
+        $('#filter-main').css('transform', 'translateX(-110%)');
+        setTimeout(function () {
+            $('#filter-main').css('display', 'none');
+        }, 200);
+        $('#screen-cover-filter').css('display', 'none');
+    });
+
+    $('#filter-btn-open').on('click', function () {
+        $('.filter-expandable').each(function () {
+            $(this).css('display', 'flex');
+        })
+    });
+
+    $('#filter-btn-collapse').on('click', function () {
+        $('.filter-expandable').each(function () {
+            $(this).css('display', 'none');
+        })
+    });
+
+    $('#filter-btn-help').on('click', function () {
+
+    });
+
+    $('.filter-buttons-div button').bind('mouseover focusin', function () {
+        if (this.id === 'filter-btn-apply') {
+            $(this).css({
+                'outline-color': 'rgb(39, 93, 219)',
+                'box-shadow': '0 3px 0 2px rgb(23,55,131)'
+            });
+            $(this).find('.icon').css({
+                'color': 'rgb(39, 93, 219)',
+                'font-size': '1.4rem'
+            });
+        } else if (this.id === 'filter-btn-reset') {
+            $(this).css({
+                'outline-color': 'orange',
+                'box-shadow': '0 3px 0 2px rgb(183,118,0)'
+            });
+            $(this).find('.icon').css({
+                'color': 'orange',
+                'transform': 'translate(-50%, -50%) rotate(180deg)'
+            });
+        } else if (this.id === 'filter-btn-close') {
+            $(this).css({
+                'outline-color': 'red',
+                'box-shadow': '0 3px 0 2px rgb(153,0,0)'
+            });
+            $(this).find('.icon').css({
+                'color': 'red',
+                'font-size': '1.3rem'
+            });
+        } else if (this.id === 'filter-btn-open') {
+            $(this).css({
+                'outline-color': 'rgb(39, 93, 219)',
+                'box-shadow': '0 3px 0 2px rgb(23,55,131)'
+            });
+            $(this).find('.icon').css({
+                'color': 'rgb(39, 93, 219)',
+                'font-size': '1.2rem'
+            });
+        } else if (this.id === 'filter-btn-collapse') {
+            $(this).css({
+                'outline-color': 'red',
+                'box-shadow': '0 3px 0 2px rgb(153,0,0)'
+            });
+            $(this).find('.icon').css({
+                'color': 'red',
+                'font-size': '1.2rem'
+            });
+        } else if (this.id === 'filter-btn-help') {
+            $(this).css({
+                'outline-color': 'rgb(64,167,19)',
+                'box-shadow': '0 3px 0 2px rgb(38,100,11)'
+            });
+            $(this).find('.icon').css({
+                'color': 'rgb(64,167,19)',
+                'font-size': '1.2rem'
+            });
+        }
+    }).bind('mouseout focusout', function () {
         $(this).css({
             'outline-color': 'var(--themeBorderColor)',
             'box-shadow': '0 3px 0 2px gray'
         });
-        $('.fa-filter').css({
-            'color': 'var(--themeReverseColor)',
-            'font-size': '1.1rem'
-        });
+        if (this.id === 'filter-btn-apply') {
+            $(this).find('.icon').css({
+                'color': 'var(--themeReverseColor)',
+                'font-size': '1.1rem'
+            });
+        } else if (this.id === 'filter-btn-reset') {
+            $(this).find('.icon').css({
+                'color': 'var(--themeReverseColor)',
+                'transform': 'translate(-50%, -50%) rotate(0deg)'
+            });
+        } else {
+            $(this).find('.icon').css({
+                'color': 'var(--themeReverseColor)',
+                'font-size': '1rem'
+            });
+        }
     });
 
-    $('#filter-btn-reset').on('mouseover', function () {
-        $(this).css({
-            'outline-color': 'orange',
-            'box-shadow': '0 3px 0 2px rgb(183,118,0)'
-        });
-        $('.fa-arrows-rotate').css({
-            'color': 'orange',
-            'transform': 'translate(-50%, -50%) rotate(180deg)'
-        });
-    }).on('mouseout', function () {
-        $(this).css({
-            'outline-color': 'var(--themeBorderColor)',
-            'box-shadow': '0 3px 0 2px gray'
-        });
-        $('.fa-arrows-rotate').css({
-            'color': 'var(--themeBorderColor)',
-            'transform': 'translate(-50%, -50%) rotate(0deg)'
-        });
-        $('.fa-arrows-rotate').css('color', 'var(--themeReverseColor)');
-    });
 
-    $('#filter-btn-close').on('mouseover', function () {
-        $(this).css({
-            'outline-color': 'red',
-            'box-shadow': '0 3px 0 2px rgb(153,0,0)'
-        });
-        $('.fa-xmark').css({
-            'color': 'red',
-            'font-size': '1.3rem'
-        });
-    }).on('mouseout', function () {
-        $(this).css({
-            'outline-color': 'var(--themeBorderColor)',
-            'box-shadow': '0 3px 0 2px gray'
-        });
-        $('.fa-xmark').css({
-            'color': 'var(--themeReverseColor)',
-            'font-size': '1rem'
-        });
-    });
-
-    $('.filter-heading-btn').on('mouseover', function () {
+    $('.filter-heading-btn').bind('mouseover focusin', function () {
         $(this).find('i').css('color', 'var(--primaryColor)');
-    }).on('mouseout', function () {
+    }).bind('mouseout focusout', function () {
         $(this).find('i').css('color', 'var(--themeReverseColor)');
     });
 
@@ -308,7 +367,7 @@ $(function() {
         });
     });
 
-    $('.brand-option, #brand-select-all-div').on('click', function (x) {
+    $('.checkmark-option, .checkmarks-select-all').on('click', function (x) {
         if (!$(x.target).is('input') && !$(x.target).is('label')) {
             let checkbox = $(this).find('input');
             if (checkbox.prop('checked') === false) {
@@ -319,7 +378,7 @@ $(function() {
         }
     });
 
-    $('.brand-option, .brand-option input, .brand-option label').not($('#brand-select-all-div, #brand-select-all, #brand-select-all-div label')).on('click', function () {
+    /*$('.brand-option, .brand-option input, .brand-option label').not($('#brand-select-all-div, #brand-select-all, #brand-select-all-div label')).on('click', function () {
         let allSelected = true;
         $('#filter-expandable-brand input').not($('#brand-select-all')).each(function () {
             if ($(this).prop('checked') === false) {
@@ -327,14 +386,38 @@ $(function() {
             }
         });
         $('#brand-select-all').prop('checked', allSelected);
+    });*/
+    $('.checkmark-option, .checkmark-option input, .checkmark-option label')
+        .not($('.checkmarks-select-all, .checkmarks-select-all input, .checkmarks-select-all label'))
+        .on('click', function () {
+        let allBrandsSelected = true;
+        $('#filter-expandable-brand input').not($('#brand-select-all')).each(function () {
+            if ($(this).prop('checked') === false) {
+                allBrandsSelected = false;
+            }
+        });
+        $('#brand-select-all').prop('checked', allBrandsSelected);
+        let allSensorsSelected = true;
+        $('#filter-expandable-sensor input').not($('#sensor-select-all')).each(function () {
+            if ($(this).prop('checked') === false) {
+                allSensorsSelected = false;
+            }
+        });
+        $('#sensor-select-all').prop('checked', allSensorsSelected);
     });
 
-    $('#brand-select-all-div, #brand-select-all, #brand-select-all-div label').on('click', function () {
-        let checkbox = $('#brand-select-all');
-        if (checkbox.prop('checked') === false) {
-            $('#filter-expandable-brand input').not(checkbox).prop('checked', false);
+    $('.checkmarks-select-all, .checkmarks-select-all input, .checkmarks-select-all label').on('click', function () {
+        let checkboxBrand = $('#brand-select-all');
+        if (checkboxBrand.prop('checked') === false) {
+            $('#filter-expandable-brand input').not(checkboxBrand).prop('checked', false);
         } else {
-            $('#filter-expandable-brand input').not(checkbox).prop('checked', true);
+            $('#filter-expandable-brand input').not(checkboxBrand).prop('checked', true);
+        }
+        let checkboxSensor = $('#sensor-select-all');
+        if (checkboxSensor.prop('checked') === false) {
+            $('#filter-expandable-sensor input').not(checkboxSensor).prop('checked', false);
+        } else {
+            $('#filter-expandable-sensor input').not(checkboxSensor).prop('checked', true);
         }
     });
 
@@ -348,20 +431,6 @@ $(function() {
             'border-width': '1px',
             'background-color': 'var(--themeBackgroundColor)'
         });
-    });
-
-    $('#activate-filter-btn').on('click', function () {
-        $('#filter-main').css('display', 'flex');
-        setTimeout(function () {
-            $('#filter-main').css('transform', 'translateX(0)');
-        });
-    });
-
-    $('#filter-btn-close').on('click', function () {
-        $('#filter-main').css('transform', 'translateX(-110%)');
-        setTimeout(function () {
-            $('#filter-main').css('display', 'none');
-        }, 200);
     });
 
 
@@ -425,14 +494,66 @@ $(function() {
         }
     });
 
+    $('#slider-range-dpi').slider({
+        range: true,
+        min: 0,
+        max: 100,
+        values: [0,100],
+        slide:function(event, ui) {
+            $('#filter-dpi-min').val($('#slider-range-dpi').slider('values', 0));
+            $('#filter-dpi-max').val($('#slider-range-dpi').slider('values', 1));
+        },
+        stop: function(event, ui) {
+            $('#filter-dpi-min').val(ui.values[0]);
+            $('#filter-dpi-max').val(ui.values[1]);
+        }
+    });
+
+    $('#slider-range-pollingRate').slider({
+        range: true,
+        min: 0,
+        max: 100,
+        values: [0,100],
+        slide:function(event, ui) {
+            $('#filter-pollingRate-min').val($('#slider-range-pollingRate').slider('values', 0));
+            $('#filter-pollingRate-max').val($('#slider-range-pollingRate').slider('values', 1));
+        },
+        stop: function(event, ui) {
+            $('#filter-pollingRate-min').val(ui.values[0]);
+            $('#filter-pollingRate-max').val(ui.values[1]);
+        }
+    });
+
+
+    function activateCheckboxesShape() {
+        $('input[name="filter-shape"]').each(function () {
+            if ($(this).prop('checked') === true) {
+                $(this).prev('label').css({
+                    'border': '2px solid var(--primaryColor)',
+                    'box-shadow': '0 3px 0 0 var(--primaryDarkColor)'
+                });
+            } else if ($(this).prop('checked') === false) {
+                $(this).prev('label').css({
+                    'border': '2px solid var(--themeBorderColor)',
+                    'box-shadow': '0 3px 0 0 gray'
+                });
+            }
+        });
+    }
+
+    $('input[name="filter-shape"]').on('change', function () {
+        activateCheckboxesShape()
+    });
 
 
 
-/*--------------------------------
-    Call functions on load - start
---------------------------------*/
+
+    /*--------------------------------
+        Call functions on load - start
+    --------------------------------*/
 
     setTheme();
+    activateCheckboxesShape();
 
 /*------------------------------
     Call functions on load - end

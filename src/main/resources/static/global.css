@@ -55,6 +55,7 @@
 /*--- :root (managed in JavaScript) ---*/
 :root {
     --primaryColor:#FF3C19;
+    --primaryDarkColor:#B22A11;
     --themeHoverColor: inherit;
     --themeBackgroundColor: inherit;
     --themeReverseColor: inherit;
@@ -277,8 +278,8 @@ nav a:hover {
     display: none;
 }
 
-/* Screen cover */
-#screen-cover { /* Covers main content with dark overlay when side-menu is active */
+/* Screen cover for burger menu */
+#screen-cover-burger { /* Covers main content with dark overlay when side-menu is active */
     z-index: 98;
     position: fixed;
     display: none;
@@ -315,7 +316,7 @@ nav a:hover {
     }
     #burger-icon-mobile {
         z-index: 100;
-        position: absolute;
+        position: fixed;
         display: flex;
         top: 0;
         right: 0;
