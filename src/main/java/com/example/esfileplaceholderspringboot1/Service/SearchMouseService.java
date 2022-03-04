@@ -1,24 +1,34 @@
 package com.example.esfileplaceholderspringboot1.Service;
 
-import com.example.esfileplaceholderspringboot1.Model.SliderValues;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.esfileplaceholderspringboot1.Model.SliderValuesMax;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 @Service
 public class SearchMouseService {
 
-    @Autowired
-    JdbcTemplate db;
+    Logger errorLogger = LoggerFactory.getLogger(CompareShapesService.class);
 
-    public List<SliderValues> getSliderValues() {
-        String sql = "SELECT MAX(length), MAX(width), MAX(height), MAX(weight), MAX(maxDPI), MAX(pollingRate) FROM mice";
+    final JdbcTemplate db;
 
-        return db.query(sql, new BeanPropertyRowMapper<>(SliderValues.class));
+    public SearchMouseService(JdbcTemplate db) {
+        this.db = db;
+    }
+
+    public SliderValuesMax getSliderValues() {
+        String sql = "SELECT MAX(length) AS length, MAX(width) AS width, MAX(height) AS height, MAX(weight) AS weight, MAX(maxDPI) AS maxDPI, MAX(pollingRate) AS pollingRate FROM mice";
+
+        try {
+            return (SliderValuesMax) db.queryForObject(sql, new BeanPropertyRowMapper<>(SliderValuesMax.class));
+        }
+        catch (Exception e) {
+            errorLogger.error("Error with getSliderValues():\n" + e);
+            return null;
+        }
     }
 }

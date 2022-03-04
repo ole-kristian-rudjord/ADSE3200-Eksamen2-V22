@@ -825,7 +825,7 @@ $(function() {
                 if (status.status === 404) {
                     createErrorMessage(brand + ' ' + model + ' does not exists in the database.');
                 } else {
-                    createErrorMessage('There was an error while retrieving information from the database, please try again later.\n Error: ' + status.status);
+                    createErrorMessage('There was an error while retrieving information from the database,\nplease try again later.\n Error: ' + status.status);
                 }
             })
         } else {

@@ -216,7 +216,7 @@ $(function() {
             result +=
                 "<tr>" +
                     "<td class='string'>" + mouse.brand + "</td>" +
-                    "<td class='string'>" + mouse.name.replace(/\-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
+                    "<td class='string'>" + mouse.model.replace(/-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
                     "<td class='number'>" + parseFloat(mouse.length) + "</td>" +
                     "<td class='number'>" + parseFloat(mouse.width) + "</td>" +
                     "<td class='number'>" + parseFloat(mouse.height) + "</td>" +
@@ -459,20 +459,48 @@ $(function() {
 /*-------------------
     Sliders - Start
 -------------------*/
+    let defaultMaxLength;
+    let defaultMaxWidth;
+    let defaultMaxHeight;
+    let defaultMaxWeight;
+    let defaultMaxDPI;
+    let defaultMaxPollingRate;
 
-    $.get("/getSliderValues", function (sliderValues) {
-        console.log(sliderValues);
+    /*$.get("/getSliderValues", function (sliderValuesMax) {
+        defaultMaxLength = sliderValuesMax.length;
+        defaultMaxWidth = sliderValuesMax.width;
+        defaultMaxHeight = sliderValuesMax.height;
+        defaultMaxWeight = sliderValuesMax.weight;
+        defaultMaxDPI = sliderValuesMax.maxDPI;
+        defaultMaxPollingRate = sliderValuesMax.pollingRate;
+    });*/
+
+    $.ajax({
+        url: "/getSliderValues",
+        dataType: 'json',
+        type: 'get',
+        async: false,
+        data: {},
+        success: function (sliderValuesMax) {
+            defaultMaxLength = sliderValuesMax.length;
+            defaultMaxWidth = sliderValuesMax.width;
+            defaultMaxHeight = sliderValuesMax.height;
+            defaultMaxWeight = sliderValuesMax.weight;
+            defaultMaxDPI = sliderValuesMax.maxDPI;
+            defaultMaxPollingRate = sliderValuesMax.pollingRate;
+        },
+        error: function () {
+            alert('error');
+        }
     })
 
-    const defaultMinLength = 0;
-    const defaultMaxLength = 100;
-    $('#slider-range-length').prev('input').val(defaultMinLength);
+    $('#slider-range-length').prev('input').val(0);
     $('#slider-range-length').next('input').val(defaultMaxLength);
     $('#slider-range-length').slider({
         range: true,
         min: 0,
-        max: 100,
-        values: [0,100],
+        max: defaultMaxLength,
+        values: [0, defaultMaxLength],
         slide:function(event, ui) {
             $('#filter-length-min').val(ui.values[0]);
             $('#filter-length-max').val(ui.values[1]);
@@ -483,15 +511,13 @@ $(function() {
         }
     });
 
-    const defaultMinWidth = 0;
-    const defaultMaxWidth = 100;
-    $('#slider-range-width').prev('input').val(defaultMinWidth);
+    $('#slider-range-width').prev('input').val(0);
     $('#slider-range-width').next('input').val(defaultMaxWidth);
     $('#slider-range-width').slider({
         range: true,
         min: 0,
-        max: 100,
-        values: [defaultMinWidth, defaultMaxWidth],
+        max: defaultMaxWidth,
+        values: [0, defaultMaxWidth],
         slide:function(event, ui) {
             $('#filter-width-min').val(ui.values[0]);
             $('#filter-width-max').val(ui.values[1]);
@@ -502,15 +528,13 @@ $(function() {
         }
     });
 
-    const defaultMinHeight = 0;
-    const defaultMaxHeight = 100;
-    $('#slider-range-height').prev('input').val(defaultMinHeight);
+    $('#slider-range-height').prev('input').val(0);
     $('#slider-range-height').next('input').val(defaultMaxHeight);
     $('#slider-range-height').slider({
         range: true,
         min: 0,
-        max: 100,
-        values: [0,100],
+        max: defaultMaxHeight,
+        values: [0, defaultMaxHeight],
         slide:function(event, ui) {
             $('#filter-height-min').val(ui.values[0]);
             $('#filter-height-max').val(ui.values[1]);
@@ -521,15 +545,13 @@ $(function() {
         }
     });
 
-    const defaultMinWeight = 0;
-    const defaultMaxWeight = 100;
-    $('#slider-range-weight').prev('input').val(defaultMinWeight);
+    $('#slider-range-weight').prev('input').val(0);
     $('#slider-range-weight').next('input').val(defaultMaxWeight);
     $('#slider-range-weight').slider({
         range: true,
         min: 0,
-        max: 100,
-        values: [0,100],
+        max: defaultMaxWeight,
+        values: [0, defaultMaxWeight],
         slide:function(event, ui) {
             $('#filter-weight-min').val(ui.values[0]);
             $('#filter-weight-max').val(ui.values[1]);
@@ -540,15 +562,13 @@ $(function() {
         }
     });
 
-    const defaultMinDpi = 0;
-    const defaultMaxDpi = 100;
-    $('#slider-range-dpi').prev('input').val(defaultMinDpi);
-    $('#slider-range-dpi').next('input').val(defaultMaxDpi);
+    $('#slider-range-dpi').prev('input').val(0);
+    $('#slider-range-dpi').next('input').val(defaultMaxDPI);
     $('#slider-range-dpi').slider({
         range: true,
         min: 0,
-        max: 100,
-        values: [0,100],
+        max: defaultMaxDPI,
+        values: [0, defaultMaxDPI],
         slide:function(event, ui) {
             $('#filter-dpi-min').val(ui.values[0]);
             $('#filter-dpi-max').val(ui.values[1]);
@@ -559,15 +579,13 @@ $(function() {
         }
     });
 
-    const defaultMinPollingRate = 0;
-    const defaultMaxPollingRate = 100;
-    $('#slider-range-pollingRate').prev('input').val(defaultMinPollingRate);
+    $('#slider-range-pollingRate').prev('input').val(0);
     $('#slider-range-pollingRate').next('input').val(defaultMaxPollingRate);
     $('#slider-range-pollingRate').slider({
         range: true,
-        min: defaultMinPollingRate,
+        min: 0,
         max: defaultMaxPollingRate,
-        values: [defaultMinPollingRate,defaultMaxPollingRate],
+        values: [0, defaultMaxPollingRate],
         slide:function(event, ui) {
             $('#filter-pollingRate-min').val(ui.values[0]);
             $('#filter-pollingRate-max').val(ui.values[1]);
@@ -578,6 +596,20 @@ $(function() {
         }
     });
 
+    $('.filter-dimensions-div input').on('keyup', function () {
+
+        if ((''+this.id).includes('min') && $(this).val() - 1 < $(this).next().next('input').val()) {
+            console.log($(this).val() + ', ' + $(this).next().next('input').val())
+            $(this).next(('.filter-dimensions-slider')).slider({
+                values: [$(this).val(), $(this).next().next('input').val()]
+            });
+        } else if (('' + this.id).includes('max') && $(this).val() + 1 > $(this).prev().prev('input').val()) {
+            console.log($(this).prev().prev('input').val() + ', ' + $(this).val())
+            $(this).prev(('.filter-dimensions-slider')).slider({
+                values: [$(this).prev().prev('input').val(), $(this).val()]
+            });
+        }
+    });
 /*-----------------
     Sliders - End
 -----------------*/

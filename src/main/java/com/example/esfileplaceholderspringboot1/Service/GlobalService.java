@@ -3,7 +3,6 @@ package com.example.esfileplaceholderspringboot1.Service;
 import com.example.esfileplaceholderspringboot1.Model.Mouse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -15,8 +14,11 @@ public class GlobalService {
 
     Logger errorLogger = LoggerFactory.getLogger(CompareShapesService.class);
 
-    @Autowired
-    JdbcTemplate db;
+    final JdbcTemplate db;
+
+    public GlobalService(JdbcTemplate db) {
+        this.db = db;
+    }
 
     public List<Mouse> getAllMice() {
         String sql = "SELECT * FROM mice";
