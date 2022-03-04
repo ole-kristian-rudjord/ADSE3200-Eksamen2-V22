@@ -236,10 +236,15 @@
     transition-property: transform, opacity;
 }
 
+
+
+
 /*--- Add new shape input ---*/
-#add-new-shape-input {
+#add-new-shape-div {
     width: 275px;
-    padding: 6px 8px;
+    display: flex;
+    gap: 3px;
+    /*padding: 6px 8px;
     border: none;
     border-top: transparent solid 2px;
     border-bottom: var(--themeBorderColor) solid 2px;
@@ -247,14 +252,51 @@
     color: var(--themeReverseColor);
     background-color: var(--themeBackgroundColor);
     transition: 180ms ease;
-    transition-property: outline, border-bottom-color, background-color, border-radius;
+    transition-property: outline, border-bottom-color, background-color, border-radius;*/
 }
-#add-new-shape-input:focus {
+#add-new-shape-div input {
+    padding: 6px 4px;
+    background-color: var(--themeBackgroundColor);
+    border: none;
+    color: var(--themeReverseColor);
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid var(--themeBorderColor);
+    transition: 180ms ease;
+    transition-property: border-bottom-color, background-color, border-radius;
+}
+#add-new-shape-div input:focus {
     outline: none;
+    border-radius: 4px;
     border-bottom-color: var(--primaryColor);
-    border-radius: 6px;
     background-color: var(--themeHoverColor);
 }
+#add-new-shape-brand {
+    width: 32%;
+}
+#add-new-shape-model {
+    width: 52%;
+}
+#add-new-shape-div button {
+    width: 48px;
+    font-size: 1.2rem;
+    background-color: var(--themeBackgroundColor);
+    color: var(--themeReverseColor);
+    border: 2px solid var(--themeBorderColor);
+    border-radius: 4px 4px 4px 0;
+    cursor: pointer;
+    transition: 180ms ease;
+    transition-property: border-color, background-color, border-radius;
+}
+#add-new-shape-div button:hover,
+#add-new-shape-div button:focus-visible {
+    outline: none;
+    background-color: var(--themeHoverColor);
+    border-color: var(--primaryColor);
+    border-radius: 6px;
+}
+
+
+
 
 /*--- Shape information ---*/
 #shape-tool-current-mice {
@@ -368,27 +410,24 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    top: 0;
-    right: 0;
     height: 50px;
     width: 50px;
     outline: none;
-    border: none;
-    background-color: transparent;
+    border: 2px solid var(--themeBorderColor);
+    background-color: red;
+    border-radius: 4px;
     cursor: pointer;
 }
 .shape-tool-color:focus-visible {
-    outline: var(--themeBorderColor) solid 2px;
-    border-radius: 8px;
-    background-color: var(--themeHoverColor);
+    outline: 2px solid var(--themeBorderColor);
+    border: 4px solid var(--themeBackgroundColor);
+    border-radius: 6px;
 }
 .shape-tool-color::-webkit-color-swatch {
-    border: var(--themeBorderColor) solid 2px;
-    border-radius: 4px;
-    transition: 60ms ease;
+    display: none;
 }
-.shape-tool-color::-webkit-color-swatch:hover {
-    border-width: 4px;
+.shape-tool-color::-moz-color-swatch {
+    display: none;
 }
 .shape-information-weight,
 .shape-information-unit-weight,
@@ -671,9 +710,12 @@
         left: 2vh;
         text-align: left;*/
     }
-    #add-new-shape-input {
-        width: 230px;
+    #add-new-shape-div {
+        width: 240px;
         margin-top: 3vh;
+    }
+    #add-new-shape-div input {
+        font-size: 0.78rem;
     }
     #shape-tool-current-mice {
         grid-row: 2/3;
@@ -729,7 +771,7 @@
 
     /* Shape settings */
     #shape-settings-grid {
-        position: fixed;
+        position: static;
         justify-content: center;
         bottom: inherit;
         left: inherit;
@@ -763,13 +805,14 @@
     #shape-settings-size-text {
         grid-column: inherit;
         grid-row: inherit;
-        position: fixed;
+        position: absolute;
         display: flex;
         flex-direction: column-reverse;
-        top: 50%;
+        top: 0;
         right: 0;
         margin: 0;
         border: var(--themeHoverColor) solid 1px;
+        border-top: none;
         border-right: none;
         font-size: 1rem;
         background-color: var(--themeBackgroundColor);
@@ -778,20 +821,14 @@
         margin: 0;
     }
     .shape-settings-size-btn {
-        padding: 5px 10px;
+        padding: 7px 14px;
     }
     .shape-settings-size-btn:hover {
         color: inherit;
         background-color: inherit;
     }
     #shape-settings-size-slider {
-        position: fixed;
         display: none;
-        top: 0;
-        left: 0;
-        width: 80vw;
-        margin: 0;
-        border-width: 0;
     }
     #shape-settings-align-vertical-text {
         grid-column: 1/2;

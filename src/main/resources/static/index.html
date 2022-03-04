@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>ES - Compare Shapes</title>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -79,8 +79,13 @@
 
     <div id="mobile-bottom-div">
         <div id="shape-tool">
-            <input type="text" list="add-new-shape-list" id="add-new-shape-input" placeholder="add new shape:">
-            <datalist id="add-new-shape-list"></datalist>
+            <div id="add-new-shape-div">
+                <input type="text" list="add-new-shape-list-brand" id="add-new-shape-brand" placeholder="brand:">
+                <datalist id="add-new-shape-list-brand"></datalist>
+                <input type="text" list="add-new-shape-list-model" id="add-new-shape-model" placeholder="model:">
+                <datalist id="add-new-shape-list-model"></datalist>
+                <button>+</button>
+            </div>
             <div id="shape-tool-current-mice"></div>
         </div>
 

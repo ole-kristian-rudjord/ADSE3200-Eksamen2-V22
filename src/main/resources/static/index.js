@@ -501,16 +501,52 @@ $(function() {
         $('#add-new-shape-list').append(newOption);
     }*/
 
-    $.get('/getAllMice', function (mouseList) {
+    /*$.get('/getAllMice', function (mouseList) {
         for (const mouse of mouseList) {
-            let newOption = document.createElement('option');
-            newOption.value = mouse.name;
-            newOption.className = 'shape-tool-list-option';
-            $('#add-new-shape-list').append(newOption);
+            let brandOption = document.createElement('option');
+            let modelOption = document.createElement('option');
+            brandOption.value = mouse.brand;
+            modelOption.value = mouse.model;
+            brandOption.className = 'shape-tool-list-option';
+            modelOption.className = 'shape-tool-list-option';
+            $('#add-new-shape-list-brand').append(brandOption);
+            $('#add-new-shape-list-model').append(modelOption);
         }
     }).fail(function (status) {
         createErrorMessage('There was an error with retrieving mice information from the database, please try again later.\nError: ' + status.status);
+    });*/
+
+    $.get('/getDistinctBrands', function (brandList) { // gjør om til List<String>
+        for (const mouse of brandList) {
+            let brandOption = document.createElement('option');
+            brandOption.value = mouse.brand;
+            brandOption.className = 'shape-tool-list-option';
+            $('#add-new-shape-list-brand').append(brandOption);
+        }
+    }).fail(function (status) {
+        createErrorMessage('There was an error with retrieving brand information from the database,\nplease try again later.\nError: ' + status.status);
     });
+
+    function getMatchingModels() {
+        const mouseObject = {
+            brand: $('#add-new-shape-list-brand').val()
+        }
+        $.get('/getMatchingModels', mouseObject, function (modelList) { // gjør om til List<String>
+            console.log(modelList);
+            $('#add-new-shape-list-model').empty();
+            for (const mouse of modelList) {
+                console.log(mouse);
+                let modelOption = document.createElement('option');
+                modelOption.value = mouse.model;
+                modelOption.className = 'shape-tool-list-option';
+                $('#add-new-shape-list-model').append(modelOption);
+            }
+        }).fail(function (status) {
+            createErrorMessage('There was an error with retrieving model information from the database,\nplease try again later.\nError: ' + status.status);
+        });
+    }
+
+
 
 
     // Array with currently viewed mice
@@ -561,6 +597,7 @@ $(function() {
         let colorInputId = 'shape-color-' + mouseId;
         let currentColorValue = $('#'+colorInputId).val();
         $(`.${mouseId}-class path`).css('stroke', currentColorValue);
+        $('#shape-color-'+mouseId).css('background-color', currentColorValue);
     }
 
 
@@ -568,218 +605,6 @@ $(function() {
     let colorValueArray = ['#FF3C19', '#19DCFF', '#AF19FF', '#69FF19', '#FEE801', '#0117FE', '#FE0196', '#01FE69'];
     let colorValueCounter = 0;
 
-
-    // Function for adding SVG images
-    /*function addSVG(name, svgCode, view) {
-        let svgImage;
-        // Needs to check if browser is Firefox due to SVG path-clipping not working.
-        if (isOnFirefox() === false) {
-            svgImage = svgCode.replace(/<svg /g, `<svg id="${name}-${view}" class="${name}-class SVG-main SVG-main-${view}"`).replace(/<path /g, `<path id="${name}-${view}-path" `).replace(/<path /g,'<defs> <path ').replace(/<\/svg>/g, ` <\/path> <clipPath id="${name}-${view}-clip"> <use xlink:href="#${name}-${view}-path"/> </clipPath> </defs> <g> <use xlink:href="#${name}-${view}-path" clip-path="url(#${name}-${view}-clip)"/> </g> </svg>`);
-        } else {
-            // Does not include path-clipping, resulting in outlines partially cutting off near edges.
-            svgImage = svgCode.replace(/<svg /g, `<svg id="${name}-${view}" class="${name}-class SVG-main SVG-main-${view}"`);
-            // Set timeout due to stroke-width not applying to final loading SVG.
-            setTimeout(function () {
-                $('.SVG-main path').css('stroke-width', '3');
-                $('.SVG-main-side path').css('stroke-width', '3.2');
-            }, 0);
-        }
-        return svgImage;
-    }
-
-
-    // Function for adding mouse information and SVG-images
-    function addMouse(mouseName) {
-        let replacedMouseName = mouseName.replace(/_/g, ' ').replace(/rpPlusIcon/g, '+').replace(/rpMinusIcon/g, '-');
-        // Checks if mouse (selectedValue) is not already in use (currentlyViewedMice[])
-        if (currentlyViewedMiceSVG.indexOf(mouseArraySVG.find(x => x.name === mouseName)) === -1) {
-            // Adds selected mouse to currentlyViewedMiceSVG[]
-            currentlyViewedMiceSVG.push(mouseArraySVG.find(x => x.name === mouseName));
-            // Sorts array alphabetically by name
-            currentlyViewedMiceSVG.sort(function (a, b) {
-                return a.name.localeCompare(b.name);
-            });
-
-            let svgTop = mouseArraySVG.find(x => x.name === mouseName).svgCodeTop;
-            let topViewMissing = false;
-            if (svgTop !== null) {
-                $('#shape-top-container').append(addSVG(mouseName, svgTop, 'top'));
-            } else {
-                topViewMissing = true;
-            }
-
-            let svgSide = mouseArraySVG.find(x => x.name === mouseName).svgCodeSide;
-            let sideViewMissing = false;
-            if (svgSide !== null) {
-                $('#shape-side-container').append(addSVG(mouseName, svgSide, 'side'));
-            } else {
-                sideViewMissing = true;
-            }
-
-            let svgBack = mouseArraySVG.find(x => x.name === mouseName).svgCodeBack;
-            let backViewMissing = false;
-            if (svgBack !== null) {
-                $('#shape-back-container').append(addSVG(mouseName, svgBack, 'back'));
-            } else {
-                backViewMissing = true;
-            }
-
-            // Main div
-            let newInformationDiv = document.createElement('div');
-            newInformationDiv.id = mouseName + '-div';
-            newInformationDiv.className = 'shape-information-div';
-            $('#shape-tool-current-mice').append(newInformationDiv);
-
-            // Sub-div, click to remove on mobile
-            let newInformationSubDiv = document.createElement('div');
-            newInformationSubDiv.id = mouseName + '-sub-div';
-            newInformationSubDiv.className = 'shape-information-sub-div';
-            newInformationDiv.append(newInformationSubDiv);
-
-            // Close icon
-            let newCloseIcon = document.createElement('button');
-            newCloseIcon.id = (mouseName + '-close');
-            newCloseIcon.className = 'shape-tool-close';
-            newCloseIcon.innerHTML = '&#10006;';
-            newInformationSubDiv.append(newCloseIcon);
-
-            // Adds hover-able information if mouse information/specification is missing
-            let hoverText = document.createElement('span');
-            let titleText = '';
-
-            // Checks if images are missing
-            if (topViewMissing === true && sideViewMissing === true && backViewMissing === true) {
-                titleText += 'No images currently available\n';
-            } else {
-                if (topViewMissing === true) {
-                    titleText += 'Top-view image not available\n';
-                }
-                if (sideViewMissing === true) {
-                    titleText += 'Side-view image not available\n';
-                }
-                if (backViewMissing === true) {
-                    titleText += 'Back-view image not available\n';
-                }
-            }
-
-            // Mouse name
-            let newNameSpan = document.createElement('span');
-            newNameSpan.id = mouseName;
-            newNameSpan.className = 'shape-information-name';
-            if (mouseName !== null) {
-                newNameSpan.textContent = mouseName.replace(/_/g, ' ').replace(/rpPlusIcon/g, '+').replace(/rpMinusIcon/g, '-');
-            } else {
-                newNameSpan.textContent = 'NA';
-                newNameSpan.title = 'Mouse name is currently not available';
-                titleText += 'Mouse name is currently not available\n';
-            }
-            newInformationSubDiv.append(newNameSpan);
-
-            // Finds current mouse and creates object
-            let mouseObject = mouseArraySVG.find(x => x.name === mouseName);
-
-            // Dimensions
-            let newInformationDimensions = document.createElement('span');
-            newInformationDimensions.className = 'shape-information-dimensions';
-
-            // Length
-            let mouseLengthSpan = document.createElement('span');
-            let mouseLength = mouseObject.length;
-            if (mouseLength !== null) {
-                mouseLength = Math.round(mouseLength);
-                mouseLengthSpan.title = 'Length:\n' + mouseObject.length + ' mm';
-            } else {
-                mouseLength = 'N/A';
-                mouseLengthSpan.title = 'Length is currently not available';
-                titleText += 'Length is currently not available\n';
-            }
-            mouseLengthSpan.innerText = mouseLength;
-
-            // Width
-            let mouseWidthSpan = document.createElement('span');
-            let mouseWidth = mouseObject.width;
-            if (mouseWidth !== null) {
-                mouseWidth = Math.round(mouseWidth);
-                mouseWidthSpan.title = 'Width:\n' + mouseObject.width + ' mm';
-            } else {
-                mouseWidth = 'N/A';
-                mouseWidthSpan.title = 'Width is currently not available';
-                titleText += 'Width is currently not available\n';
-            }
-            mouseWidthSpan.innerText = mouseWidth;
-
-            // Height
-            let mouseHeightSpan = document.createElement('span');
-            let mouseHeight = mouseObject.height;
-            if (mouseHeight !== null) {
-                mouseHeight = Math.round(mouseHeight);
-                mouseHeightSpan.title = 'Height:\n' + mouseObject.height + ' mm';
-            } else {
-                mouseHeight = 'N/A';
-                mouseHeightSpan.title += 'Height is currently not available';
-                titleText += 'Height is currently not available\n';
-            }
-            mouseHeightSpan.innerText = mouseHeight;
-
-            // Measurement
-            let measurement = document.createElement('span');
-            measurement.innerText = ' mm';
-            measurement.title = 'Measured in:\nmillimeters';
-
-            newInformationDimensions.append(mouseLengthSpan, ' x ' ,mouseWidthSpan, ' x ', mouseHeightSpan, measurement);
-            newInformationSubDiv.append(newInformationDimensions);
-
-            // Weight
-            let newInformationWeight = document.createElement('span');
-            newInformationWeight.className = 'shape-information-weight';
-            let mouseWeight = mouseObject.weight;
-            if (mouseWeight !== null) {
-                mouseWeight = Math.round(mouseObject.weight) + 'g';
-                newInformationWeight.title = 'Weight:\n' + mouseObject.weight + ' grams';
-            } else {
-                mouseWeight = 'N/A';
-                newInformationWeight.title += 'Weight is currently not available';
-                titleText += 'Weight is currently not available\n';
-            }
-            newInformationWeight.innerText = mouseWeight;
-            newInformationSubDiv.append(newInformationWeight);
-
-            // Color-input
-            let newColorInput = document.createElement('input');
-            newColorInput.type = 'color';
-            newColorInput.value = colorValueArray[colorValueCounter];
-            colorValueCounter++;
-            if (colorValueCounter === colorValueArray.length) {
-                colorValueCounter = 0;
-            }
-            newColorInput.id = mouseName + '-color';
-            newColorInput.className = 'shape-tool-color';
-            newColorInput.title = 'change outline color';
-            newInformationDiv.append(newColorInput);
-
-            // Creates hover-able information if mouse information/specification is missing
-            if (titleText !== '') {
-                let newViewMissingInformation = document.createElement('span');
-                newViewMissingInformation.id = mouseName + '-view-missing-information'
-                newViewMissingInformation.className = 'view-missing-information';
-                newViewMissingInformation.innerText = '!';
-                newViewMissingInformation.tabIndex = '0';
-                hoverText.id = mouseName + '-view-missing-hover-text';
-                hoverText.className = 'view-missing-hover-text';
-                hoverText.innerText = titleText;
-                newViewMissingInformation.append(hoverText);
-                newInformationSubDiv.append(newViewMissingInformation);
-            }
-
-            // Calls functions to update shapes, outline and alignment
-            updateShapeOutlineColor(mouseName);
-            updateShapeSize();
-            setAlignment();
-        } else {
-            // Creates error message if mouse is already viewed
-            createErrorMessage(replacedMouseName + ' is already selected');
-        }
-    }*/
 
     function addSVG(id, svgCode, view) {
         let svgImage;
@@ -798,21 +623,22 @@ $(function() {
         return svgImage;
     }
 
-    function addMouse(mouseName) {
+    function addMouse(brand, model) {
         $('#add-new-shape-input').val('');
         let mouseInUse = false;
         for (const viewedMouse of currentlyViewedMiceSVG) {
-            if (viewedMouse.name === mouseName) {
+            if (viewedMouse.brand + ' ' + viewedMouse.model === brand + ' ' + model) {
                 mouseInUse = true;
             }
         }
         if (!mouseInUse) {
-            /*const mouseObject = {
-                name: mouseName
-            }*/
-            const replacedMouseName = mouseName.replace(/\s/g, 'RPspace').replace(/\+/g, 'RPplus').replace(/\-/g, 'RPminus');
-            console.log(replacedMouseName);
-            $.get('/getMouse?mouse='+replacedMouseName/*, mouseObject*/, function (mouse) {
+            const mouseObject = {
+                brand: brand,
+                model: model
+            }
+            /*const replacedMouseName = mouseName.replace(/\s/g, 'RPspace').replace(/\+/g, 'RPplus').replace(/\-/g, 'RPminus');
+            console.log(replacedMouseName);*/
+            $.get('/getMouse'/*?mouse='+replacedMouseName*/, mouseObject, function (mouse) {
                 currentlyViewedMiceSVG.push(mouse);
                 /*currentlyViewedMiceSVG.sort(function (a, b) {
                     return a.name.localeCompare(b.name);
@@ -879,10 +705,11 @@ $(function() {
 
                 // Mouse name
                 let newNameSpan = document.createElement('span');
+                let mouseName = mouse.brand + ' ' + mouse.model;
                 newNameSpan.id = 'shape-name-' + mouse.id;
                 newNameSpan.className = 'shape-information-name';
                 if (mouseName !== null) {
-                    newNameSpan.textContent = mouse.name;
+                    newNameSpan.textContent = mouseName;
                 } else {
                     newNameSpan.textContent = 'NA';
                     newNameSpan.title = 'Mouse name is currently not available';
@@ -996,13 +823,13 @@ $(function() {
                 }
             }).fail(function (status) {
                 if (status.status === 404) {
-                    createErrorMessage(mouseName + ' does not exists in the database.');
+                    createErrorMessage(brand + ' ' + model + ' does not exists in the database.');
                 } else {
                     createErrorMessage('There was an error while retrieving information from the database, please try again later.\n Error: ' + status.status);
                 }
             })
         } else {
-            createErrorMessage(mouseName + ' is already selected.');
+            createErrorMessage(brand + ' ' + model + ' is already selected.');
         }
     }
 
@@ -1027,10 +854,20 @@ $(function() {
     }*/
 
 
-    // Adds mouse on text-input change or enter key-press
-    $('#add-new-shape-input').on('change', function () {
-        addMouse($(this).val());
-        $(this).blur();
+    $('#add-new-shape-brand').focusout(function () {
+        getMatchingModels();
+    });
+
+    // Adds mouse on button press
+    $('#add-new-shape-div button').on('click', function () {
+        const brand = $('#add-new-shape-brand');
+        const model = $('#add-new-shape-model');
+        if (brand.val() !== '' || brand.val() !== '') {
+            addMouse(brand.val(), model.val());
+            brand.val('');
+            model.val('');
+        }
+
         /*$('#add-new-shape-list option').each(function () {
             if ($(this).val() === $('#add-new-shape-input').val()) {
                 /!*addMouseMethod($(this).val());*!/
@@ -1039,13 +876,13 @@ $(function() {
             }
         });
         $(this).blur();*/
-    }).on('keypress', function (key) {
+    });/*.on('keypress', function (key) {
         // If user presses enter
         if (key.which === '13') {
-            /*addMouseMethod($(this).val());*/
-            addMouse($(this).val());
+            addMouse($('#add-new-shape-brand').val, $('#add-new-shape-model').val());
+            $('#add-new-shape-div input').blur();
         }
-    });
+    });*/
 
 
     // Adds padding on bottom of current mice div to make sure it does not under-/over-lap with shape-settings-grid
@@ -1397,12 +1234,14 @@ $(function() {
         // Default shapes
         /*addMouse('Zowie_EC1rpMinusIconC');
         addMouse('Zowie_FK2rpMinusIconC');*/
-        addMouse('Zowie FK1+-C');
-        addMouse('Zowie EC1-C');
+        addMouse('Zowie', 'FK1+-C');
+        addMouse('Zowie', 'EC1-C');
 
         setAlignment();
 
         currentMiceBottomPadding();
+
+        getMatchingModels();
 
         // Decreases shape size until it fits on screen.
         if (isOnMobile()) {

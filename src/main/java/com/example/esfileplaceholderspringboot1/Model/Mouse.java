@@ -3,7 +3,7 @@ package com.example.esfileplaceholderspringboot1.Model;
 public class Mouse {
     private int id;
     private String brand;
-    private String name;
+    private String model;
     private double length;
     private double width;
     private double height;
@@ -19,10 +19,10 @@ public class Mouse {
 
     public Mouse() {}
 
-    public Mouse(int id, String brand, String name, double length, double width, double height, double weight, boolean wireless, boolean shape, String sensor, int pollingRate, int maxDPI, String svgTop, String svgSide, String svgBack) {
+    public Mouse(int id, String brand, String model, double length, double width, double height, double weight, boolean wireless, boolean shape, String sensor, int pollingRate, int maxDPI, String svgTop, String svgSide, String svgBack) {
         this.id = id;
         this.brand = brand;
-        this.name = name;
+        this.model = model;
         this.length = length;
         this.width = width;
         this.height = height;
@@ -53,12 +53,12 @@ public class Mouse {
         this.brand = brand;
     }
 
-    public String getName() {
-        return name;
+    public String getModel() {
+        return model;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public double getLength() {

@@ -18,29 +18,42 @@ public class CompareShapesService {
     @Autowired
     JdbcTemplate db;
 
-    /*public List<Mouse> getAllMice() {
-        String sql = "SELECT * FROM mice";
+    public Mouse getMouse(Mouse mouse) {
+        /*String propperMouseName = mouse.replace("RPspace", " ").replace("RPplus", "+").replace("RPminus", "-");*/
+        String sql = "SELECT * FROM mice WHERE brand=? AND model=?";
 
         try {
-            List<Mouse> mouseList = db.query(sql, new BeanPropertyRowMapper<>(Mouse.class));
-            return mouseList;
-        }
-        catch (Exception e) {
-            errorLogger.error("Error with getAllMice():\n" + e);
-            return null;
-        }
-    }*/
-
-    public Mouse getMouse(/*Mouse*/String mouse) {
-        String propperMouseName = mouse.replace("RPspace", " ").replace("RPplus", "+").replace("RPminus", "-");
-        String sql = "SELECT * FROM mice WHERE name=?";
-
-        try {
-            Mouse returningMouse = db.queryForObject(sql, new BeanPropertyRowMapper<>(Mouse.class), /*mouse.getName()*/ propperMouseName);
-            return returningMouse;
+            return db.queryForObject(sql, new BeanPropertyRowMapper<>(Mouse.class), mouse.getBrand(), mouse.getModel()/*propperMouseName*/);
         }
         catch (Exception e) {
             errorLogger.error("Error with getMouse():\n" + e);
+            return null;
+        }
+    }
+
+    public List<Mouse> getDistinctBrands() {
+        String sql = "SELECT DISTINCT(brand) FROM mice";
+
+        try {
+            return db.query(sql, new BeanPropertyRowMapper<>(Mouse.class));
+        }
+        catch (Exception e) {
+            errorLogger.error("Error with getDistinctBrand():\n" + e);
+            return null;
+        }
+    }
+
+    public List<Mouse> getMatchingModels(Mouse brand) {
+        try {
+            if (brand.getBrand().equals("")) {
+                return db.query("SELECT model FROM mice", new BeanPropertyRowMapper<>(Mouse.class));
+            }
+            else {
+                return db.query("SELECT model FROM mice WHERE brand=?", new BeanPropertyRowMapper<>(Mouse.class), brand.getBrand());
+            }
+        }
+        catch (Exception e) {
+            errorLogger.error("Error with getDistinctBrand():\n" + e);
             return null;
         }
     }

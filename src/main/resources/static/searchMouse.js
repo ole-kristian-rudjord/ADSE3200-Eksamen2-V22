@@ -175,6 +175,11 @@ $(function() {
 
 
 
+
+/*-----------------------
+    Mouse table - start
+-----------------------*/
+
     $.get("/getAllMice", function (mouseList) {
         let result =
             "<thead>"+
@@ -226,6 +231,16 @@ $(function() {
         result += "</tbody>";
         $('#mouse-table').html(result);
     });
+
+/*---------------------
+    Mouse table - End
+---------------------*/
+
+
+
+/*-------------------------------
+    Filter main buttons - Start
+-------------------------------*/
 
     $('#activate-filter-btn').on('click', function () {
         $('#filter-main').css('display', 'flex');
@@ -348,7 +363,6 @@ $(function() {
         }
     });
 
-
     $('.filter-heading-btn').bind('mouseover focusin', function () {
         $(this).find('i').css('color', 'var(--primaryColor)');
     }).bind('mouseout focusout', function () {
@@ -367,6 +381,15 @@ $(function() {
         });
     });
 
+/*-----------------------------
+    Filter main buttons - End
+-----------------------------*/
+
+
+/*----------------------
+    Checkmarks - Start
+----------------------*/
+
     $('.checkmark-option, .checkmarks-select-all').on('click', function (x) {
         if (!$(x.target).is('input') && !$(x.target).is('label')) {
             let checkbox = $(this).find('input');
@@ -378,15 +401,6 @@ $(function() {
         }
     });
 
-    /*$('.brand-option, .brand-option input, .brand-option label').not($('#brand-select-all-div, #brand-select-all, #brand-select-all-div label')).on('click', function () {
-        let allSelected = true;
-        $('#filter-expandable-brand input').not($('#brand-select-all')).each(function () {
-            if ($(this).prop('checked') === false) {
-                allSelected = false;
-            }
-        });
-        $('#brand-select-all').prop('checked', allSelected);
-    });*/
     $('.checkmark-option, .checkmark-option input, .checkmark-option label')
         .not($('.checkmarks-select-all, .checkmarks-select-all input, .checkmarks-select-all label'))
         .on('click', function () {
@@ -421,27 +435,47 @@ $(function() {
         }
     });
 
-    $('.brand-option, #brand-select-all-div').on('mouseover', function () {
-        $(this).find('input').css({
-            'border-width': '2px',
-            'background-color': 'var(--themeHoverColor)'
-        });
+    $('.checkmark-option, .checkmarks-select-all').on('mouseover', function () {
+        if (!isOnMobile()) {
+            $(this).find('input').css({
+                'border-width': '2px',
+                'background-color': 'var(--themeHoverColor)'
+            });
+        }
     }).on('mouseleave', function () {
-        $(this).find('input').css({
-            'border-width': '1px',
-            'background-color': 'var(--themeBackgroundColor)'
-        });
+        if (!isOnMobile()) {
+            $(this).find('input').css({
+                'border-width': '1px',
+                'background-color': 'var(--themeBackgroundColor)'
+            });
+        }
     });
 
+/*--------------------
+    Checkmarks - End
+--------------------*/
 
+
+/*-------------------
+    Sliders - Start
+-------------------*/
+
+    $.get("/getSliderValues", function (sliderValues) {
+        console.log(sliderValues);
+    })
+
+    const defaultMinLength = 0;
+    const defaultMaxLength = 100;
+    $('#slider-range-length').prev('input').val(defaultMinLength);
+    $('#slider-range-length').next('input').val(defaultMaxLength);
     $('#slider-range-length').slider({
         range: true,
         min: 0,
         max: 100,
         values: [0,100],
         slide:function(event, ui) {
-            $('#filter-length-min').val($('#slider-range-length').slider('values', 0));
-            $('#filter-length-max').val($('#slider-range-length').slider('values', 1));
+            $('#filter-length-min').val(ui.values[0]);
+            $('#filter-length-max').val(ui.values[1]);
         },
         stop: function(event, ui) {
             $('#filter-length-min').val(ui.values[0]);
@@ -449,14 +483,18 @@ $(function() {
         }
     });
 
+    const defaultMinWidth = 0;
+    const defaultMaxWidth = 100;
+    $('#slider-range-width').prev('input').val(defaultMinWidth);
+    $('#slider-range-width').next('input').val(defaultMaxWidth);
     $('#slider-range-width').slider({
         range: true,
         min: 0,
         max: 100,
-        values: [0,100],
+        values: [defaultMinWidth, defaultMaxWidth],
         slide:function(event, ui) {
-            $('#filter-width-min').val($('#slider-range-width').slider('values', 0));
-            $('#filter-width-max').val($('#slider-range-width').slider('values', 1));
+            $('#filter-width-min').val(ui.values[0]);
+            $('#filter-width-max').val(ui.values[1]);
         },
         stop: function(event, ui) {
             $('#filter-width-min').val(ui.values[0]);
@@ -464,14 +502,18 @@ $(function() {
         }
     });
 
+    const defaultMinHeight = 0;
+    const defaultMaxHeight = 100;
+    $('#slider-range-height').prev('input').val(defaultMinHeight);
+    $('#slider-range-height').next('input').val(defaultMaxHeight);
     $('#slider-range-height').slider({
         range: true,
         min: 0,
         max: 100,
         values: [0,100],
         slide:function(event, ui) {
-            $('#filter-height-min').val($('#slider-range-height').slider('values', 0));
-            $('#filter-height-max').val($('#slider-range-height').slider('values', 1));
+            $('#filter-height-min').val(ui.values[0]);
+            $('#filter-height-max').val(ui.values[1]);
         },
         stop: function(event, ui) {
             $('#filter-height-min').val(ui.values[0]);
@@ -479,14 +521,18 @@ $(function() {
         }
     });
 
+    const defaultMinWeight = 0;
+    const defaultMaxWeight = 100;
+    $('#slider-range-weight').prev('input').val(defaultMinWeight);
+    $('#slider-range-weight').next('input').val(defaultMaxWeight);
     $('#slider-range-weight').slider({
         range: true,
         min: 0,
         max: 100,
         values: [0,100],
         slide:function(event, ui) {
-            $('#filter-weight-min').val($('#slider-range-weight').slider('values', 0));
-            $('#filter-weight-max').val($('#slider-range-weight').slider('values', 1));
+            $('#filter-weight-min').val(ui.values[0]);
+            $('#filter-weight-max').val(ui.values[1]);
         },
         stop: function(event, ui) {
             $('#filter-weight-min').val(ui.values[0]);
@@ -494,14 +540,18 @@ $(function() {
         }
     });
 
+    const defaultMinDpi = 0;
+    const defaultMaxDpi = 100;
+    $('#slider-range-dpi').prev('input').val(defaultMinDpi);
+    $('#slider-range-dpi').next('input').val(defaultMaxDpi);
     $('#slider-range-dpi').slider({
         range: true,
         min: 0,
         max: 100,
         values: [0,100],
         slide:function(event, ui) {
-            $('#filter-dpi-min').val($('#slider-range-dpi').slider('values', 0));
-            $('#filter-dpi-max').val($('#slider-range-dpi').slider('values', 1));
+            $('#filter-dpi-min').val(ui.values[0]);
+            $('#filter-dpi-max').val(ui.values[1]);
         },
         stop: function(event, ui) {
             $('#filter-dpi-min').val(ui.values[0]);
@@ -509,14 +559,18 @@ $(function() {
         }
     });
 
+    const defaultMinPollingRate = 0;
+    const defaultMaxPollingRate = 100;
+    $('#slider-range-pollingRate').prev('input').val(defaultMinPollingRate);
+    $('#slider-range-pollingRate').next('input').val(defaultMaxPollingRate);
     $('#slider-range-pollingRate').slider({
         range: true,
-        min: 0,
-        max: 100,
-        values: [0,100],
+        min: defaultMinPollingRate,
+        max: defaultMaxPollingRate,
+        values: [defaultMinPollingRate,defaultMaxPollingRate],
         slide:function(event, ui) {
-            $('#filter-pollingRate-min').val($('#slider-range-pollingRate').slider('values', 0));
-            $('#filter-pollingRate-max').val($('#slider-range-pollingRate').slider('values', 1));
+            $('#filter-pollingRate-min').val(ui.values[0]);
+            $('#filter-pollingRate-max').val(ui.values[1]);
         },
         stop: function(event, ui) {
             $('#filter-pollingRate-min').val(ui.values[0]);
@@ -524,9 +578,17 @@ $(function() {
         }
     });
 
+/*-----------------
+    Sliders - End
+-----------------*/
+
+
+/*--------------------------
+    Checkbox-buttons - End
+--------------------------*/
 
     function activateCheckboxesShape() {
-        $('input[name="filter-shape"]').each(function () {
+        $('input[name="filter-shape"], input[name="filter-connectivity"]').each(function () {
             if ($(this).prop('checked') === true) {
                 $(this).prev('label').css({
                     'border': '2px solid var(--primaryColor)',
@@ -541,16 +603,32 @@ $(function() {
         });
     }
 
-    $('input[name="filter-shape"]').on('change', function () {
-        activateCheckboxesShape()
+    $('input[name="filter-shape"], input[name="filter-connectivity"]').on('change', function () {
+        activateCheckboxesShape();
     });
 
+/*--------------------------
+    Checkbox-buttons - End
+--------------------------*/
+
+
+/*---------------------------
+    Reset functions - Start
+---------------------------*/
 
 
 
-    /*--------------------------------
-        Call functions on load - start
-    --------------------------------*/
+
+
+/*---------------------------
+    Reset functions - Start
+---------------------------*/
+
+
+
+/*--------------------------------
+    Call functions on load - start
+--------------------------------*/
 
     setTheme();
     activateCheckboxesShape();

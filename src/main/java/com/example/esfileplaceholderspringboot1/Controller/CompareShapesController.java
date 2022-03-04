@@ -17,21 +17,30 @@ public class CompareShapesController {
     @Autowired
     CompareShapesService CompareShapesService;
 
-    /*@GetMapping("/getAllMice")
-    public List<Mouse> getAllmice(HttpServletResponse response) throws IOException {
-        List<Mouse> mouseList = CompareShapesService.getAllMice();
-        if (mouseList == null) {
-            response.sendError(HttpStatus.NOT_FOUND.value());
-        }
-        return mouseList;
-    }*/
-
     @GetMapping("/getMouse")
-    public Mouse getMouse(/*Mouse mouse*/String mouse, HttpServletResponse response) throws IOException {
+    public Mouse getMouse(Mouse mouse, HttpServletResponse response) throws IOException {
         Mouse returningMouse = CompareShapesService.getMouse(mouse);
         if (returningMouse == null) {
             response.sendError(HttpStatus.NOT_FOUND.value());
         }
         return returningMouse;
+    }
+
+    @GetMapping("/getDistinctBrands")
+    public List<Mouse> getDistinctBrands(HttpServletResponse response) throws IOException {
+        List<Mouse> brandList = CompareShapesService.getDistinctBrands();
+        if (brandList == null) {
+            response.sendError(HttpStatus.NOT_FOUND.value());
+        }
+        return brandList;
+    }
+
+    @GetMapping("/getMatchingModels")
+    public List<Mouse> getMatchingModels(Mouse brand, HttpServletResponse response) throws IOException {
+        List<Mouse> modelList = CompareShapesService.getMatchingModels(brand);
+        if (modelList == null) {
+            response.sendError(HttpStatus.NOT_FOUND.value());
+        }
+        return modelList;
     }
 }

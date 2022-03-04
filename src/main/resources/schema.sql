@@ -1,7 +1,7 @@
 CREATE TABLE mice (
     id INT(4) AUTO_INCREMENT NOT NULL,
     brand VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    model VARCHAR(255) NOT NULL,
     length DECIMAL(5,2),
     width DECIMAL(5,2),
     height DECIMAL(5,2),
