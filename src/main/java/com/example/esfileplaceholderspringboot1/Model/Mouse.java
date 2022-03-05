@@ -12,14 +12,14 @@ public class Mouse {
     private boolean shape;
     private String sensor;
     private int pollingRate;
-    private int maxDPI;
+    private int dpi;
     private String svgTop;
     private String svgSide;
     private String svgBack;
 
     public Mouse() {}
 
-    public Mouse(int id, String brand, String model, double length, double width, double height, double weight, boolean wireless, boolean shape, String sensor, int pollingRate, int maxDPI, String svgTop, String svgSide, String svgBack) {
+    public Mouse(int id, String brand, String model, double length, double width, double height, double weight, boolean wireless, boolean shape, String sensor, int pollingRate, int dpi, String svgTop, String svgSide, String svgBack) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -31,7 +31,7 @@ public class Mouse {
         this.shape = shape;
         this.sensor = sensor;
         this.pollingRate = pollingRate;
-        this.maxDPI = maxDPI;
+        this.dpi = dpi;
         this.svgTop = svgTop;
         this.svgSide = svgSide;
         this.svgBack = svgBack;
@@ -125,12 +125,12 @@ public class Mouse {
         this.pollingRate = pollingRate;
     }
 
-    public int getMaxDPI() {
-        return maxDPI;
+    public int getDpi() {
+        return dpi;
     }
 
-    public void setMaxDPI(int maxDPI) {
-        this.maxDPI = maxDPI;
+    public void setDpi(int dpi) {
+        this.dpi = dpi;
     }
 
     public String getSvgTop() {

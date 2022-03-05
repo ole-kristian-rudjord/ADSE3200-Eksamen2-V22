@@ -174,47 +174,83 @@ $(function() {
 ---------------*/
 
 
+    function createErrorMessage(message) { /* fix transitions and layout */
+        let errorMessageLi = document.createElement('li');
+        errorMessageLi.className = 'error-message-li';
+        let errorMessageSpan = document.createElement('span');
+        errorMessageSpan.innerText = message;
+        // errorMessageSpan.title = 'click to remove';
+        errorMessageLi.append(errorMessageSpan);
+        $('#error-messages-list').append(errorMessageLi);
+        setTimeout(function () {
+            $('.error-message-li').last().css({
+                'opacity': '1',
+                'transform': 'translateY(0)'
+            });
+        }, 0);
+        setTimeout(function () {
+            let translateX;
+            if ($(window).width() > 850) { // media queries start at 850px
+                translateX = 'translateX(100%)';
+            } else {
+                translateX = 'translateX(-100%)';
+            }
+            $('.error-message-li').first().css({
+                'transform': translateX,
+                'opacity': '0'
+            });
+        }, 5500);
+        setTimeout(function () {
+            $('.error-message-li').first().remove();
+        }, 6100); // + transition time
+    }
 
 
 /*-----------------------
     Mouse table - start
 -----------------------*/
 
-    $.get("/getAllMice", function (mouseList) {
+    function formatTable(mouseList) {
         let result =
             "<thead>"+
-                "<tr>" +
-                    "<td class='string'>Brand</td>" +
-                    "<td class='string'>Name</td>" +
-                    "<td class='number'>Length</td>" +
-                    "<td class='number'>Width</td>" +
-                    "<td class='number'>Height</td>" +
-                    "<td class='number'>Weight</td>" +
-                    "<td class='string'>Shape</td>" +
-                    "<td class='string'>Connectivity</td>" +
-                    "<td class='string'>Sensor</td>" +
-                    "<td class='number'>DPI</td>" +
-                    "<td class='number'>Polling Rate</td>" +
-                "</tr>" +
-            "</thead>" +
-            "<tbody>";
-        for (const mouse of mouseList) {
-            let shape;
-            if (mouse.shape) {
-                shape = 'ergonomic';
-            } else {
-                shape = 'ambidextrous';
-            }
+            "<tr>" +
+            "<td class='string'>Brand</td>" +
+            "<td class='string'>Name</td>" +
+            "<td class='number'>Length</td>" +
+            "<td class='number'>Width</td>" +
+            "<td class='number'>Height</td>" +
+            "<td class='number'>Weight</td>" +
+            "<td class='string'>Shape</td>" +
+            "<td class='string'>Connectivity</td>" +
+            "<td class='string'>Sensor</td>" +
+            "<td class='number'>DPI</td>" +
+            "<td class='number'>Polling Rate</td>" +
+            "</tr>" +
+            "</thead>";
+        if (mouseList === 'fail: loading') {
+            $('#mouse-table').html(result);
+            createErrorMessage('Mouse information failed to load, please try again later'); /* fix transitions and layout */
+        } else if (mouseList === 'fail: filter-search') {
+            createErrorMessage('Filters did not match mice from the database'); /* fix transitions and layout */
+        } else {
+            result += "<tbody>";
+            for (const mouse of mouseList) {
+                let shape;
+                if (mouse.shape) {
+                    shape = 'ergonomic';
+                } else {
+                    shape = 'ambidextrous';
+                }
 
-            let connectivity;
-            if (mouse.wireless) {
-                connectivity = 'wireless';
-            } else {
-                connectivity = 'wired';
-            }
+                let connectivity;
+                if (mouse.wireless) {
+                    connectivity = 'wireless';
+                } else {
+                    connectivity = 'wired';
+                }
 
-            result +=
-                "<tr>" +
+                result +=
+                    "<tr>" +
                     "<td class='string'>" + mouse.brand + "</td>" +
                     "<td class='string'>" + mouse.model.replace(/-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
                     "<td class='number'>" + parseFloat(mouse.length) + "</td>" +
@@ -224,13 +260,20 @@ $(function() {
                     "<td class='string'>" + shape + "</td>" +
                     "<td class='string'>" + connectivity + "</td>" +
                     "<td class='string'>" + mouse.sensor + "</td>" +
-                    "<td class='number'>" + parseFloat(mouse.maxDPI) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.dpi) + "</td>" +
                     "<td class='number'>" + parseFloat(mouse.pollingRate) + "</td>" +
-                "</tr>"
+                    "</tr>"
+            }
+            result += "</tbody>";
+            $('#mouse-table').html(result);
         }
-        result += "</tbody>";
-        $('#mouse-table').html(result);
-    });
+    }
+
+    $.get("/getAllMice", function (mouseList) {
+        formatTable(mouseList);
+    }).fail(function (status) {
+        formatTable('fail: loading');
+    })
 
 /*---------------------
     Mouse table - End
@@ -252,11 +295,86 @@ $(function() {
     });
 
     $('#filter-btn-apply').on('click', function () {
+        let brandList = [];
+        $('.brand-option input').each(function () {
+            if ($(this).prop('checked')) {
+                brandList.push($(this).next('label').text());
+            }
+        });
 
+        let sensorList = [];
+        $('.sensor-option input').each(function () {
+            if ($(this).prop('checked')) {
+                sensorList.push($(this).next('label').text());
+            }
+        });
+
+        const filteredMouseSearch = {
+            brandList: brandList,
+            lengthMin: $('#filter-length-min').val(),
+            lengthMax: $('#filter-length-max').val(),
+            widthMin: $('#filter-width-min').val(),
+            widthMax: $('#filter-width-max').val(),
+            heightMin: $('#filter-height-min').val(),
+            heightMax: $('#filter-height-max').val(),
+            weightMin: $('#filter-weight-min').val(),
+            weightMax: $('#filter-weight-max').val(),
+            wired: $('#filter-shape-wired').prop('checked'),
+            wireless: $('#filter-shape-wireless').prop('checked'),
+            ambidextrous: $('#filter-shape-ambidextrous').prop('checked'),
+            ergonomic: $('#filter-shape-ergonomic').prop('checked'),
+            sensorList: sensorList,
+            dpiMin: $('#filter-dpi-min').val(),
+            dpiMax: $('#filter-dpi-max').val(),
+            pollingRateMin: $('#filter-pollingRate-min').val(),
+            pollingRateMax: $('#filter-pollingRate-max').val()
+        }
+        console.log(filteredMouseSearch);
+        $.get("/getFilteredMice", filteredMouseSearch, function(mouseList) {
+            formatTable(mouseList);
+        }).fail(function (status) {
+            formatTable('fail: filter-search');
+        });
     });
 
     $('#filter-btn-reset').on('click', function () {
-
+        $('.filter-checkmarks input, .filter-checkbox-buttons input').prop('checked', true);
+        activateCheckboxesShape();
+        $('.filter-dimensions-slider').each(function() {
+            const thisId = ''+this.id;
+            const specificFilter = thisId.replace('slider-range-', '');
+            const inputMin = 'filter-' + specificFilter + '-min';
+            const inputMax = 'filter-' + specificFilter + '-max';
+            let maxValue;
+            switch (specificFilter) {
+                case 'length':
+                    maxValue = maxValues.length;
+                    break;
+                case 'width':
+                    maxValue = maxValues.width;
+                    break;
+                case 'height':
+                    maxValue = maxValues.height;
+                    break;
+                case 'weight':
+                    maxValue = maxValues.weight;
+                    break;
+                case 'dpi':
+                    maxValue = maxValues.dpi;
+                    break;
+                case 'pollingRate':
+                    maxValue = maxValues.pollingRate;
+                    break;
+                default:
+                    maxValue = null;
+                    break;
+            }
+            $(this).slider({
+                values: [0, maxValue]
+            });
+            $('#' + inputMin).val(0);
+            $('#' + inputMax).val(maxValue);
+        });
     });
 
     $('#filter-btn-close, #screen-cover-filter').on('click', function () {
@@ -390,7 +508,63 @@ $(function() {
     Checkmarks - Start
 ----------------------*/
 
-    $('.checkmark-option, .checkmarks-select-all').on('click', function (x) {
+    function formatChecklist(list, category) {
+        let selectAllDiv = document.createElement('div');
+        selectAllDiv.id = category + '-select-all-div';
+        selectAllDiv.className = 'checkmarks-select-all';
+        $('#filter-expandable-' + category).append(selectAllDiv);
+
+        let selectAllInput = document.createElement('input');
+        selectAllInput.type = 'checkbox';
+        selectAllInput.checked = true;
+        selectAllInput.id = category + '-select-all';
+        selectAllDiv.append(selectAllInput);
+
+        let selectAllLabel = document.createElement('label');
+        selectAllLabel.htmlFor = category + '-select-all'; // try: selectAllLabel.htmlFor = selectAllInput.id;
+        selectAllLabel.textContent = 'Select All';
+        selectAllDiv.append(selectAllLabel);
+
+        let optionsDiv = document.createElement('div');
+        optionsDiv.id = category + '-options-div';
+        optionsDiv.className = 'checkmark-options-div';
+        $('#filter-expandable-' + category).append(optionsDiv);
+
+        for (const name of list) {
+            let optionDiv = document.createElement('div');
+            optionDiv.className = category + '-option checkmark-option';
+            optionsDiv.append(optionDiv);
+
+            let optionInput = document.createElement('input');
+            optionInput.type = 'checkbox';
+            optionInput.checked = true;
+            optionInput.id = category + '-' + name;
+            optionDiv.append(optionInput);
+
+            let optionLabel = document.createElement('label');
+            optionLabel.htmlFor = category + '-' + name; // try: optionLabel.htmlFor = optionInput.id;
+            optionLabel.textContent = name;
+            optionDiv.append(optionLabel);
+        }
+    }
+
+    $.get('/getDistinctCategoryItems?category=' + 'brand', function (mouseList) {
+        let brandList = [];
+        for (const mouse of mouseList) {
+            brandList.push(mouse.brand);
+        }
+        formatChecklist(brandList, 'brand');
+    });
+
+    $.get('/getDistinctCategoryItems?category=' + 'sensor', function (mouseList) {
+        let sensorList = [];
+        for (const mouse of mouseList) {
+            sensorList.push(mouse.sensor);
+        }
+        formatChecklist(sensorList, 'sensor');
+    });
+
+    $('body').on('click', '.checkmark-option, .checkmarks-select-all', function (x) {
         if (!$(x.target).is('input') && !$(x.target).is('label')) {
             let checkbox = $(this).find('input');
             if (checkbox.prop('checked') === false) {
@@ -401,9 +575,7 @@ $(function() {
         }
     });
 
-    $('.checkmark-option, .checkmark-option input, .checkmark-option label')
-        .not($('.checkmarks-select-all, .checkmarks-select-all input, .checkmarks-select-all label'))
-        .on('click', function () {
+    $('body').on('click', '.checkmark-option, .checkmark-option input, .checkmark-option label', function () {
         let allBrandsSelected = true;
         $('#filter-expandable-brand input').not($('#brand-select-all')).each(function () {
             if ($(this).prop('checked') === false) {
@@ -420,7 +592,7 @@ $(function() {
         $('#sensor-select-all').prop('checked', allSensorsSelected);
     });
 
-    $('.checkmarks-select-all, .checkmarks-select-all input, .checkmarks-select-all label').on('click', function () {
+    $('body').on('click', '.checkmarks-select-all, .checkmarks-select-all input, .checkmarks-select-all label', function () {
         let checkboxBrand = $('#brand-select-all');
         if (checkboxBrand.prop('checked') === false) {
             $('#filter-expandable-brand input').not(checkboxBrand).prop('checked', false);
@@ -435,14 +607,14 @@ $(function() {
         }
     });
 
-    $('.checkmark-option, .checkmarks-select-all').on('mouseover', function () {
+    $('body').on('mouseover', '.checkmark-option, .checkmarks-select-all', function () {
         if (!isOnMobile()) {
             $(this).find('input').css({
                 'border-width': '2px',
                 'background-color': 'var(--themeHoverColor)'
             });
         }
-    }).on('mouseleave', function () {
+    }).on('mouseleave', '.checkmark-option, .checkmarks-select-all', function () {
         if (!isOnMobile()) {
             $(this).find('input').css({
                 'border-width': '1px',
@@ -459,21 +631,7 @@ $(function() {
 /*-------------------
     Sliders - Start
 -------------------*/
-    let defaultMaxLength;
-    let defaultMaxWidth;
-    let defaultMaxHeight;
-    let defaultMaxWeight;
-    let defaultMaxDPI;
-    let defaultMaxPollingRate;
-
-    /*$.get("/getSliderValues", function (sliderValuesMax) {
-        defaultMaxLength = sliderValuesMax.length;
-        defaultMaxWidth = sliderValuesMax.width;
-        defaultMaxHeight = sliderValuesMax.height;
-        defaultMaxWeight = sliderValuesMax.weight;
-        defaultMaxDPI = sliderValuesMax.maxDPI;
-        defaultMaxPollingRate = sliderValuesMax.pollingRate;
-    });*/
+    let maxValues = {}
 
     $.ajax({
         url: "/getSliderValues",
@@ -482,12 +640,7 @@ $(function() {
         async: false,
         data: {},
         success: function (sliderValuesMax) {
-            defaultMaxLength = sliderValuesMax.length;
-            defaultMaxWidth = sliderValuesMax.width;
-            defaultMaxHeight = sliderValuesMax.height;
-            defaultMaxWeight = sliderValuesMax.weight;
-            defaultMaxDPI = sliderValuesMax.maxDPI;
-            defaultMaxPollingRate = sliderValuesMax.pollingRate;
+            maxValues = sliderValuesMax;
         },
         error: function () {
             alert('error');
@@ -495,12 +648,12 @@ $(function() {
     })
 
     $('#slider-range-length').prev('input').val(0);
-    $('#slider-range-length').next('input').val(defaultMaxLength);
+    $('#slider-range-length').next('input').val(maxValues.length);
     $('#slider-range-length').slider({
         range: true,
         min: 0,
-        max: defaultMaxLength,
-        values: [0, defaultMaxLength],
+        max: maxValues.length,
+        values: [0, maxValues.length],
         slide:function(event, ui) {
             $('#filter-length-min').val(ui.values[0]);
             $('#filter-length-max').val(ui.values[1]);
@@ -512,12 +665,12 @@ $(function() {
     });
 
     $('#slider-range-width').prev('input').val(0);
-    $('#slider-range-width').next('input').val(defaultMaxWidth);
+    $('#slider-range-width').next('input').val(maxValues.width);
     $('#slider-range-width').slider({
         range: true,
         min: 0,
-        max: defaultMaxWidth,
-        values: [0, defaultMaxWidth],
+        max: maxValues.width,
+        values: [0, maxValues.width],
         slide:function(event, ui) {
             $('#filter-width-min').val(ui.values[0]);
             $('#filter-width-max').val(ui.values[1]);
@@ -529,12 +682,12 @@ $(function() {
     });
 
     $('#slider-range-height').prev('input').val(0);
-    $('#slider-range-height').next('input').val(defaultMaxHeight);
+    $('#slider-range-height').next('input').val(maxValues.height);
     $('#slider-range-height').slider({
         range: true,
         min: 0,
-        max: defaultMaxHeight,
-        values: [0, defaultMaxHeight],
+        max: maxValues.height,
+        values: [0, maxValues.height],
         slide:function(event, ui) {
             $('#filter-height-min').val(ui.values[0]);
             $('#filter-height-max').val(ui.values[1]);
@@ -546,12 +699,12 @@ $(function() {
     });
 
     $('#slider-range-weight').prev('input').val(0);
-    $('#slider-range-weight').next('input').val(defaultMaxWeight);
+    $('#slider-range-weight').next('input').val(maxValues.weight);
     $('#slider-range-weight').slider({
         range: true,
         min: 0,
-        max: defaultMaxWeight,
-        values: [0, defaultMaxWeight],
+        max: maxValues.weight,
+        values: [0, maxValues.weight],
         slide:function(event, ui) {
             $('#filter-weight-min').val(ui.values[0]);
             $('#filter-weight-max').val(ui.values[1]);
@@ -563,12 +716,12 @@ $(function() {
     });
 
     $('#slider-range-dpi').prev('input').val(0);
-    $('#slider-range-dpi').next('input').val(defaultMaxDPI);
+    $('#slider-range-dpi').next('input').val(maxValues.dpi);
     $('#slider-range-dpi').slider({
         range: true,
         min: 0,
-        max: defaultMaxDPI,
-        values: [0, defaultMaxDPI],
+        max: maxValues.dpi,
+        values: [0, maxValues.dpi],
         slide:function(event, ui) {
             $('#filter-dpi-min').val(ui.values[0]);
             $('#filter-dpi-max').val(ui.values[1]);
@@ -580,12 +733,12 @@ $(function() {
     });
 
     $('#slider-range-pollingRate').prev('input').val(0);
-    $('#slider-range-pollingRate').next('input').val(defaultMaxPollingRate);
+    $('#slider-range-pollingRate').next('input').val(maxValues.pollingRate);
     $('#slider-range-pollingRate').slider({
         range: true,
         min: 0,
-        max: defaultMaxPollingRate,
-        values: [0, defaultMaxPollingRate],
+        max: maxValues.pollingRate,
+        values: [0, maxValues.pollingRate],
         slide:function(event, ui) {
             $('#filter-pollingRate-min').val(ui.values[0]);
             $('#filter-pollingRate-max').val(ui.values[1]);
@@ -597,14 +750,11 @@ $(function() {
     });
 
     $('.filter-dimensions-div input').on('keyup', function () {
-
         if ((''+this.id).includes('min') && $(this).val() - 1 < $(this).next().next('input').val()) {
-            console.log($(this).val() + ', ' + $(this).next().next('input').val())
             $(this).next(('.filter-dimensions-slider')).slider({
                 values: [$(this).val(), $(this).next().next('input').val()]
             });
         } else if (('' + this.id).includes('max') && $(this).val() + 1 > $(this).prev().prev('input').val()) {
-            console.log($(this).prev().prev('input').val() + ', ' + $(this).val())
             $(this).prev(('.filter-dimensions-slider')).slider({
                 values: [$(this).prev().prev('input').val(), $(this).val()]
             });
@@ -620,22 +770,22 @@ $(function() {
 --------------------------*/
 
     function activateCheckboxesShape() {
-        $('input[name="filter-shape"], input[name="filter-connectivity"]').each(function () {
+        $('.filter-checkbox-buttons input').each(function () {
             if ($(this).prop('checked') === true) {
                 $(this).prev('label').css({
-                    'border': '2px solid var(--primaryColor)',
+                    'border-color': 'var(--primaryColor)',
                     'box-shadow': '0 3px 0 0 var(--primaryDarkColor)'
                 });
             } else if ($(this).prop('checked') === false) {
                 $(this).prev('label').css({
-                    'border': '2px solid var(--themeBorderColor)',
+                    'border-color': 'var(--themeBorderColor)',
                     'box-shadow': '0 3px 0 0 gray'
                 });
             }
         });
     }
 
-    $('input[name="filter-shape"], input[name="filter-connectivity"]').on('change', function () {
+    $('.filter-checkbox-buttons input').on('change', function () {
         activateCheckboxesShape();
     });
 

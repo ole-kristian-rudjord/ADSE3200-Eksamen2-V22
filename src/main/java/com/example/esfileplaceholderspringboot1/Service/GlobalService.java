@@ -32,4 +32,28 @@ public class GlobalService {
             return null;
         }
     }
+
+    public List<Mouse> getDistinctBrands() {
+        String sql = "SELECT DISTINCT(brand) FROM mice";
+
+        try {
+            return db.query(sql, new BeanPropertyRowMapper<>(Mouse.class));
+        }
+        catch (Exception e) {
+            errorLogger.error("Error with getDistinctBrand():\n" + e);
+            return null;
+        }
+    }
+
+    public List<Mouse> getDistinctCategoryItems(String category) {
+        String sql = "SELECT DISTINCT(" + category + ") FROM mice";
+
+        try {
+            return db.query(sql, new BeanPropertyRowMapper<>(Mouse.class));
+        }
+        catch (Exception e) {
+            errorLogger.error("Error with getDistinctCategoryItems():\n" + e);
+            return null;
+        }
+    }
 }

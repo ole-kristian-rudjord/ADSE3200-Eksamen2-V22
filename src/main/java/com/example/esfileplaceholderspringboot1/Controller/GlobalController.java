@@ -27,4 +27,22 @@ public class GlobalController {
         }
         return mouseList;
     }
+
+    @GetMapping("/getDistinctBrands")
+    public List<Mouse> getDistinctBrands(HttpServletResponse response) throws IOException {
+        List<Mouse> brandList = GlobalService.getDistinctBrands();
+        if (brandList == null) {
+            response.sendError(HttpStatus.NOT_FOUND.value());
+        }
+        return brandList;
+    }
+
+    @GetMapping("/getDistinctCategoryItems")
+    public List<Mouse> getDistinctCategoryItems(String category, HttpServletResponse response) throws IOException {
+        List<Mouse> distinctCategoryItems = GlobalService.getDistinctCategoryItems(category);
+        if (distinctCategoryItems == null) {
+            response.sendError(HttpStatus.NOT_FOUND.value());
+        }
+        return distinctCategoryItems;
+    }
 }

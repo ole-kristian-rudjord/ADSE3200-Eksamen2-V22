@@ -21,26 +21,13 @@ public class CompareShapesService {
     }
 
     public Mouse getMouse(Mouse mouse) {
-        /*String propperMouseName = mouse.replace("RPspace", " ").replace("RPplus", "+").replace("RPminus", "-");*/
         String sql = "SELECT * FROM mice WHERE brand=? AND model=?";
 
         try {
-            return db.queryForObject(sql, new BeanPropertyRowMapper<>(Mouse.class), mouse.getBrand(), mouse.getModel()/*propperMouseName*/);
+            return db.queryForObject(sql, new BeanPropertyRowMapper<>(Mouse.class), mouse.getBrand(), mouse.getModel());
         }
         catch (Exception e) {
             errorLogger.error("Error with getMouse():\n" + e);
-            return null;
-        }
-    }
-
-    public List<Mouse> getDistinctBrands() {
-        String sql = "SELECT DISTINCT(brand) FROM mice";
-
-        try {
-            return db.query(sql, new BeanPropertyRowMapper<>(Mouse.class));
-        }
-        catch (Exception e) {
-            errorLogger.error("Error with getDistinctBrand():\n" + e);
             return null;
         }
     }

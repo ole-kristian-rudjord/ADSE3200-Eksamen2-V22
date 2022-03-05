@@ -515,8 +515,7 @@ $(function() {
     }).fail(function (status) {
         createErrorMessage('There was an error with retrieving mice information from the database, please try again later.\nError: ' + status.status);
     });*/
-
-    $.get('/getDistinctBrands', function (brandList) { // gjør om til List<String>
+    $.get('/getDistinctCategoryItems?category=' + 'brand', function (brandList) { // gjør om til List<String>
         for (const mouse of brandList) {
             let brandOption = document.createElement('option');
             brandOption.value = mouse.brand;
@@ -524,7 +523,7 @@ $(function() {
             $('#add-new-shape-list-brand').append(brandOption);
         }
     }).fail(function (status) {
-        createErrorMessage('There was an error with retrieving brand information from the database,\nplease try again later.\nError: ' + status.status);
+        createErrorMessage('Error: ' + status.status + '\nCould not retrieve brand information from database, please try again later.');
     });
 
     function getMatchingModels() {

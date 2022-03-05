@@ -5,17 +5,17 @@ public class SliderValuesMax {
     private double width;
     private double height;
     private double weight;
-    private double maxDPI;
+    private double dpi;
     private double pollingRate;
 
     public SliderValuesMax(){}
 
-    public SliderValuesMax(double length, double width, double height, double weight, double maxDPI, double pollingRate) {
+    public SliderValuesMax(double length, double width, double height, double weight, double dpi, double pollingRate) {
         this.length = length;
         this.width = width;
         this.height = height;
         this.weight = weight;
-        this.maxDPI = maxDPI;
+        this.dpi = dpi;
         this.pollingRate = pollingRate;
     }
 
@@ -51,12 +51,12 @@ public class SliderValuesMax {
         this.weight = weight;
     }
 
-    public double getMaxDPI() {
-        return maxDPI;
+    public double getDpi() {
+        return dpi;
     }
 
-    public void setMaxDPI(double maxDPI) {
-        this.maxDPI = maxDPI;
+    public void setDpi(double dpi) {
+        this.dpi = dpi;
     }
 
     public double getPollingRate() {

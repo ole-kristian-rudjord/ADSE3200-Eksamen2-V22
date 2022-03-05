@@ -28,14 +28,7 @@ public class CompareShapesController {
         return returningMouse;
     }
 
-    @GetMapping("/getDistinctBrands")
-    public List<Mouse> getDistinctBrands(HttpServletResponse response) throws IOException {
-        List<Mouse> brandList = CompareShapesService.getDistinctBrands();
-        if (brandList == null) {
-            response.sendError(HttpStatus.NOT_FOUND.value());
-        }
-        return brandList;
-    }
+
 
     @GetMapping("/getMatchingModels")
     public List<Mouse> getMatchingModels(Mouse brand, HttpServletResponse response) throws IOException {

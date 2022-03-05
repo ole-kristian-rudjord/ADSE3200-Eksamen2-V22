@@ -1,3 +1,43 @@
+/*--- Error messages ---*/
+#error-messages-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1.5vh;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    background-color: var(--themeHoverColor);
+    z-index: 50;
+
+    /*outline: red solid 1px;*/
+}
+.error-message-li { /* fix transitions and layout */
+    display: block;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 4px;
+    transform: translateY(-300%);
+    font-size: 0.86rem;
+    text-decoration: underline;
+    text-decoration-color: var(--primaryColor);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    color: var(--themeReverseColor);
+    opacity: 0;
+    transition: 650ms ease;
+    transition-property: transform, opacity;
+}
+.error-message-li:first-of-type {
+    padding-bottom: 20px;
+}
+.error-message-li:last-of-type {
+    padding-top: 20px;
+}
+
+
 #mouse-table {
     border-radius: 4px 4px 0 0;
     overflow: hidden;
@@ -218,7 +258,7 @@
 }
 
 .checkmark-options-div {
-    height: 35vh;
+    max-height: 35vh;
     overflow-y: scroll;
 }
 .checkmark-options-div::-webkit-scrollbar {

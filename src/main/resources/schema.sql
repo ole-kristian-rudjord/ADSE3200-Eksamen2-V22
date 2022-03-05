@@ -10,7 +10,7 @@ CREATE TABLE mice (
     shape BIT,
     sensor VARCHAR(255),
     pollingRate INT(8),
-    maxDPI INT(8),
+    dpi INT(8),
     svgTop VARCHAR(max),
     svgSide VARCHAR(max),
     svgBack VARCHAR(max),
