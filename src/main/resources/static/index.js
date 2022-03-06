@@ -276,9 +276,9 @@ $(function() {
             stepValue *= 2;
         }
 
-        if (slider.val() > slider.attr('min') && this.id === 'shape-settings-size-text-minus') {
+        if (slider.val() > slider.attr('min') && $(this).text() === '-') {
             slider.val($('#shape-settings-size-slider').val() - stepValue);
-        } else if (slider.val() < slider.attr('max') && this.id === 'shape-settings-size-text-plus') {
+        } else if (slider.val() < slider.attr('max') && $(this).text() === '+') {
             slider.val(parseFloat($('#shape-settings-size-slider').val()) + parseFloat(stepValue));
         }
 
@@ -561,27 +561,71 @@ $(function() {
         // errorMessageSpan.title = 'click to remove';
         errorMessageLi.append(errorMessageSpan);
         $('#error-messages-list').append(errorMessageLi);
-        setTimeout(function () {
-            $('.error-message-li').last().css({
-                'opacity': '1',
-                'transform': 'translateY(0)'
-            });
-        }, 0);
-        setTimeout(function () {
-            let translateX;
-            if ($(window).width() > 850) { // media queries start at 850px
-                translateX = 'translateX(100%)';
+        if ($('body').is('#compare-shapes')) {
+            if (!isOnMobile()) {
+                setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'opacity': '1',
+                        'transform': 'translateY(0)'
+                    });
+                }, 0);
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'transform': 'translateX(100%)',
+                        'opacity': '0'
+                    });
+                }, 5500);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 6100); // + transition time
             } else {
-                translateX = 'translateX(-100%)';
+                setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'opacity': '1',
+                        'transform': 'translateY(0)'
+                    });
+                }, 0);
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'transform': 'translateX(-100%)',
+                        'opacity': '0'
+                    });
+                }, 5500);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 6100); // + transition time
             }
-            $('.error-message-li').first().css({
-                'transform': translateX,
-                'opacity': '0'
-            });
-        }, 5500);
-        setTimeout(function () {
-            $('.error-message-li').first().remove();
-        }, 6100); // + transition time
+        } else if ($('body').is('#search-mouse')) {
+            if (!isOnMobile()) {
+                setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'opacity': '1'
+                    });
+                }, 0);
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'opacity': '0'
+                    });
+                }, 5500);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 5800); // + transition time
+            } else {
+                setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'opacity': '1',
+                    });
+                }, 0);
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'opacity': '0'
+                    });
+                }, 5500);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 5800); // + transition time
+            }
+        }
     }
 
 
@@ -707,6 +751,7 @@ $(function() {
                 let mouseName = mouse.brand + ' ' + mouse.model;
                 newNameSpan.id = 'shape-name-' + mouse.id;
                 newNameSpan.className = 'shape-information-name';
+                newNameSpan.title = 'Brand: ' + mouse.brand + '\nModel: ' + mouse.model;
                 if (mouseName !== null) {
                     newNameSpan.textContent = mouseName;
                 } else {
@@ -857,14 +902,25 @@ $(function() {
         getMatchingModels();
     });
 
+    $('#add-new-shape-div input').on('change', function () {
+        const brand = $('#add-new-shape-brand').val();
+        const model = $('#add-new-shape-model').val();
+        if (brand !== '' && model !== '') {
+            $('#add-new-shape-div button').prop('title', 'Add ' + brand + ' ' + model);
+        } else {
+            $('#add-new-shape-div button').prop('title', 'Add mouse');
+        }
+    });
+
     // Adds mouse on button press
     $('#add-new-shape-div button').on('click', function () {
         const brand = $('#add-new-shape-brand');
         const model = $('#add-new-shape-model');
-        if (brand.val() !== '' || brand.val() !== '') {
+        if (brand.val() !== '' && model.val() !== '') {
             addMouse(brand.val(), model.val());
             brand.val('');
             model.val('');
+            $(this).prop('title', 'Add mouse');
         }
 
         /*$('#add-new-shape-list option').each(function () {

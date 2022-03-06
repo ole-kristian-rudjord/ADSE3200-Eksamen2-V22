@@ -174,7 +174,7 @@ $(function() {
 ---------------*/
 
 
-    function createErrorMessage(message) { /* fix transitions and layout */
+    function createErrorMessage(message) {
         let errorMessageLi = document.createElement('li');
         errorMessageLi.className = 'error-message-li';
         let errorMessageSpan = document.createElement('span');
@@ -182,27 +182,71 @@ $(function() {
         // errorMessageSpan.title = 'click to remove';
         errorMessageLi.append(errorMessageSpan);
         $('#error-messages-list').append(errorMessageLi);
-        setTimeout(function () {
-            $('.error-message-li').last().css({
-                'opacity': '1',
-                'transform': 'translateY(0)'
-            });
-        }, 0);
-        setTimeout(function () {
-            let translateX;
-            if ($(window).width() > 850) { // media queries start at 850px
-                translateX = 'translateX(100%)';
+        if ($('body').is('#compare-shapes')) {
+            if (!isOnMobile()) {
+                /*setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'opacity': '1',
+                        'transform': 'translateY(0)'
+                    });
+                }, 0);*/
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'transform': 'translateX(100%)',
+                        'opacity': '0'
+                    });
+                }, 5500);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 6100); // + transition time
             } else {
-                translateX = 'translateX(-100%)';
+                /*setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'opacity': '1',
+                        'transform': 'translateY(0)'
+                    });
+                }, 0);*/
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'transform': 'translateX(-100%)',
+                        'opacity': '0'
+                    });
+                }, 5000);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 6100); // + transition time
             }
-            $('.error-message-li').first().css({
-                'transform': translateX,
-                'opacity': '0'
-            });
-        }, 5500);
-        setTimeout(function () {
-            $('.error-message-li').first().remove();
-        }, 6100); // + transition time
+        } else if ($('body').is('#search-mouse')) {
+            if (!isOnMobile()) {
+                /*setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'color': 'var(--themeReverseColor)'
+                    });
+                }, 0);*/
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'color': 'var(--themeHoverColor)'
+                    });
+                }, 5000);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 5200); // + transition time
+            } else {
+                /*setTimeout(function () {
+                    $('.error-message-li').last().css({
+                        'color': 'var(--themeReverseColor)'
+                    });
+                }, 0);*/
+                setTimeout(function () {
+                    $('.error-message-li').first().css({
+                        'color': 'var(--themeHoverColor)'
+                    });
+                }, 5000);
+                setTimeout(function () {
+                    $('.error-message-li').first().remove();
+                }, 5200); // + transition time
+            }
+        }
     }
 
 
@@ -332,6 +376,7 @@ $(function() {
         console.log(filteredMouseSearch);
         $.get("/getFilteredMice", filteredMouseSearch, function(mouseList) {
             formatTable(mouseList);
+            closeFilter();
         }).fail(function (status) {
             formatTable('fail: filter-search');
         });
@@ -378,12 +423,7 @@ $(function() {
     });
 
     $('#filter-btn-close, #screen-cover-filter').on('click', function () {
-        $('#activate-filter-btn').css('display', 'block');
-        $('#filter-main').css('transform', 'translateX(-110%)');
-        setTimeout(function () {
-            $('#filter-main').css('display', 'none');
-        }, 200);
-        $('#screen-cover-filter').css('display', 'none');
+        closeFilter();
     });
 
     $('#filter-btn-open').on('click', function () {
@@ -643,7 +683,7 @@ $(function() {
             maxValues = sliderValuesMax;
         },
         error: function () {
-            alert('error');
+            createErrorMessage('Could not create proper filter-sliders, please try again later');
         }
     })
 
@@ -819,3 +859,12 @@ $(function() {
     Call functions on load - end
 ------------------------------*/
 });
+
+function closeFilter() {
+    $('#activate-filter-btn').css('display', 'block');
+    $('#filter-main').css('transform', 'translateX(-110%)');
+    setTimeout(function () {
+        $('#filter-main').css('display', 'none');
+    }, 200);
+    $('#screen-cover-filter').css('display', 'none');
+}

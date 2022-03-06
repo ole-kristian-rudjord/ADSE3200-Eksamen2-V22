@@ -80,13 +80,18 @@
     <div id="mobile-bottom-div">
         <div id="shape-tool">
             <div id="add-new-shape-div">
-                <input type="text" list="add-new-shape-list-brand" id="add-new-shape-brand" placeholder="brand:">
+                <input type="text" list="add-new-shape-list-brand" id="add-new-shape-brand" placeholder="brand:" title="Select mouse brand">
                 <datalist id="add-new-shape-list-brand"></datalist>
-                <input type="text" list="add-new-shape-list-model" id="add-new-shape-model" placeholder="model:">
+                <input type="text" list="add-new-shape-list-model" id="add-new-shape-model" placeholder="model:"  title="Select mouse model">
                 <datalist id="add-new-shape-list-model"></datalist>
-                <button>+</button>
+                <button title="Add mouse">+</button>
             </div>
             <div id="shape-tool-current-mice"></div>
+        </div>
+
+        <div id="shape-settings-size-btn-mobile">
+            <button class="shape-settings-size-btn">+</button>
+            <button class="shape-settings-size-btn">-</button>
         </div>
 
         <div id="shape-settings-grid">

@@ -224,14 +224,14 @@
 .error-message-li {
     display: block;
     border-radius: 4px;
-    transform: translateY(-300%);
+    /*transform: translateY(-300%);*/
     font-size: 0.86rem;
     text-decoration: underline;
     text-decoration-color: var(--primaryColor);
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
     color: var(--themeReverseColor);
-    opacity: 0;
+    /*opacity: 0;*/
     transition: 650ms ease;
     transition-property: transform, opacity;
 }
@@ -243,7 +243,8 @@
 #add-new-shape-div {
     width: 275px;
     display: flex;
-    gap: 3px;
+    /*gap: 3px;*/
+    justify-content: space-between;
     /*padding: 6px 8px;
     border: none;
     border-top: transparent solid 2px;
@@ -258,11 +259,15 @@
     padding: 6px 4px;
     background-color: var(--themeBackgroundColor);
     border: none;
+    font-size: 0.8rem;
     color: var(--themeReverseColor);
     border-top: 2px solid transparent;
     border-bottom: 2px solid var(--themeBorderColor);
     transition: 180ms ease;
     transition-property: border-bottom-color, background-color, border-radius;
+}
+#add-new-shape-div input::-webkit-calendar-picker-indicator {
+    display: none !important;
 }
 #add-new-shape-div input:focus {
     outline: none;
@@ -271,13 +276,13 @@
     background-color: var(--themeHoverColor);
 }
 #add-new-shape-brand {
-    width: 32%;
+    width: 82px;
 }
 #add-new-shape-model {
-    width: 52%;
+    width: 133px;
 }
 #add-new-shape-div button {
-    width: 48px;
+    width: 50px;
     font-size: 1.2rem;
     background-color: var(--themeBackgroundColor);
     color: var(--themeReverseColor);
@@ -490,6 +495,9 @@
 }
 
 /* Buttons */
+#shape-settings-size-btn-mobile {
+    display: none;
+}
 .shape-settings-size-btn {
     padding: 0 5px;
     border-radius: 4px;
@@ -704,11 +712,12 @@
         background-color: inherit;
     }
     #error-messages-list {
-        display: none;
-        /*top: 42vh;
+        bottom: 50%;
+        height: inherit;
         right: inherit;
         left: 2vh;
-        text-align: left;*/
+        text-align: left;
+        border: 1px solid red;
     }
     #add-new-shape-div {
         width: 240px;
@@ -716,6 +725,15 @@
     }
     #add-new-shape-div input {
         font-size: 0.78rem;
+    }
+    #add-new-shape-brand {
+        width: 76px;
+    }
+    #add-new-shape-model {
+        width: 126px;
+    }
+    #add-new-shape-div button {
+        width: 32px;
     }
     #shape-tool-current-mice {
         grid-row: 2/3;
@@ -771,7 +789,7 @@
 
     /* Shape settings */
     #shape-settings-grid {
-        position: static;
+        position: fixed;
         justify-content: center;
         bottom: inherit;
         left: inherit;
@@ -799,17 +817,38 @@
     .shape-settings-align-btn-right-side {
         width: 45px;
     }
-    #shape-settings-size-text-mobile-remove {
-        display: none;
-    }
-    #shape-settings-size-text {
-        grid-column: inherit;
-        grid-row: inherit;
+    #shape-settings-size-btn-mobile {
         position: absolute;
-        display: flex;
-        flex-direction: column-reverse;
         top: 0;
         right: 0;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid var(--themeHoverColor);
+        border-left: 1px solid var(--themeHoverColor);
+    }
+    #shape-settings-size-btn-mobile button {
+        outline: none;
+        border: none;
+        background-color: var(--themeBackgroundColor);
+        color: var(--themeReverseColor);
+        padding: 7px 14px;
+    }
+    #shape-settings-size-text,
+    #shape-settings-size-slider {
+        display: none;
+    }
+    /*#shape-settings-size-text-mobile-remove {
+        display: none;
+    }*/
+    /*#shape-settings-size-text {
+        grid-column: inherit;
+        grid-row: inherit;
+        position: fixed;
+        display: flex;
+        flex-direction: column-reverse;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
         margin: 0;
         border: var(--themeHoverColor) solid 1px;
         border-top: none;
@@ -829,7 +868,7 @@
     }
     #shape-settings-size-slider {
         display: none;
-    }
+    }*/
     #shape-settings-align-vertical-text {
         grid-column: 1/2;
         grid-row: 1/2;

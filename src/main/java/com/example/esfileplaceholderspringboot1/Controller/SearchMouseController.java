@@ -33,7 +33,7 @@ public class SearchMouseController {
     @GetMapping("/getFilteredMice")
     public List<Mouse> getFilteredMice(FilteredMouseSearch filteredMouseSearch, HttpServletResponse response) throws IOException {
         List<Mouse> mouseList = SearchMouseService.getFilteredMice(filteredMouseSearch);
-        if (mouseList == null) {
+        if (mouseList == null || mouseList.size() <= 0) {
             response.sendError(HttpStatus.NOT_FOUND.value());
         }
         return mouseList;
