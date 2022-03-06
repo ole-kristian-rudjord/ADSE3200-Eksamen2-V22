@@ -76,6 +76,8 @@
     width: 100%;
     top: 0;
     background-color: rgba(10,10,10,0.3);
+    opacity: 0;
+    transition: opacity 200ms;
 }
 
 
@@ -92,6 +94,12 @@
     padding: 14px 14px 12px 14px;
     cursor: pointer;
     transition: border-color 180ms ease, background-color 180ms ease;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
 }
 #activate-filter-btn:hover {
     background-color: var(--themeHoverColor);
@@ -145,6 +153,12 @@
     background-color: var(--themeHoverColor);
     cursor: pointer;
     transition: 180ms ease;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
 }
 .filter-buttons-div button .icon-span {
     position: absolute;
@@ -489,6 +503,39 @@
 
 
 
+
+
+
+
+.help-div
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 850px) {
     body {
         overflow-x: scroll;
@@ -580,23 +627,4 @@
     #slider-range-pollingRate .ui-slider-handle:hover {
         border-color: var(--themeBorderColor);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="global.js"></script>
     <script src="searchMouse.js"></script>
 </head>
 <body id="search-mouse" class="theme-background">
@@ -74,62 +75,7 @@
     </div>
     <div id="filter-content">
         <button class="filter-heading-btn"><i class="category-icon fa-solid fa-copyright"></i><span>Brand</span><i class="icon fa-solid fa-angle-down"></i></button>
-        <div id="filter-expandable-brand" class="filter-expandable filter-checkmarks">
-            <!--<div id="brand-select-all-div" class="checkmarks-select-all">
-                <input type="checkbox" checked id="brand-select-all">
-                <label for="brand-select-all">Select All</label>
-            </div>
-            <div id="brand-options-div" class="checkmark-options-div">
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Zowie">
-                    <label for="brand-Zowie">Zowie</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Glorious">
-                    <label for="brand-Glorious">Glorious</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Logitech">
-                    <label for="brand-Logitech">Logitech</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Razer">
-                    <label for="brand-Razer">Razer</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Zowie2">
-                    <label for="brand-Zowie2">Zowie</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Glorious2">
-                    <label for="brand-Glorious2">Glorious</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Logitech2">
-                    <label for="brand-Logitech2">Logitech</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Razer2">
-                    <label for="brand-Razer2">Razer</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Zowie3">
-                    <label for="brand-Zowie3">Zowie</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Glorious3">
-                    <label for="brand-Glorious3">Glorious</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Logitech3">
-                    <label for="brand-Logitech3">Logitech</label>
-                </div>
-                <div class="brand-option checkmark-option">
-                    <input type="checkbox" checked id="brand-Razer3">
-                    <label for="brand-Razer3">Razer</label>
-                </div>
-            </div>-->
-        </div>
+        <div id="filter-expandable-brand" class="filter-expandable filter-checkmarks"></div>
         <button class="filter-heading-btn"><i class="category-icon fa-solid fa-ruler-vertical"></i><span>Length</span><i class="icon fa-solid fa-angle-down"></i></button>
         <div id="filter-expandable-length" class="filter-expandable">
             <div id="filter-length-div" class="filter-dimensions-div">
@@ -185,62 +131,7 @@
             </div>
         </div>
         <button class="filter-heading-btn"><i class="category-icon fa-solid fa-gears"></i><span>Sensor</span><i class="icon fa-solid fa-angle-down"></i></button>
-        <div id="filter-expandable-sensor" class="filter-expandable filter-checkmarks">
-            <!--<div id="sensor-select-all-div" class="checkmarks-select-all">
-                <input type="checkbox" checked id="sensor-select-all">
-                <label for="sensor-select-all">Select All</label>
-            </div>
-            <div id="sensor-options-div" class="checkmark-options-div">
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Zowie">
-                    <label for="sensor-Zowie">Zowie</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Glorious">
-                    <label for="sensor-Glorious">Glorious</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Logitech">
-                    <label for="sensor-Logitech">Logitech</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Razer">
-                    <label for="sensor-Razer">Razer</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Zowie2">
-                    <label for="sensor-Zowie2">Zowie</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Glorious2">
-                    <label for="sensor-Glorious2">Glorious</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Logitech2">
-                    <label for="sensor-Logitech2">Logitech</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Razer2">
-                    <label for="sensor-Razer2">Razer</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Zowie3">
-                    <label for="sensor-Zowie3">Zowie</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Glorious3">
-                    <label for="sensor-Glorious3">Glorious</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Logitech3">
-                    <label for="sensor-Logitech3">Logitech</label>
-                </div>
-                <div class="sensor-option checkmark-option">
-                    <input type="checkbox" checked id="sensor-Razer3">
-                    <label for="sensor-Razer3">Razer</label>
-                </div>
-            </div>-->
-        </div>
+        <div id="filter-expandable-sensor" class="filter-expandable filter-checkmarks"></div>
         <button class="filter-heading-btn"><i class="category-icon fa-solid fa-braille"></i><span>DPI</span><i class="icon fa-solid fa-angle-down"></i></button>
         <div id="filter-expandable-dpi" class="filter-expandable">
             <div id="filter-dpi-div" class="filter-dimensions-div">
@@ -265,7 +156,5 @@
     </div>
 </div>
 <!-- Most of HTML above is default across all pages -->
-<table id="mouse-table"></table>
-<!--<table id="mouse-table"><thead><tr><td>Brand</td><td>Name</td><td>Length</td><td>Width</td><td>Height</td><td>Weight</td><td>Shape</td><td>Connectivity</td><td>Sensor</td><td>DPI</td><td>Polling Rate</td></tr></thead><tbody><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK1+-C</td><td>129</td><td>69</td><td>39</td><td>77</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie FK2-C</td><td>125</td><td>65</td><td>36</td><td>70</td><td>ambidextrous</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr><tr><td>Zowie</td><td>Zowie EC1-C</td><td>130</td><td>69</td><td>42</td><td>80</td><td>ergonomic</td><td>wired</td><td>PMW3360</td><td>3200</td><td>1000</td></tr></tbody></table>-->
-</body>
+<table id="mouse-table"></table></body>
 </html>

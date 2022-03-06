@@ -24,318 +24,25 @@
 
 
 
-
-
 $(function() {
-/*------------------------------
-    Checks user device - start
-------------------------------*/
-
-    // Checks if user is on a mobile device (<= 850px wide screen)
-    function isOnMobile() {
-        // 850 from media queries in CSS
-        return $(window).width() <= 850;
-    }
-
-    // Checks if user is using a Firefox browser due to certain code not working the same as on chromium
-    function isOnFirefox() {
-        return navigator.userAgent.indexOf('Firefox') !== -1;
-    }
-
-/*----------------------------
-    Checks user device - end
-----------------------------*/
-
-
-/*-----------------------
-    Burger menu - start
------------------------*/
-
-    // Changes burger icon lines color on hover
-    $('.burger-icon').on('mouseover', function () {
-        $('.burger-lines').css('background-color', 'var(--primaryColor)');
-    }).on('mouseout', function () {
-        $('.burger-lines').css('background-color', 'var(--themeReverseColor)');
-    });
-
-
-    // Toggle burger menu on click
-    $('.burger-icon, #screen-cover-burger, #side-menu-close').on('click', function () {
-        if ($('#side-menu').css('display') === 'none') {
-            $('#side-menu').css('display', 'flex');
-            setTimeout(function () {
-                $('#side-menu').css('transform', 'translate(0)');
-                $('#screen-cover-burger').css('display', 'flex');
-            });
-        } else {
-            $('#side-menu').css('transform', 'translate(110%)');
-            $('#screen-cover-burger').css('display', 'none');
-            setTimeout(function () {
-                $('#side-menu').css('display', 'none');
-            }, 200);
-        }
-    });
-
-/*---------------------
-    Burger menu - end
----------------------*/
-
-
-/*-----------------
-    Theme - start
------------------*/
-
-    let systemTheme;
-    // Checks system color scheme
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        systemTheme = 'light';
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        systemTheme = 'dark';
-    } else {
-        systemTheme = 'gray';
-    }
-
-    // Sets website theme based on system color scheme (systemTheme)
-    let theme = localStorage.getItem('theme') || systemTheme;
-    let backgroundColor;
-    let reverseColor;
-    let borderColor;
-    let hoverColor;
-
-    function setTheme() {
-        // Checks active theme
-        if (theme === 'light') {
-            backgroundColor = 'white';
-            reverseColor = 'black';
-            borderColor = 'black';
-            hoverColor = 'rgb(230,230,230)';
-        } else if (theme === 'gray') {
-            backgroundColor = 'rgb(32,32,32)';
-            reverseColor = 'rgb(220,220,220)';
-            borderColor = 'rgb(220,220,220)';
-            hoverColor = 'rgb(45,45,45)';
-        } else if (theme === 'dark') {
-            backgroundColor = 'black';
-            reverseColor = 'rgb(220,220,220)';
-            borderColor = 'rgb(190,190,190)';
-            hoverColor = 'rgb(35,35,35)';
-        }
-
-        $(':root').css({
-            '--themeHoverColor': hoverColor,
-            '--themeBackgroundColor': backgroundColor,
-            '--themeReverseColor': reverseColor,
-            '--themeBorderColor': borderColor
-        });
-
-        $('body').css('background-color', backgroundColor);
-
-        // Changes current theme icon
-        $('.theme-options-btn').css('border', 'var(--themeBorderColor) solid 2px');
-        $('#theme-option-' + theme).css('border', 'var(--primaryColor) solid 4px');
-
-        // Changes only applied to "Compare Shapes" page
-        /*if ($('body').is('#compare-shapes')) {
-            // Sets align button color due to border-color changes overwriting currently active alignment outline.
-            setAlignButtonColor();
-        }*/
-    }
-
-
-    // Change theme on theme-button click
-    $('.theme-options-btn').on('click', function () {
-        if (this.id === 'theme-option-light') {
-            theme = 'light';
-        } else if (this.id === 'theme-option-gray') {
-            theme = 'gray';
-        } else if (this.id === 'theme-option-dark') {
-            theme = 'dark';
-        }
-        localStorage.setItem('theme', theme);
-        setTheme();
-    });
-
-
-    // Shows what theme is being hovered
-    $('.theme-options-btn').on('mouseenter mouseleave', function () {
-        let text;
-        if (this.id === 'theme-option-light') {
-            text = 'light';
-        } else if (this.id === 'theme-option-gray') {
-            text = 'gray';
-        } else if (this.id === 'theme-option-dark') {
-            text = 'dark';
-        }
-        $('#theme-text-hover').text(text).toggle();
-    });
-
-/*---------------
-    Theme - end
----------------*/
-
-
-    function createErrorMessage(message) {
-        let errorMessageLi = document.createElement('li');
-        errorMessageLi.className = 'error-message-li';
-        let errorMessageSpan = document.createElement('span');
-        errorMessageSpan.innerText = message;
-        // errorMessageSpan.title = 'click to remove';
-        errorMessageLi.append(errorMessageSpan);
-        $('#error-messages-list').append(errorMessageLi);
-        if ($('body').is('#compare-shapes')) {
-            if (!isOnMobile()) {
-                /*setTimeout(function () {
-                    $('.error-message-li').last().css({
-                        'opacity': '1',
-                        'transform': 'translateY(0)'
-                    });
-                }, 0);*/
-                setTimeout(function () {
-                    $('.error-message-li').first().css({
-                        'transform': 'translateX(100%)',
-                        'opacity': '0'
-                    });
-                }, 5500);
-                setTimeout(function () {
-                    $('.error-message-li').first().remove();
-                }, 6100); // + transition time
-            } else {
-                /*setTimeout(function () {
-                    $('.error-message-li').last().css({
-                        'opacity': '1',
-                        'transform': 'translateY(0)'
-                    });
-                }, 0);*/
-                setTimeout(function () {
-                    $('.error-message-li').first().css({
-                        'transform': 'translateX(-100%)',
-                        'opacity': '0'
-                    });
-                }, 5000);
-                setTimeout(function () {
-                    $('.error-message-li').first().remove();
-                }, 6100); // + transition time
-            }
-        } else if ($('body').is('#search-mouse')) {
-            if (!isOnMobile()) {
-                /*setTimeout(function () {
-                    $('.error-message-li').last().css({
-                        'color': 'var(--themeReverseColor)'
-                    });
-                }, 0);*/
-                setTimeout(function () {
-                    $('.error-message-li').first().css({
-                        'color': 'var(--themeHoverColor)'
-                    });
-                }, 5000);
-                setTimeout(function () {
-                    $('.error-message-li').first().remove();
-                }, 5200); // + transition time
-            } else {
-                /*setTimeout(function () {
-                    $('.error-message-li').last().css({
-                        'color': 'var(--themeReverseColor)'
-                    });
-                }, 0);*/
-                setTimeout(function () {
-                    $('.error-message-li').first().css({
-                        'color': 'var(--themeHoverColor)'
-                    });
-                }, 5000);
-                setTimeout(function () {
-                    $('.error-message-li').first().remove();
-                }, 5200); // + transition time
-            }
-        }
-    }
-
-
 /*-----------------------
     Mouse table - start
 -----------------------*/
-
-    function formatTable(mouseList) {
-        let result =
-            "<thead>"+
-            "<tr>" +
-            "<td class='string'>Brand</td>" +
-            "<td class='string'>Name</td>" +
-            "<td class='number'>Length</td>" +
-            "<td class='number'>Width</td>" +
-            "<td class='number'>Height</td>" +
-            "<td class='number'>Weight</td>" +
-            "<td class='string'>Shape</td>" +
-            "<td class='string'>Connectivity</td>" +
-            "<td class='string'>Sensor</td>" +
-            "<td class='number'>DPI</td>" +
-            "<td class='number'>Polling Rate</td>" +
-            "</tr>" +
-            "</thead>";
-        if (mouseList === 'fail: loading') {
-            $('#mouse-table').html(result);
-            createErrorMessage('Mouse information failed to load, please try again later'); /* fix transitions and layout */
-        } else if (mouseList === 'fail: filter-search') {
-            createErrorMessage('Filters did not match mice from the database'); /* fix transitions and layout */
-        } else {
-            result += "<tbody>";
-            for (const mouse of mouseList) {
-                let shape;
-                if (mouse.shape) {
-                    shape = 'ergonomic';
-                } else {
-                    shape = 'ambidextrous';
-                }
-
-                let connectivity;
-                if (mouse.wireless) {
-                    connectivity = 'wireless';
-                } else {
-                    connectivity = 'wired';
-                }
-
-                result +=
-                    "<tr>" +
-                    "<td class='string'>" + mouse.brand + "</td>" +
-                    "<td class='string'>" + mouse.model.replace(/-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
-                    "<td class='number'>" + parseFloat(mouse.length) + "</td>" +
-                    "<td class='number'>" + parseFloat(mouse.width) + "</td>" +
-                    "<td class='number'>" + parseFloat(mouse.height) + "</td>" +
-                    "<td class='number'>" + parseFloat(mouse.weight) + "</td>" +
-                    "<td class='string'>" + shape + "</td>" +
-                    "<td class='string'>" + connectivity + "</td>" +
-                    "<td class='string'>" + mouse.sensor + "</td>" +
-                    "<td class='number'>" + parseFloat(mouse.dpi) + "</td>" +
-                    "<td class='number'>" + parseFloat(mouse.pollingRate) + "</td>" +
-                    "</tr>"
-            }
-            result += "</tbody>";
-            $('#mouse-table').html(result);
-        }
-    }
-
     $.get("/getAllMice", function (mouseList) {
         formatTable(mouseList);
     }).fail(function (status) {
         formatTable('fail: loading');
     })
-
 /*---------------------
     Mouse table - End
 ---------------------*/
 
 
-
 /*-------------------------------
     Filter main buttons - Start
 -------------------------------*/
-
     $('#activate-filter-btn').on('click', function () {
-        $('#filter-main').css('display', 'flex');
-        setTimeout(function () {
-            $('#filter-main').css('transform', 'translateX(0)');
-        });
-        $(this).css('display', 'none');
-        $('#screen-cover-filter').css('display', 'block');
+        openFilter();
     });
 
     $('#filter-btn-apply').on('click', function () {
@@ -538,7 +245,6 @@ $(function() {
             }
         });
     });
-
 /*-----------------------------
     Filter main buttons - End
 -----------------------------*/
@@ -547,47 +253,6 @@ $(function() {
 /*----------------------
     Checkmarks - Start
 ----------------------*/
-
-    function formatChecklist(list, category) {
-        let selectAllDiv = document.createElement('div');
-        selectAllDiv.id = category + '-select-all-div';
-        selectAllDiv.className = 'checkmarks-select-all';
-        $('#filter-expandable-' + category).append(selectAllDiv);
-
-        let selectAllInput = document.createElement('input');
-        selectAllInput.type = 'checkbox';
-        selectAllInput.checked = true;
-        selectAllInput.id = category + '-select-all';
-        selectAllDiv.append(selectAllInput);
-
-        let selectAllLabel = document.createElement('label');
-        selectAllLabel.htmlFor = category + '-select-all'; // try: selectAllLabel.htmlFor = selectAllInput.id;
-        selectAllLabel.textContent = 'Select All';
-        selectAllDiv.append(selectAllLabel);
-
-        let optionsDiv = document.createElement('div');
-        optionsDiv.id = category + '-options-div';
-        optionsDiv.className = 'checkmark-options-div';
-        $('#filter-expandable-' + category).append(optionsDiv);
-
-        for (const name of list) {
-            let optionDiv = document.createElement('div');
-            optionDiv.className = category + '-option checkmark-option';
-            optionsDiv.append(optionDiv);
-
-            let optionInput = document.createElement('input');
-            optionInput.type = 'checkbox';
-            optionInput.checked = true;
-            optionInput.id = category + '-' + name;
-            optionDiv.append(optionInput);
-
-            let optionLabel = document.createElement('label');
-            optionLabel.htmlFor = category + '-' + name; // try: optionLabel.htmlFor = optionInput.id;
-            optionLabel.textContent = name;
-            optionDiv.append(optionLabel);
-        }
-    }
-
     $.get('/getDistinctCategoryItems?category=' + 'brand', function (mouseList) {
         let brandList = [];
         for (const mouse of mouseList) {
@@ -662,7 +327,6 @@ $(function() {
             });
         }
     });
-
 /*--------------------
     Checkmarks - End
 --------------------*/
@@ -808,63 +472,175 @@ $(function() {
 /*--------------------------
     Checkbox-buttons - End
 --------------------------*/
-
-    function activateCheckboxesShape() {
-        $('.filter-checkbox-buttons input').each(function () {
-            if ($(this).prop('checked') === true) {
-                $(this).prev('label').css({
-                    'border-color': 'var(--primaryColor)',
-                    'box-shadow': '0 3px 0 0 var(--primaryDarkColor)'
-                });
-            } else if ($(this).prop('checked') === false) {
-                $(this).prev('label').css({
-                    'border-color': 'var(--themeBorderColor)',
-                    'box-shadow': '0 3px 0 0 gray'
-                });
-            }
-        });
-    }
-
     $('.filter-checkbox-buttons input').on('change', function () {
         activateCheckboxesShape();
     });
-
 /*--------------------------
     Checkbox-buttons - End
 --------------------------*/
 
 
-/*---------------------------
-    Reset functions - Start
----------------------------*/
-
-
-
-
-
-/*---------------------------
-    Reset functions - Start
----------------------------*/
-
-
-
 /*--------------------------------
     Call functions on load - start
 --------------------------------*/
-
-    setTheme();
     activateCheckboxesShape();
-
 /*------------------------------
     Call functions on load - end
 ------------------------------*/
 });
 
+
+
+/*-------------------
+    Filters - start
+-------------------*/
+function openFilter() {
+    $('#filter-main').css('display', 'flex');
+    $('#screen-cover-filter').css('display', 'block');
+    setTimeout(function () {
+        $('#filter-main').css('transform', 'translateX(0)');
+        $('#screen-cover-filter').css('opacity', '1');
+    });
+    $('#activate-filter-btn').css('display', 'none');
+}
+
 function closeFilter() {
     $('#activate-filter-btn').css('display', 'block');
     $('#filter-main').css('transform', 'translateX(-110%)');
+    $('#screen-cover-filter').css('opacity', '0');
     setTimeout(function () {
         $('#filter-main').css('display', 'none');
+        $('#screen-cover-filter').css('display', 'none');
     }, 200);
-    $('#screen-cover-filter').css('display', 'none');
 }
+/*-----------------
+    Filters - end
+-----------------*/
+
+
+/*---------------------
+    Formating - start
+---------------------*/
+function formatTable(mouseList) {
+    let result =
+        "<thead>"+
+        "<tr>" +
+        "<td class='string'>Brand</td>" +
+        "<td class='string'>Name</td>" +
+        "<td class='number'>Length</td>" +
+        "<td class='number'>Width</td>" +
+        "<td class='number'>Height</td>" +
+        "<td class='number'>Weight</td>" +
+        "<td class='string'>Shape</td>" +
+        "<td class='string'>Connectivity</td>" +
+        "<td class='string'>Sensor</td>" +
+        "<td class='number'>DPI</td>" +
+        "<td class='number'>Polling Rate</td>" +
+        "</tr>" +
+        "</thead>";
+    if (mouseList === 'fail: loading') {
+        $('#mouse-table').html(result);
+        createErrorMessage('Mouse information failed to load, please try again later');
+    } else if (mouseList === 'fail: filter-search') {
+        createErrorMessage('Filters did not match mice from the database');
+    } else {
+        result += "<tbody>";
+        for (const mouse of mouseList) {
+            let shape;
+            if (mouse.shape) {
+                shape = 'ergonomic';
+            } else {
+                shape = 'ambidextrous';
+            }
+
+            let connectivity;
+            if (mouse.wireless) {
+                connectivity = 'wireless';
+            } else {
+                connectivity = 'wired';
+            }
+
+            result +=
+                "<tr>" +
+                "<td class='string'>" + mouse.brand + "</td>" +
+                "<td class='string'>" + mouse.model.replace(/-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
+                "<td class='number'>" + parseFloat(mouse.length) + "</td>" +
+                "<td class='number'>" + parseFloat(mouse.width) + "</td>" +
+                "<td class='number'>" + parseFloat(mouse.height) + "</td>" +
+                "<td class='number'>" + parseFloat(mouse.weight) + "</td>" +
+                "<td class='string'>" + shape + "</td>" +
+                "<td class='string'>" + connectivity + "</td>" +
+                "<td class='string'>" + mouse.sensor + "</td>" +
+                "<td class='number'>" + parseFloat(mouse.dpi) + "</td>" +
+                "<td class='number'>" + parseFloat(mouse.pollingRate) + "</td>" +
+                "</tr>"
+        }
+        result += "</tbody>";
+        $('#mouse-table').html(result);
+    }
+}
+function formatChecklist(list, category) {
+    let selectAllDiv = document.createElement('div');
+    selectAllDiv.id = category + '-select-all-div';
+    selectAllDiv.className = 'checkmarks-select-all';
+    $('#filter-expandable-' + category).append(selectAllDiv);
+
+    let selectAllInput = document.createElement('input');
+    selectAllInput.type = 'checkbox';
+    selectAllInput.checked = true;
+    selectAllInput.id = category + '-select-all';
+    selectAllDiv.append(selectAllInput);
+
+    let selectAllLabel = document.createElement('label');
+    selectAllLabel.htmlFor = category + '-select-all'; // try: selectAllLabel.htmlFor = selectAllInput.id;
+    selectAllLabel.textContent = 'Select All';
+    selectAllDiv.append(selectAllLabel);
+
+    let optionsDiv = document.createElement('div');
+    optionsDiv.id = category + '-options-div';
+    optionsDiv.className = 'checkmark-options-div';
+    $('#filter-expandable-' + category).append(optionsDiv);
+
+    for (const name of list) {
+        let optionDiv = document.createElement('div');
+        optionDiv.className = category + '-option checkmark-option';
+        optionsDiv.append(optionDiv);
+
+        let optionInput = document.createElement('input');
+        optionInput.type = 'checkbox';
+        optionInput.checked = true;
+        optionInput.id = category + '-' + name;
+        optionDiv.append(optionInput);
+
+        let optionLabel = document.createElement('label');
+        optionLabel.htmlFor = category + '-' + name; // try: optionLabel.htmlFor = optionInput.id;
+        optionLabel.textContent = name;
+        optionDiv.append(optionLabel);
+    }
+}
+/*-------------------
+    Formating - end
+-------------------*/
+
+
+/*----------------------
+    Checkboxes - start
+----------------------*/
+function activateCheckboxesShape() {
+    $('.filter-checkbox-buttons input').each(function () {
+        if ($(this).prop('checked') === true) {
+            $(this).prev('label').css({
+                'border-color': 'var(--primaryColor)',
+                'box-shadow': '0 3px 0 0 var(--primaryDarkColor)'
+            });
+        } else if ($(this).prop('checked') === false) {
+            $(this).prev('label').css({
+                'border-color': 'var(--themeBorderColor)',
+                'box-shadow': '0 3px 0 0 gray'
+            });
+        }
+    });
+}
+/*--------------------
+    Checkboxes - end
+--------------------*/

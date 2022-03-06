@@ -190,7 +190,7 @@ nav a:hover {
     height: 100vh;
     transform: translateX(110%);
     align-items: center;
-    border-left: var(--themeBorderColor) solid 1px;
+    border-left: var(--themeBorderColor) solid 2px;
     background-color: var(--themeBackgroundColor);
     transition: 200ms ease;
 }
@@ -227,13 +227,19 @@ nav a:hover {
 }
 .theme-options-btn {
     display: inline-block;
-    height: 24px;
-    width: 24px;
+    height: 26px;
+    width: 26px;
     border: var(--themeBorderColor) solid 2px;
     border-radius: 6px;
     cursor: pointer;
-    transition: 80ms ease;
-    transition-property: border;
+    transition: border 80ms ease, border-radius 120ms ease;
+}
+.theme-options-btn:hover {
+    border-radius: 8px;
+}
+.theme-options-btn:focus-visible {
+    outline: 4px solid var(--themeBorderColor);
+    border-radius: 50%;
 }
 #theme-option-light {
     background-color: white;
@@ -287,6 +293,8 @@ nav a:hover {
     width: 100%;
     top: 0;
     background-color: rgba(10,10,10,0.5);
+    opacity: 0;
+    transition: opacity 200ms;
 }
 /*--------------
   Navbar - end
