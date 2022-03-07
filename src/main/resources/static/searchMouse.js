@@ -146,7 +146,11 @@ $(function() {
     });
 
     $('#filter-btn-help').on('click', function () {
+        $('#help-div').css('display', 'flex');
+    });
 
+    $('#help-div button').on('click', function () {
+        $('#help-div').css('display', 'none');
     });
 
     $('.filter-buttons-div button').bind('mouseover focusin', function () {
