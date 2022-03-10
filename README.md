@@ -13,7 +13,7 @@ ES is currently under development and, as of now, features two pages.
 Because the website is still in early development, some bugs, errors, and poor optimization might be expected from certain features while testing new implementations and updates. 
 Since the main focus has been on the website so far, few mice have been added to the current database. Once launched, I will have implemented a feature to help expand the database through, what I hope, will be a community wanting to add more mice and shapes over time as new products arise.
 
-## Tool/technologies
+## Tools/technologies
 The website is hosted on Heroku.
 The front-end is built on standard HTML+CSS, JavaScript, and JQuery.
 The back-end is currently using Spring Boot with a placeholder H2 database which will be replaced by a hosted MySQL database. 
