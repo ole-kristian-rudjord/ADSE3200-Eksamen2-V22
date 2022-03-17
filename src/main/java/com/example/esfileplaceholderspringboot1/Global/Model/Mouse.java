@@ -1,4 +1,4 @@
-package com.example.esfileplaceholderspringboot1.Model;
+package com.example.esfileplaceholderspringboot1.Global.Model;
 
 public class Mouse {
     private int id;

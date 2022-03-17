@@ -1,4 +1,4 @@
-package com.example.esfileplaceholderspringboot1.Model;
+package com.example.esfileplaceholderspringboot1.SearchMouse.Model;
 
 import java.util.List;
 

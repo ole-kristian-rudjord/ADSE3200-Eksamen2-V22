@@ -1,11 +1,12 @@
-package com.example.esfileplaceholderspringboot1.Controller;
+package com.example.esfileplaceholderspringboot1.SearchMouse.Controller;
 
-import com.example.esfileplaceholderspringboot1.Model.FilteredMouseSearch;
-import com.example.esfileplaceholderspringboot1.Model.Mouse;
-import com.example.esfileplaceholderspringboot1.Model.SliderValuesMax;
-import com.example.esfileplaceholderspringboot1.Service.SearchMouseService;
+import com.example.esfileplaceholderspringboot1.Global.Model.Mouse;
+import com.example.esfileplaceholderspringboot1.SearchMouse.Model.FilteredMouseSearch;
+import com.example.esfileplaceholderspringboot1.SearchMouse.Model.SliderValuesMax;
+import com.example.esfileplaceholderspringboot1.SearchMouse.Service.SearchMouseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/SearchMouse")
 public class SearchMouseController {
 
     final SearchMouseService SearchMouseService;

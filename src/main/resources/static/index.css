@@ -717,7 +717,7 @@
         right: inherit;
         left: 2vh;
         text-align: left;
-        border: 1px solid red;
+        /*border: 1px solid red;*/
     }
     #add-new-shape-div {
         width: 240px;

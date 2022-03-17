@@ -1,6 +1,6 @@
-package com.example.esfileplaceholderspringboot1.Service;
+package com.example.esfileplaceholderspringboot1.CompareShapes.Service;
 
-import com.example.esfileplaceholderspringboot1.Model.Mouse;
+import com.example.esfileplaceholderspringboot1.Global.Model.Mouse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -20,11 +20,11 @@ public class CompareShapesService {
         this.db = db;
     }
 
-    public Mouse getMouse(Mouse mouse) {
+    public Mouse getMouse(/*String brand, String model */Mouse mouse) {
         String sql = "SELECT * FROM mice WHERE brand=? AND model=?";
 
         try {
-            return db.queryForObject(sql, new BeanPropertyRowMapper<>(Mouse.class), mouse.getBrand(), mouse.getModel());
+            return db.queryForObject(sql, new BeanPropertyRowMapper<>(Mouse.class), /*brand, model */mouse.getBrand(), mouse.getModel());
         }
         catch (Exception e) {
             errorLogger.error("Error with getMouse():\n" + e);

@@ -1,4 +1,4 @@
-package com.example.esfileplaceholderspringboot1.Model;
+package com.example.esfileplaceholderspringboot1.SearchMouse.Model;
 
 public class SliderValuesMax {
     private double length;

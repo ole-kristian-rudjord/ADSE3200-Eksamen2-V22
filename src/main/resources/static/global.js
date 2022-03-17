@@ -4,7 +4,7 @@ $(function () {
 -----------------*/
     // Sets locally stored theme to gray if none are detected
     if (localStorage.getItem('theme') === null) {
-        localStorage.setItem('theme', 'light');
+        localStorage.setItem('theme', 'gray');
     }
 
 

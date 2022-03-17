@@ -29,6 +29,20 @@
 
 -------------------------------------------------------*/
 $(function() {
+
+    $.ajax({
+        url: "/Global/getAllMice",
+        datatype: 'json',
+        type: 'get',
+        async: false,
+        success: function (allMice) {
+            mouseArray = allMice;
+        },
+        error: function (status) {
+            createErrorMessage("Error: " + status.status + "\nCloud not retrieve mice form the database.");
+        }
+    });
+
 /*-------------------------
     Shape compare - start
 -------------------------*/
@@ -126,22 +140,37 @@ $(function() {
     /*-----------------------------
         Adding new shapes - start
     -----------------------------*/
-    $.get('/getDistinctCategoryItems?category=' + 'brand', function (brandList) { // gjør om til List<String>
-        for (const mouse of brandList) {
+    let previousBrand = null;
+    let arrayCounter = 0;
+    do {
+        let modelOption = document.createElement('option');
+        modelOption.value = mouseArray[arrayCounter].model;
+        modelOption.className = 'shape-tool-list-option';
+        $('#add-new-shape-list-model').append(modelOption);
+
+        if (mouseArray[arrayCounter].brand !== previousBrand) {
             let brandOption = document.createElement('option');
-            brandOption.value = mouse.brand;
+            brandOption.value = mouseArray[arrayCounter].brand;
             brandOption.className = 'shape-tool-list-option';
             $('#add-new-shape-list-brand').append(brandOption);
+
+            previousBrand = mouseArray[arrayCounter].brand;
         }
-    }).fail(function (status) {
-        createErrorMessage('Error: ' + status.status + '\nCould not retrieve brand information from database, please try again later.');
-    });
+        arrayCounter++;
+    } while (arrayCounter < mouseArray.length);
 
 
     $('#add-new-shape-brand').focusout(function () {
         getMatchingModels();
     });
 
+
+    /*$('#add-new-shape-div input').on('focusin', function () {
+        let length = $('#add-new-shape-div input');
+        $(this).attr('size', 3);
+    }).on('focusout', function () {
+        $(this).attr('size', 0);
+    });*/
 
     $('#add-new-shape-div input').on('change', function () {
         const brand = $('#add-new-shape-brand').val();
@@ -158,12 +187,24 @@ $(function() {
     $('#add-new-shape-div button').on('click', function () {
         const brand = $('#add-new-shape-brand');
         const model = $('#add-new-shape-model');
-        if (brand.val() !== '' && model.val() !== '') {
+
+        if (brand.val() === '') {
+            brand.focus();
+        } else if (model.val() === '') {
+            model.focus();
+        } else {
             addMouse(brand.val(), model.val());
             brand.val('');
             model.val('');
             $(this).prop('title', 'Add mouse');
         }
+
+        /*if (brand.val() !== '' && model.val() !== '') {
+            addMouse(brand.val(), model.val());
+            brand.val('');
+            model.val('');
+            $(this).prop('title', 'Add mouse');
+        }*/
     });
     /*---------------------------
         Adding new shapes - end
@@ -352,12 +393,21 @@ $(function() {
     // Default shapes
     addMouse('Zowie', 'FK1+-C');
     addMouse('Zowie', 'EC1-C');
+    /*
+    Lag en share shapes knapp for å lage custom URL med brand og model.
+    Dersom noen åpner nettsiden med en vanlig URL, kjøp default addMouse(),
+    dersom det brukes en custom URL, finn brands og models og bruk koden under
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const brand = urlParams.get('brand');
+    const model = urlParams.get('model');
+    addMouse(brand, model);
+    */
 
     setAlignment();
 
     currentMiceBottomPadding();
-
-    getMatchingModels();
 
     // Decreases shape size until it fits on screen.
     if (isOnMobile()) {
@@ -371,7 +421,6 @@ $(function() {
   Call functions on load - end
 ------------------------------*/
 });
-
 
 
 /*-----------------------------------------------
@@ -522,6 +571,8 @@ function shapeSizeAndAlignmentReset() {
     Alignment - end
 -------------------*/
 
+// Array with all mice
+let mouseArray = [];
 
 // Array with currently viewed mice
 let currentlyViewedMiceSVG = [];
@@ -534,228 +585,227 @@ let currentlyViewedMiceSVG = [];
 let colorValueArray = ['#FF3C19', '#19DCFF', '#AF19FF', '#69FF19', '#FEE801', '#0117FE', '#FE0196', '#01FE69'];
 let colorValueCounter = 0;
 
-function addMouse(brand, model) {
+
+function addMouse(inputBrand, inputModel) {
     $('#add-new-shape-input').val('');
     let mouseInUse = false;
     for (const viewedMouse of currentlyViewedMiceSVG) {
-        if (viewedMouse.brand + ' ' + viewedMouse.model === brand + ' ' + model) {
+        if (viewedMouse.brand + ' ' + viewedMouse.model === inputBrand + ' ' + inputModel) {
             mouseInUse = true;
         }
     }
     if (!mouseInUse) {
-        const mouseObject = {
-            brand: brand,
-            model: model
+        for (const mouse of mouseArray) {
+            if (mouse.brand === inputBrand && mouse.model === inputModel) {
+                currentlyViewedMiceSVG.push(mouse);
+                let topViewMissing = false;
+                if (mouse.svgTop !== null) {
+                    $('#shape-top-container').append(addSVG(mouse.id, mouse.svgTop, 'top'));
+                } else {
+                    topViewMissing = true;
+                }
+
+                let sideViewMissing = false;
+                if (mouse.svgSide !== null) {
+                    $('#shape-side-container').append(addSVG(mouse.id, mouse.svgSide, 'side'));
+                } else {
+                    sideViewMissing = true;
+                }
+
+                let backViewMissing = false;
+                if (mouse.svgBack !== null) {
+                    $('#shape-back-container').append(addSVG(mouse.id, mouse.svgBack, 'back'));
+                } else {
+                    backViewMissing = true;
+                }
+
+                // Main div
+                let newInformationDiv = document.createElement('div');
+                newInformationDiv.id = 'shape-div-' + mouse.id;
+                newInformationDiv.className = 'shape-information-div';
+                $('#shape-tool-current-mice').append(newInformationDiv);
+
+                // Sub-div, click to remove on mobile
+                let newInformationSubDiv = document.createElement('div');
+                newInformationSubDiv.id = 'shape-sub-div-' + mouse.id;
+                newInformationSubDiv.className = 'shape-information-sub-div';
+                newInformationDiv.append(newInformationSubDiv);
+
+                // Close icon
+                let newCloseIcon = document.createElement('button');
+                newCloseIcon.id = 'shape-close-' + mouse.id;
+                newCloseIcon.className = 'shape-tool-close';
+                newCloseIcon.innerHTML = '&#10006;';
+                newInformationSubDiv.append(newCloseIcon);
+
+                // Adds hover-able information if mouse information/specification is missing
+                let hoverText = document.createElement('span');
+                let titleText = '';
+
+                // Checks if images are missing
+                if (topViewMissing === true && sideViewMissing === true && backViewMissing === true) {
+                    titleText += 'No images currently available\n';
+                } else {
+                    if (topViewMissing === true) {
+                        titleText += 'Top-view image not available\n';
+                    }
+                    if (sideViewMissing === true) {
+                        titleText += 'Side-view image not available\n';
+                    }
+                    if (backViewMissing === true) {
+                        titleText += 'Back-view image not available\n';
+                    }
+                }
+
+                // Mouse name
+                let newNameSpan = document.createElement('span');
+                let mouseName = mouse.brand + ' ' + mouse.model;
+                newNameSpan.id = 'shape-name-' + mouse.id;
+                newNameSpan.className = 'shape-information-name';
+                newNameSpan.title = 'Brand: ' + mouse.brand + '\nModel: ' + mouse.model;
+                if (mouseName !== null) {
+                    newNameSpan.textContent = mouseName;
+                } else {
+                    newNameSpan.textContent = 'NA';
+                    newNameSpan.title = 'Mouse name is currently not available';
+                    titleText += 'Mouse name is currently not available\n';
+                }
+                newInformationSubDiv.append(newNameSpan);
+
+                // Dimensions
+                let newInformationDimensions = document.createElement('span');
+                newInformationDimensions.className = 'shape-information-dimensions';
+
+                // Length
+                let mouseLengthSpan = document.createElement('span');
+                let mouseLength = mouse.length;
+                if (mouseLength !== null) {
+                    mouseLength = Math.round(mouseLength);
+                    mouseLengthSpan.title = 'Length:\n' + mouse.length + ' mm';
+                } else {
+                    mouseLength = 'N/A';
+                    mouseLengthSpan.title = 'Length is currently not available';
+                    titleText += 'Length is currently not available\n';
+                }
+                mouseLengthSpan.innerText = mouseLength;
+
+                // Width
+                let mouseWidthSpan = document.createElement('span');
+                let mouseWidth = mouse.width;
+                if (mouseWidth !== null) {
+                    mouseWidth = Math.round(mouseWidth);
+                    mouseWidthSpan.title = 'Width:\n' + mouse.width + ' mm';
+                } else {
+                    mouseWidth = 'N/A';
+                    mouseWidthSpan.title = 'Width is currently not available';
+                    titleText += 'Width is currently not available\n';
+                }
+                mouseWidthSpan.innerText = mouseWidth;
+
+                // Height
+                let mouseHeightSpan = document.createElement('span');
+                let mouseHeight = mouse.height;
+                if (mouseHeight !== null) {
+                    mouseHeight = Math.round(mouseHeight);
+                    mouseHeightSpan.title = 'Height:\n' + mouse.height + ' mm';
+                } else {
+                    mouseHeight = 'N/A';
+                    mouseHeightSpan.title += 'Height is currently not available';
+                    titleText += 'Height is currently not available\n';
+                }
+                mouseHeightSpan.innerText = mouseHeight;
+
+                // Measurement
+                let measurement = document.createElement('span');
+                measurement.innerText = ' mm';
+                measurement.title = 'Measured in:\nmillimeters';
+
+                newInformationDimensions.append(mouseLengthSpan, ' x ', mouseWidthSpan, ' x ', mouseHeightSpan, measurement);
+                newInformationSubDiv.append(newInformationDimensions);
+
+                // Weight
+                let newInformationWeight = document.createElement('span');
+                newInformationWeight.className = 'shape-information-weight';
+                let mouseWeight = mouse.weight;
+                if (mouseWeight !== null) {
+                    mouseWeight = Math.round(mouseWeight) + 'g'; // mouseWeight = Math.round(mouse.weight) + 'g';
+                    newInformationWeight.title = 'Weight:\n' + mouse.weight + ' grams';
+                } else {
+                    mouseWeight = 'N/A';
+                    newInformationWeight.title += 'Weight is currently not available';
+                    titleText += 'Weight is currently not available\n';
+                }
+                newInformationWeight.innerText = mouseWeight;
+                newInformationSubDiv.append(newInformationWeight);
+
+                // Color-input
+                let newColorInput = document.createElement('input');
+                newColorInput.type = 'color';
+                newColorInput.value = colorValueArray[colorValueCounter];
+                colorValueCounter++;
+                if (colorValueCounter === colorValueArray.length) {
+                    colorValueCounter = 0;
+                }
+                newColorInput.id = 'shape-color-' + mouse.id;
+                newColorInput.className = 'shape-tool-color';
+                newColorInput.title = 'change outline color';
+                newInformationDiv.append(newColorInput);
+
+                if (titleText !== '') {
+                    let newViewMissingInformation = document.createElement('span');
+                    newViewMissingInformation.id = 'view-missing-information-' + mouse.id;
+                    newViewMissingInformation.className = 'view-missing-information';
+                    newViewMissingInformation.innerText = '!';
+                    newViewMissingInformation.tabIndex = '0';
+                    hoverText.id = 'view-missing-hover-text-' + mouse.id;
+                    hoverText.className = 'view-missing-hover-text';
+                    hoverText.innerText = titleText;
+                    newViewMissingInformation.append(hoverText);
+                    newInformationSubDiv.append(newViewMissingInformation);
+                }
+
+                // Calls functions to update shapes, outline and alignment
+                updateShapeOutlineColor(mouse.id);
+                updateShapeSize();
+                setAlignment();
+                // Decreases shape size until it fits on screen.
+                if (isOnMobile()) {
+                    decreaseShapeSize();
+                } else {
+                    addDivToolCollideCSS();
+                    increaseShapeSizeDesktop();
+                    decreaseShapeSizeDesktop();
+                }
+                return true;
+            }
         }
-        $.get('/getMouse', mouseObject, function (mouse) {
-            currentlyViewedMiceSVG.push(mouse);
-            let topViewMissing = false;
-            if (mouse.svgTop !== null) {
-                $('#shape-top-container').append(addSVG(mouse.id, mouse.svgTop, 'top'));
-            } else {
-                topViewMissing = true;
-            }
-
-            let sideViewMissing = false;
-            if (mouse.svgSide !== null) {
-                $('#shape-side-container').append(addSVG(mouse.id, mouse.svgSide, 'side'));
-            } else {
-                sideViewMissing = true;
-            }
-
-            let backViewMissing = false;
-            if (mouse.svgBack !== null) {
-                $('#shape-back-container').append(addSVG(mouse.id, mouse.svgBack, 'back'));
-            } else {
-                backViewMissing = true;
-            }
-
-            // Main div
-            let newInformationDiv = document.createElement('div');
-            newInformationDiv.id = 'shape-div-' + mouse.id;
-            newInformationDiv.className = 'shape-information-div';
-            $('#shape-tool-current-mice').append(newInformationDiv);
-
-            // Sub-div, click to remove on mobile
-            let newInformationSubDiv = document.createElement('div');
-            newInformationSubDiv.id = 'shape-sub-div-' + mouse.id;
-            newInformationSubDiv.className = 'shape-information-sub-div';
-            newInformationDiv.append(newInformationSubDiv);
-
-            // Close icon
-            let newCloseIcon = document.createElement('button');
-            newCloseIcon.id = 'shape-close-' + mouse.id;
-            newCloseIcon.className = 'shape-tool-close';
-            newCloseIcon.innerHTML = '&#10006;';
-            newInformationSubDiv.append(newCloseIcon);
-
-            // Adds hover-able information if mouse information/specification is missing
-            let hoverText = document.createElement('span');
-            let titleText = '';
-
-            // Checks if images are missing
-            if (topViewMissing === true && sideViewMissing === true && backViewMissing === true) {
-                titleText += 'No images currently available\n';
-            } else {
-                if (topViewMissing === true) {
-                    titleText += 'Top-view image not available\n';
-                }
-                if (sideViewMissing === true) {
-                    titleText += 'Side-view image not available\n';
-                }
-                if (backViewMissing === true) {
-                    titleText += 'Back-view image not available\n';
-                }
-            }
-
-            // Mouse name
-            let newNameSpan = document.createElement('span');
-            let mouseName = mouse.brand + ' ' + mouse.model;
-            newNameSpan.id = 'shape-name-' + mouse.id;
-            newNameSpan.className = 'shape-information-name';
-            newNameSpan.title = 'Brand: ' + mouse.brand + '\nModel: ' + mouse.model;
-            if (mouseName !== null) {
-                newNameSpan.textContent = mouseName;
-            } else {
-                newNameSpan.textContent = 'NA';
-                newNameSpan.title = 'Mouse name is currently not available';
-                titleText += 'Mouse name is currently not available\n';
-            }
-            newInformationSubDiv.append(newNameSpan);
-
-            // Dimensions
-            let newInformationDimensions = document.createElement('span');
-            newInformationDimensions.className = 'shape-information-dimensions';
-
-            // Length
-            let mouseLengthSpan = document.createElement('span');
-            let mouseLength = mouse.length;
-            if (mouseLength !== null) {
-                mouseLength = Math.round(mouseLength);
-                mouseLengthSpan.title = 'Length:\n' + mouse.length + ' mm';
-            } else {
-                mouseLength = 'N/A';
-                mouseLengthSpan.title = 'Length is currently not available';
-                titleText += 'Length is currently not available\n';
-            }
-            mouseLengthSpan.innerText = mouseLength;
-
-            // Width
-            let mouseWidthSpan = document.createElement('span');
-            let mouseWidth = mouse.width;
-            if (mouseWidth !== null) {
-                mouseWidth = Math.round(mouseWidth);
-                mouseWidthSpan.title = 'Width:\n' + mouse.width + ' mm';
-            } else {
-                mouseWidth = 'N/A';
-                mouseWidthSpan.title = 'Width is currently not available';
-                titleText += 'Width is currently not available\n';
-            }
-            mouseWidthSpan.innerText = mouseWidth;
-
-            // Height
-            let mouseHeightSpan = document.createElement('span');
-            let mouseHeight = mouse.height;
-            if (mouseHeight !== null) {
-                mouseHeight = Math.round(mouseHeight);
-                mouseHeightSpan.title = 'Height:\n' + mouse.height + ' mm';
-            } else {
-                mouseHeight = 'N/A';
-                mouseHeightSpan.title += 'Height is currently not available';
-                titleText += 'Height is currently not available\n';
-            }
-            mouseHeightSpan.innerText = mouseHeight;
-
-            // Measurement
-            let measurement = document.createElement('span');
-            measurement.innerText = ' mm';
-            measurement.title = 'Measured in:\nmillimeters';
-
-            newInformationDimensions.append(mouseLengthSpan, ' x ', mouseWidthSpan, ' x ', mouseHeightSpan, measurement);
-            newInformationSubDiv.append(newInformationDimensions);
-
-            // Weight
-            let newInformationWeight = document.createElement('span');
-            newInformationWeight.className = 'shape-information-weight';
-            let mouseWeight = mouse.weight;
-            if (mouseWeight !== null) {
-                mouseWeight = Math.round(mouseWeight) + 'g'; // mouseWeight = Math.round(mouse.weight) + 'g';
-                newInformationWeight.title = 'Weight:\n' + mouse.weight + ' grams';
-            } else {
-                mouseWeight = 'N/A';
-                newInformationWeight.title += 'Weight is currently not available';
-                titleText += 'Weight is currently not available\n';
-            }
-            newInformationWeight.innerText = mouseWeight;
-            newInformationSubDiv.append(newInformationWeight);
-
-            // Color-input
-            let newColorInput = document.createElement('input');
-            newColorInput.type = 'color';
-            newColorInput.value = colorValueArray[colorValueCounter];
-            colorValueCounter++;
-            if (colorValueCounter === colorValueArray.length) {
-                colorValueCounter = 0;
-            }
-            newColorInput.id = 'shape-color-' + mouse.id;
-            newColorInput.className = 'shape-tool-color';
-            newColorInput.title = 'change outline color';
-            newInformationDiv.append(newColorInput);
-
-            if (titleText !== '') {
-                let newViewMissingInformation = document.createElement('span');
-                newViewMissingInformation.id = 'view-missing-information-' + mouse.id;
-                newViewMissingInformation.className = 'view-missing-information';
-                newViewMissingInformation.innerText = '!';
-                newViewMissingInformation.tabIndex = '0';
-                hoverText.id = 'view-missing-hover-text-' + mouse.id;
-                hoverText.className = 'view-missing-hover-text';
-                hoverText.innerText = titleText;
-                newViewMissingInformation.append(hoverText);
-                newInformationSubDiv.append(newViewMissingInformation);
-            }
-
-            // Calls functions to update shapes, outline and alignment
-            updateShapeOutlineColor(mouse.id);
-            updateShapeSize();
-            setAlignment();
-            // Decreases shape size until it fits on screen.
-            if (isOnMobile()) {
-                decreaseShapeSize();
-            } else {
-                addDivToolCollideCSS();
-                increaseShapeSizeDesktop();
-                decreaseShapeSizeDesktop();
-            }
-        }).fail(function (status) {
-            if (status.status === 404) {
-                createErrorMessage(brand + ' ' + model + ' does not exists in the database.');
-            } else {
-                createErrorMessage('There was an error while retrieving information from the database,\nplease try again later.\n Error: ' + status.status);
-            }
-        })
+        createErrorMessage(inputBrand + ' ' + inputModel + ' does not exists in the database.');
     } else {
-        createErrorMessage(brand + ' ' + model + ' is already selected.');
+        createErrorMessage(inputBrand + ' ' + inputModel + ' is already selected.');
     }
 }
 
+
 function getMatchingModels() {
-    const mouseObject = {
-        brand: $('#add-new-shape-list-brand').val()
-    }
-    $.get('/getMatchingModels', mouseObject, function (modelList) { // gjør om til List<String>
-        console.log(modelList);
-        $('#add-new-shape-list-model').empty();
-        for (const mouse of modelList) {
-            console.log(mouse);
+    $('#add-new-shape-list-model').empty();
+    const selectedBrand = $('#add-new-shape-brand').val();
+    if (selectedBrand === "") {
+        for (const mouse of mouseArray) {
             let modelOption = document.createElement('option');
             modelOption.value = mouse.model;
             modelOption.className = 'shape-tool-list-option';
             $('#add-new-shape-list-model').append(modelOption);
         }
-    }).fail(function (status) {
-        createErrorMessage('There was an error with retrieving model information from the database,\nplease try again later.\nError: ' + status.status);
-    });
+    } else {
+        for (const mouse of mouseArray) {
+            if (mouse.brand === selectedBrand) {
+                let modelOption = document.createElement('option');
+                modelOption.value = mouse.model;
+                modelOption.className = 'shape-tool-list-option';
+                $('#add-new-shape-list-model').append(modelOption);
+            }
+        }
+    }
 }
 
 function updateShapeOutlineColor(mouseId) {

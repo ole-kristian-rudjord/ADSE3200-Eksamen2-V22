@@ -28,7 +28,7 @@ $(function() {
 /*-----------------------
     Mouse table - start
 -----------------------*/
-    $.get("/getAllMice", function (mouseList) {
+    $.get("/Global/getAllMice", function (mouseList) {
         formatTable(mouseList);
     }).fail(function (status) {
         formatTable('fail: loading');
@@ -81,7 +81,7 @@ $(function() {
             pollingRateMax: $('#filter-pollingRate-max').val()
         }
         console.log(filteredMouseSearch);
-        $.get("/getFilteredMice", filteredMouseSearch, function(mouseList) {
+        $.get("/SearchMouse/getFilteredMice", filteredMouseSearch, function(mouseList) {
             formatTable(mouseList);
             closeFilter();
         }).fail(function (status) {
@@ -257,7 +257,7 @@ $(function() {
 /*----------------------
     Checkmarks - Start
 ----------------------*/
-    $.get('/getDistinctCategoryItems?category=' + 'brand', function (mouseList) {
+    $.get('/Global/getDistinctCategoryItems?category=' + 'brand', function (mouseList) {
         let brandList = [];
         for (const mouse of mouseList) {
             brandList.push(mouse.brand);
@@ -265,7 +265,7 @@ $(function() {
         formatChecklist(brandList, 'brand');
     });
 
-    $.get('/getDistinctCategoryItems?category=' + 'sensor', function (mouseList) {
+    $.get('/Global/getDistinctCategoryItems?category=' + 'sensor', function (mouseList) {
         let sensorList = [];
         for (const mouse of mouseList) {
             sensorList.push(mouse.sensor);
@@ -342,7 +342,7 @@ $(function() {
     let maxValues = {}
 
     $.ajax({
-        url: "/getSliderValues",
+        url: "/SearchMouse/getSliderValues",
         dataType: 'json',
         type: 'get',
         async: false,

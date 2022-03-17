@@ -1,8 +1,8 @@
-package com.example.esfileplaceholderspringboot1.Service;
+package com.example.esfileplaceholderspringboot1.SearchMouse.Service;
 
-import com.example.esfileplaceholderspringboot1.Model.FilteredMouseSearch;
-import com.example.esfileplaceholderspringboot1.Model.Mouse;
-import com.example.esfileplaceholderspringboot1.Model.SliderValuesMax;
+import com.example.esfileplaceholderspringboot1.Global.Model.Mouse;
+import com.example.esfileplaceholderspringboot1.SearchMouse.Model.FilteredMouseSearch;
+import com.example.esfileplaceholderspringboot1.SearchMouse.Model.SliderValuesMax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class SearchMouseService {
 
-    Logger errorLogger = LoggerFactory.getLogger(CompareShapesService.class);
+    Logger errorLogger = LoggerFactory.getLogger(SearchMouseService.class);
 
     final JdbcTemplate db;
 
@@ -26,7 +26,7 @@ public class SearchMouseService {
         String sql = "SELECT MAX(length) AS length, MAX(width) AS width, MAX(height) AS height, MAX(weight) AS weight, MAX(dpi) AS dpi, MAX(pollingRate) AS pollingRate FROM mice";
 
         try {
-            return (SliderValuesMax) db.queryForObject(sql, new BeanPropertyRowMapper<>(SliderValuesMax.class));
+            return db.queryForObject(sql, new BeanPropertyRowMapper<>(SliderValuesMax.class));
         }
         catch (Exception e) {
             errorLogger.error("Error with getSliderValues():\n" + e);
