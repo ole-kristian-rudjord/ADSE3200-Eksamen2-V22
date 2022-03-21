@@ -13,13 +13,14 @@
 }
 .error-message-li { /* fix transitions and layout */
     display: block;
+    position: relative;
     border-left: 2px solid var(--themeBorderColor);
     border-right: 2px solid var(--themeBorderColor);
     font-size: 0.86rem;
-    text-decoration: underline;
+    /*text-decoration: underline;
     text-decoration-color: var(--primaryColor);
     text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    text-underline-offset: 2px;*/
     color: var(--themeReverseColor);
     padding: 10px;
     transition: 300ms ease;
@@ -29,6 +30,15 @@
 .error-message-li:last-of-type {
     border-radius: 8px 8px 0 0;
     border-top: 2px solid var(--themeBorderColor);
+}
+.error-message-underline {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    right: 0;
+    height: 2px;
+    background-color: var(--primaryColor);
+    transition: width 5000ms linear;
 }
 
 

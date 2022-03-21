@@ -28,6 +28,7 @@
     Call functions on load
 
 -------------------------------------------------------*/
+
 $(function() {
 
     $.ajax({
@@ -163,7 +164,6 @@ $(function() {
     $('#add-new-shape-brand').focusout(function () {
         getMatchingModels();
     });
-
 
     /*$('#add-new-shape-div input').on('focusin', function () {
         let length = $('#add-new-shape-div input');
@@ -405,7 +405,7 @@ $(function() {
     addMouse(brand, model);
     */
 
-    setAlignment();
+    setAlignButtonColor();
 
     currentMiceBottomPadding();
 
@@ -958,18 +958,3 @@ function removeDivToolCollideCSS() {
 /*----------------------------------
     Automatic shape resizing - end
 ----------------------------------*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -162,47 +162,59 @@ function createErrorMessage(message) {
     errorMessageSpan.innerText = message;
     // errorMessageSpan.title = 'click to remove';
     errorMessageLi.append(errorMessageSpan);
+    let errorMessageUnderline = document.createElement('div');
+    errorMessageUnderline.className = 'error-message-underline';
+    errorMessageLi.append(errorMessageUnderline);
     $('#error-messages-list').append(errorMessageLi);
+    setTimeout(function () {
+        errorMessageUnderline.style.width = '0%';
+    }), 0;
     if ($('body').is('#compare-shapes')) {
         if (!isOnMobile()) {
+            /*errorMessageUnderline.style.width = '0%';*/
             setTimeout(function () {
-                $('.error-message-li').first().css({
-                    'transform': 'translateX(100%)',
-                    'opacity': '0'
-                });
-            }, 5500);
-            setTimeout(function () {
-                $('.error-message-li').first().remove();
-            }, 6100); // + transition time
-        } else {
-            setTimeout(function () {
-                $('.error-message-li').first().css({
-                    'transform': 'translateX(-100%)',
-                    'opacity': '0'
-                });
+                errorMessageLi.style.transform = 'translateX(100%)';
+                errorMessageLi.style.opacity = '0';
             }, 5000);
             setTimeout(function () {
-                $('.error-message-li').first().remove();
-            }, 6100); // + transition time
+                errorMessageLi.remove();
+            }, 5500); // + transition time
+        } else {
+           /* errorMessageUnderline.style.width = '0%';*/
+            setTimeout(function () {
+                errorMessageLi.style.transform = 'translateX(-100%)';
+                errorMessageLi.style.opacity = '0';
+            }, 5000);
+            setTimeout(function () {
+                errorMessageLi.remove();
+            }, 5500); // + transition time
         }
     } else if ($('body').is('#search-mouse')) {
         if (!isOnMobile()) {
+            /*errorMessageUnderline.style.width = '0%';*/
             setTimeout(function () {
-                $('.error-message-li').first().css({
+                errorMessageLi.style.color = 'var(--themeHoverColor)';
+                /*$('.error-message-li').first().css({
                     'color': 'var(--themeHoverColor)'
-                });
+                });*/
             }, 5000);
             setTimeout(function () {
-                $('.error-message-li').first().remove();
+                errorMessageLi.remove();
+                /*$('.error-message-li').first().remove();*/
             }, 5200); // + transition time
         } else {
+            /*setTimeout(function () {
+                errorMessageUnderline.style.width = '0%';
+            }), 0;*/
             setTimeout(function () {
-                $('.error-message-li').first().css({
+                errorMessageLi.style.color = 'var(--themeHoverColor)';
+                /*$('.error-message-li').first().css({
                     'color': 'var(--themeHoverColor)'
-                });
+                });*/
             }, 5000);
             setTimeout(function () {
-                $('.error-message-li').first().remove();
+                errorMessageLi.remove();
+                /*$('.error-message-li').first().remove();*/
             }, 5200); // + transition time
         }
     }

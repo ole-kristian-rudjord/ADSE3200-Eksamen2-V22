@@ -223,19 +223,29 @@
 }
 .error-message-li {
     display: block;
+    position: relative;
     border-radius: 4px;
     /*transform: translateY(-300%);*/
     font-size: 0.86rem;
-    text-decoration: underline;
+    /*text-decoration: underline;
     text-decoration-color: var(--primaryColor);
     text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    text-underline-offset: 2px;*/
     color: var(--themeReverseColor);
+    background-color: var(--themeBackgroundColor);
     /*opacity: 0;*/
     transition: 650ms ease;
     transition-property: transform, opacity;
 }
-
+.error-message-underline {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--primaryColor);
+    transition: width 5000ms linear;
+}
 
 
 
@@ -718,6 +728,10 @@
         left: 2vh;
         text-align: left;
         /*border: 1px solid red;*/
+    }
+    .error-message-underline {
+        right: inherit;
+        left: 0;
     }
     #add-new-shape-div {
         width: 240px;
