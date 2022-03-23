@@ -105,6 +105,8 @@ public class SearchMouseService {
 
         System.out.println(sql);
 
+        /*jpa*/
+
         try {
             return db.query(sql, new BeanPropertyRowMapper<>(Mouse.class));
         } catch (Exception e) {

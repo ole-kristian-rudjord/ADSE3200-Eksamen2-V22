@@ -134,30 +134,45 @@ $(function() {
     });
 
     $('#filter-btn-open').on('click', function () {
+        $('.filter-heading-btn .fa-angle-down').each(function () {
+            $(this).css('transform', 'translateY(-50%) rotate(-180deg)');
+        });
         $('.filter-expandable').each(function () {
             $(this).css('display', 'flex');
-        })
+        });
     });
 
     $('#filter-btn-collapse').on('click', function () {
+        $('.filter-heading-btn .fa-angle-down').each(function () {
+            $(this).css('transform', 'translateY(-50%) rotate(-0deg)');
+        });
         $('.filter-expandable').each(function () {
             $(this).css('display', 'none');
-        })
+        });
     });
 
-    $('#filter-btn-help').on('click', function () {
+    $('.show-help-btn').on('click', function () {
         $('#help-div').css('display', 'flex');
+        setTimeout(function () {
+            $('#help-div').css('transform', 'translate(-50%, -50%)');
+        }, 0);
     });
 
-    $('#help-div button').on('click', function () {
-        $('#help-div').css('display', 'none');
+    $('#help-close').on('click', function () {
+        $('#help-div').css('transform', 'translate(-50%, 100%)');
+        setTimeout(function () {
+            $('#help-div').css('display', 'none');
+        }, 400);
     });
 
     $('.filter-buttons-div button').bind('mouseover focusin', function () {
+        $(this).css({
+            'background-color': 'var(--themeHoverColor)'
+        });
         if (this.id === 'filter-btn-apply') {
             $(this).css({
-                'outline-color': 'rgb(39, 93, 219)',
-                'box-shadow': '0 3px 0 2px rgb(23,55,131)'
+                'outline-color': 'rgb(39, 93, 219)'/*,
+                'box-shadow': '0 3px 0 2px rgb(23,55,131)'*/
             });
             $(this).find('.icon').css({
                 'color': 'rgb(39, 93, 219)',
@@ -165,8 +180,8 @@ $(function() {
             });
         } else if (this.id === 'filter-btn-reset') {
             $(this).css({
-                'outline-color': 'orange',
-                'box-shadow': '0 3px 0 2px rgb(183,118,0)'
+                'outline-color': 'orange'/*,
+                'box-shadow': '0 3px 0 2px rgb(183,118,0)'*/
             });
             $(this).find('.icon').css({
                 'color': 'orange',
@@ -174,8 +189,8 @@ $(function() {
             });
         } else if (this.id === 'filter-btn-close') {
             $(this).css({
-                'outline-color': 'red',
-                'box-shadow': '0 3px 0 2px rgb(153,0,0)'
+                'outline-color': 'red'/*,
+                'box-shadow': '0 3px 0 2px rgb(153,0,0)'*/
             });
             $(this).find('.icon').css({
                 'color': 'red',
@@ -183,8 +198,8 @@ $(function() {
             });
         } else if (this.id === 'filter-btn-open') {
             $(this).css({
-                'outline-color': 'rgb(39, 93, 219)',
-                'box-shadow': '0 3px 0 2px rgb(23,55,131)'
+                'outline-color': 'rgb(39, 93, 219)'/*,
+                'box-shadow': '0 3px 0 2px rgb(23,55,131)'*/
             });
             $(this).find('.icon').css({
                 'color': 'rgb(39, 93, 219)',
@@ -192,8 +207,8 @@ $(function() {
             });
         } else if (this.id === 'filter-btn-collapse') {
             $(this).css({
-                'outline-color': 'red',
-                'box-shadow': '0 3px 0 2px rgb(153,0,0)'
+                'outline-color': 'red'/*,
+                'box-shadow': '0 3px 0 2px rgb(153,0,0)'*/
             });
             $(this).find('.icon').css({
                 'color': 'red',
@@ -201,8 +216,8 @@ $(function() {
             });
         } else if (this.id === 'filter-btn-help') {
             $(this).css({
-                'outline-color': 'rgb(64,167,19)',
-                'box-shadow': '0 3px 0 2px rgb(38,100,11)'
+                'outline-color': 'rgb(64,167,19)'/*,
+                'box-shadow': '0 3px 0 2px rgb(38,100,11)'*/
             });
             $(this).find('.icon').css({
                 'color': 'rgb(64,167,19)',
@@ -212,17 +227,18 @@ $(function() {
     }).bind('mouseout focusout', function () {
         $(this).css({
             'outline-color': 'var(--themeBorderColor)',
-            'box-shadow': '0 3px 0 2px gray'
+            'background-color': 'var(--themeBackgroundColor)'/*,
+            'box-shadow': '0 3px 0 2px gray'*/
         });
-        if (this.id === 'filter-btn-apply') {
-            $(this).find('.icon').css({
-                'color': 'var(--themeReverseColor)',
-                'font-size': '1.1rem'
-            });
-        } else if (this.id === 'filter-btn-reset') {
+        if (this.id === 'filter-btn-reset') {
             $(this).find('.icon').css({
                 'color': 'var(--themeReverseColor)',
                 'transform': 'translate(-50%, -50%) rotate(0deg)'
+            });
+        } else if (this.id === 'filter-btn-close') {
+            $(this).find('.icon').css({
+                'color': 'var(--themeReverseColor)',
+                'font-size': '1.1rem'
             });
         } else {
             $(this).find('.icon').css({
@@ -231,6 +247,82 @@ $(function() {
             });
         }
     });
+
+    /*$('.filter-buttons-div button').bind('mouseover focusin', function () {
+        $(this).css({
+            'border-radius': '8px'
+        });
+        if (this.id === 'filter-btn-apply') {
+            $(this).css({
+                'box-shadow': '0 0 0 3px rgb(39, 93, 219)'
+            });
+            $(this).find('.icon').css({
+                'color': 'rgb(39, 93, 219)',
+                'font-size': '1.4rem'
+            });
+        } else if (this.id === 'filter-btn-reset') {
+            $(this).css({
+                'box-shadow': '0 0 0 3px orange'
+            });
+            $(this).find('.icon').css({
+                'color': 'orange',
+                'transform': 'translate(-50%, -50%) rotate(180deg)'
+            });
+        } else if (this.id === 'filter-btn-close') {
+            $(this).css({
+                'box-shadow': '0 0 0 3px red'
+            });
+            $(this).find('.icon').css({
+                'color': 'red',
+                'font-size': '1.3rem'
+            });
+        } else if (this.id === 'filter-btn-open') {
+            $(this).css({
+                'box-shadow': '0 0 0 3px rgb(39, 93, 219)'
+            });
+            $(this).find('.icon').css({
+                'color': 'rgb(39, 93, 219)',
+                'font-size': '1.2rem'
+            });
+        } else if (this.id === 'filter-btn-collapse') {
+            $(this).css({
+                'box-shadow': '0 0 0 3px red'
+            });
+            $(this).find('.icon').css({
+                'color': 'red',
+                'font-size': '1.2rem'
+            });
+        } else if (this.id === 'filter-btn-help') {
+            $(this).css({
+                'box-shadow': '0 0 0 3px rgb(64,167,19)'
+            });
+            $(this).find('.icon').css({
+                'color': 'rgb(64,167,19)',
+                'font-size': '1.2rem'
+            });
+        }
+    }).bind('mouseout focusout', function () {
+        $(this).css({
+            'box-shadow': '0 0 0 0 transparent',
+            'border-radius': '6px'
+        });
+        if (this.id === 'filter-btn-reset') {
+            $(this).find('.icon').css({
+                'color': 'var(--themeBackgroundColor)',
+                'transform': 'translate(-50%, -50%) rotate(0deg)'
+            });
+        } else if (this.id === 'filter-btn-close') {
+            $(this).find('.icon').css({
+                'color': 'var(--themeBackgroundColor)',
+                'font-size': '1.1rem'
+            });
+        } else {
+            $(this).find('.icon').css({
+                'color': 'var(--themeBackgroundColor)',
+                'font-size': '1rem'
+            });
+        }
+    });*/
 
     $('.filter-heading-btn').bind('mouseover focusin', function () {
         $(this).find('i').css('color', 'var(--primaryColor)');

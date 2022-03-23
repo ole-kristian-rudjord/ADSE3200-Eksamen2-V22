@@ -23,19 +23,23 @@ $(function () {
 
     // Shows what theme is being hovered
     $('.theme-options-btn').bind('mouseenter focusin', function () {
-        let text;
-        if (this.id === 'theme-option-light') {
-            text = 'light';
-        } else if (this.id === 'theme-option-gray') {
-            text = 'gray';
-        } else if (this.id === 'theme-option-dark') {
-            text = 'dark';
+        if (!isOnMobile()) {
+            let text;
+            if (this.id === 'theme-option-light') {
+                text = 'light';
+            } else if (this.id === 'theme-option-gray') {
+                text = 'gray';
+            } else if (this.id === 'theme-option-dark') {
+                text = 'dark';
+            }
+            $('#theme-text-hover').text(text);
+            $('#theme-text-hover').css('display', 'block');
         }
-        $('#theme-text-hover').text(text);
-        $('#theme-text-hover').css('display', 'block');
     }).bind('mouseleave focusout', function () {
-        $('#theme-text-hover').text('');
-        $('#theme-text-hover').css('display', 'none');
+        if (!isOnMobile()) {
+            $('#theme-text-hover').text('');
+            $('#theme-text-hover').css('display', 'none');
+        }
     });
 /*---------------
     Theme - end
@@ -156,22 +160,28 @@ function isOnFirefox() {
     Error Messages - start
 --------------------------*/
 function createErrorMessage(message) {
+    // li
     let errorMessageLi = document.createElement('li');
     errorMessageLi.className = 'error-message-li';
+
+    // text-span
     let errorMessageSpan = document.createElement('span');
     errorMessageSpan.innerText = message;
-    // errorMessageSpan.title = 'click to remove';
     errorMessageLi.append(errorMessageSpan);
+
+    // underline animation
     let errorMessageUnderline = document.createElement('div');
     errorMessageUnderline.className = 'error-message-underline';
     errorMessageLi.append(errorMessageUnderline);
+
     $('#error-messages-list').append(errorMessageLi);
+
     setTimeout(function () {
         errorMessageUnderline.style.width = '0%';
     }), 0;
+
     if ($('body').is('#compare-shapes')) {
         if (!isOnMobile()) {
-            /*errorMessageUnderline.style.width = '0%';*/
             setTimeout(function () {
                 errorMessageLi.style.transform = 'translateX(100%)';
                 errorMessageLi.style.opacity = '0';
@@ -180,7 +190,6 @@ function createErrorMessage(message) {
                 errorMessageLi.remove();
             }, 5500); // + transition time
         } else {
-           /* errorMessageUnderline.style.width = '0%';*/
             setTimeout(function () {
                 errorMessageLi.style.transform = 'translateX(-100%)';
                 errorMessageLi.style.opacity = '0';
@@ -191,30 +200,18 @@ function createErrorMessage(message) {
         }
     } else if ($('body').is('#search-mouse')) {
         if (!isOnMobile()) {
-            /*errorMessageUnderline.style.width = '0%';*/
             setTimeout(function () {
                 errorMessageLi.style.color = 'var(--themeHoverColor)';
-                /*$('.error-message-li').first().css({
-                    'color': 'var(--themeHoverColor)'
-                });*/
             }, 5000);
             setTimeout(function () {
                 errorMessageLi.remove();
-                /*$('.error-message-li').first().remove();*/
             }, 5200); // + transition time
         } else {
-            /*setTimeout(function () {
-                errorMessageUnderline.style.width = '0%';
-            }), 0;*/
             setTimeout(function () {
                 errorMessageLi.style.color = 'var(--themeHoverColor)';
-                /*$('.error-message-li').first().css({
-                    'color': 'var(--themeHoverColor)'
-                });*/
             }, 5000);
             setTimeout(function () {
                 errorMessageLi.remove();
-                /*$('.error-message-li').first().remove();*/
             }, 5200); // + transition time
         }
     }

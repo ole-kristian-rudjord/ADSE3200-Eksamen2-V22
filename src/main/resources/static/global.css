@@ -143,8 +143,8 @@ nav li {
 nav a {
     display: block;
     padding: 8px 2vw;
-    border-left: transparent solid 2px;
-    border-right: transparent solid 2px;
+    /*border-left: transparent solid 2px;
+    border-right: transparent solid 2px;*/
     white-space: nowrap;
     text-decoration: none;
     color: var(--themeReverseColor);
@@ -152,7 +152,7 @@ nav a {
     transition-property: border-color, background-color;
 }
 nav a:hover {
-    border-color: var(--primaryColor);
+    /*border-color: var(--primaryColor);*/
     background-color: var(--themeHoverColor);
 }
 .burger-icon {
@@ -197,7 +197,7 @@ nav a:hover {
 #side-menu ul {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    /*justify-content: space-evenly;*/
     height: 95vh;
 }
 #side-menu li {
@@ -206,9 +206,9 @@ nav a:hover {
 }
 #side-menu a {
     display: block;
-    padding: 15px 30px;
-    border-top: transparent solid 2px;
-    border-bottom: transparent solid 2px;
+    padding: /*15px */35px;
+    /*border-top: transparent solid 2px;
+    border-bottom: transparent solid 2px;*/
     white-space: nowrap;
     text-decoration: none;
     color: var(--themeReverseColor);
@@ -216,12 +216,13 @@ nav a:hover {
     transition-property: border-color, background-color;
 }
 #side-menu a:hover {
-    border-color: var(--primaryColor);
+    /*border-color: var(--primaryColor);*/
     background-color: var(--themeHoverColor);
 }
 #theme-options {
     display: flex;
     justify-content: center;
+    padding: 35px;
     gap: 16px;
     text-align: center;
 }
@@ -336,10 +337,17 @@ nav a:hover {
     }
     #side-menu ul {
         height: 98vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
     }
     #side-menu a {
-        padding-top: 1vh;
-        padding-bottom: 1vh;
+        padding-top: 2vh;
+        padding-bottom: 2vh;
+    }
+    #theme-options {
+        padding-top: 2vh;
+        padding-bottom: 2vh;
     }
 }
 /*---------------------
