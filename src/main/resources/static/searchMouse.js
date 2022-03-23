@@ -41,9 +41,61 @@ $(function() {
 /*-------------------------------
     Filter main buttons - Start
 -------------------------------*/
+    $('#main-buttons-div button').bind('mouseenter focusin', function () {
+        $(this).css({
+            'color': 'var(--primaryColor)',
+            'background-color': 'var(--themeHoverColor)'
+        });
+        const thisSpan = $(this).find('span');
+        thisSpan.css('display', 'flex');
+        setTimeout(function () {
+            thisSpan.css('left', '100%');
+        }, 10);
+    }).bind('mouseleave focusout', function () {
+        $(this).css({
+            'color': 'var(--themeReverseColor)',
+            'background-color': 'var(--themeBackgroundColor)'
+        });
+        const thisSpan = $(this).find('span');
+        thisSpan.css('left', '-100%');
+        setTimeout(function () {
+            thisSpan.css('display', 'none');
+        }, 180);
+    });
+
     $('#activate-filter-btn').on('click', function () {
         openFilter();
     });
+
+    $('.show-help-btn').on('click', function () {
+        $('#help-div').css('display', 'flex');
+        setTimeout(function () {
+            $('#help-div').css('transform', 'translate(-50%, -50%)');
+        }, 0);
+    });
+
+    $('#help-close, #keyboard-close-help').on('click', function () {
+        $('#help-div').css('transform', 'translate(-50%, 100%)');
+        setTimeout(function () {
+            $('#help-div').css('display', 'none');
+        }, 400);
+    });
+
+    $('#help-close').bind('mouseenter focusin', function () {
+        $(this).css({
+            'opacity': '1',
+            'background-color': 'var(--themeHoverColor)',
+            'color': 'red'
+        });
+    }).bind('mouseleave focusout', function () {
+        $(this).css({
+            'opacity': '0.5',
+            'background-color': 'transparent',
+            'color': 'var(--themeReverseColor)'
+        });
+    });
+
+
 
     $('#filter-btn-apply').on('click', function () {
         let brandList = [];
@@ -149,20 +201,6 @@ $(function() {
         $('.filter-expandable').each(function () {
             $(this).css('display', 'none');
         });
-    });
-
-    $('.show-help-btn').on('click', function () {
-        $('#help-div').css('display', 'flex');
-        setTimeout(function () {
-            $('#help-div').css('transform', 'translate(-50%, -50%)');
-        }, 0);
-    });
-
-    $('#help-close').on('click', function () {
-        $('#help-div').css('transform', 'translate(-50%, 100%)');
-        setTimeout(function () {
-            $('#help-div').css('display', 'none');
-        }, 400);
     });
 
     $('.filter-buttons-div button').bind('mouseover focusin', function () {

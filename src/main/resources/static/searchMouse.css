@@ -92,34 +92,49 @@
     flex-direction: column;
     top: 41px;
     left: 0;
-    border-radius: 0 0 6px 0;
     font-weight: 500;
-    border-right: 2px solid var(--themeBorderColor);
-    border-bottom: 2px solid var(--themeBorderColor);
-    background-color: var(--themeBackgroundColor);
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
     -khtml-user-select: none; /* Konqueror HTML */
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently */
+    z-index: 10;
 }
 #main-buttons-div button {
-    background-color: transparent;
+    position: relative;
     border: none;
     font-size: 1.2rem;
     height: 50px;
     width: 50px;
     color: var(--themeReverseColor);
+    background-color: var(--themeBackgroundColor);
+    border-right: 2px solid var(--themeBorderColor);
     cursor: pointer;
     transition: 180ms ease;
+    transition-property: background-color, color;
 }
-#main-buttons-div button:last-of-type{
+#main-buttons-div button:last-of-type {
+    border-bottom: 2px solid var(--themeBorderColor);
     border-radius: 0 0 6px 0;
 }
-#main-buttons-div button:hover {
+/*#main-buttons-div button:hover {
     background-color: var(--themeHoverColor);
     color: var(--primaryColor);
+}*/
+#main-buttons-div button span {
+    display: none;
+    align-items: center;
+    position: absolute;
+    background-color: var(--themeBackgroundColor);
+    color: var(--themeReverseColor);
+    border-radius: 6px;
+    height: 100%;
+    padding: 0 10px;
+    top: 0;
+    left: -100%;
+    transition: 180ms ease;
+    z-index: -1;
 }
 /*#activate-filter-btn {
     !*position: fixed;
@@ -572,17 +587,17 @@
     transition: 400ms ease;
     z-index: 51;
 }
-#help-div button {
+#help-close {
     position: fixed;
     top: 12px;
-    /*right: 12px;*/
+    right: 12px;
     height: 26px;
     width: 26px;
     background-color: transparent;
-    outline: none;
     font-size: 1.2rem;
     border: none;
     color: var(--themeReverseColor);
+    border-radius: 6px;
     opacity: 0.5;
     cursor: pointer;
     transition: 180ms ease;
@@ -592,26 +607,22 @@
     display: none;
     left: 12px;
 }
-#help-close {
-    right: 12px;
-}
-#help-div button i {
+#help-close i {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-#help-div button:hover {
+/*#help-close:hover {
     opacity: 1;
-    border-radius: 6px;
     background-color: var(--themeHoverColor);
     color: red;
-}
+}*/
 #help-content {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 30px 30px 60px 40px;
+    padding: 30px 30px 0 40px;
     overflow-y: scroll;
     position: relative;
 }
@@ -652,12 +663,22 @@
 #help-content a {
     color: var(--primaryColor);
 }
-
-/*#ambi-vs-ergo-span {
-    display: flex;
-    justify-content: space-around;
-    font-size: 0.92rem;
-}*/
+#keyboard-close-help {
+    opacity: 0;
+    margin: 20px auto;
+    font-size: 1.2rem;
+    padding: 20px 100px;
+    border: 5px solid var(--primaryColor);
+    border-radius: 6px;
+    background-color: var(--themeHoverColor);
+    color: var(--themeReverseColor);
+    transition: 180ms ease;
+    z-index: -1;
+}
+#keyboard-close-help:focus {
+    opacity: 1;
+    z-index: 52;
+}
 
 
 
@@ -756,6 +777,7 @@
     #main-buttons-div button {
         height: 36px;
         width: 36px;
+        position: relative;
     }
     #main-buttons-div button:hover {
         color: var(--themeReverseColor);

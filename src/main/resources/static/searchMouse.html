@@ -17,7 +17,7 @@
 <body id="search-mouse" class="theme-background">
 
 <!-- Skip to content, for keyboards and screen readers -->
-<a href="#main-content" id="skip-to-content">Skip to main content</a>
+<a href="#activate-filter-btn" id="skip-to-content">Skip to main content</a>
 
 <!-- Navbar -->
 <nav>
@@ -72,8 +72,8 @@
 <!--<button id="activate-filter-btn"><span id="activate-filter-text">Filter</span><span class="icon-span"> <i class="icon fa fa-filter"></i></span> </button>-->
 
 <div id="main-buttons-div">
-    <button id="activate-filter-btn"><i class="icon fa fa-filter"></i></button>
-    <button id="activate-help-btn" class="show-help-btn"><i class="icon fa-solid fa-circle-question"></i></button>
+    <button id="activate-filter-btn"><i class="icon fa fa-filter"></i><span>Filter</span></button>
+    <button id="activate-help-btn" class="show-help-btn"><i class="icon fa-solid fa-circle-question"></i><span>Help</span></button>
 </div>
 
 
@@ -228,6 +228,7 @@
             <p> refers the maximum amount of times a mouse can send information per second.<br><span class="link-span">Learn more about polling rate <a
                     href="https://switchandclick.com/whats-the-best-mouse-polling-rate/#:~:text=Polling%20rate%20is%20the%20speed,or%201000%20times%20per%20second." target="_blank" title="Open link in new tab">here</a>.</span></p>
         </div>
+        <button id="keyboard-close-help">Close</button>
     </div>
 </div>
 </body>
