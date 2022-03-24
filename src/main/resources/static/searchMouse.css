@@ -41,7 +41,7 @@
 #mouse-table {
     border-radius: 4px 4px 0 0;
     overflow: hidden;
-    margin: 10vh auto;
+    margin: 102px auto;
     max-width: 99%;
     width: 1200px;
     border-collapse: collapse;
@@ -123,7 +123,7 @@
     color: var(--primaryColor);
 }*/
 #main-buttons-div button span {
-    display: none;
+    display: flex;
     align-items: center;
     position: absolute;
     background-color: var(--themeBackgroundColor);
@@ -715,7 +715,7 @@
         border-radius: 0;
         font-size: 0.9rem;
     }
-    #help-div button {
+    #help-close {
         top: 0;
         left: 0;
         height: 36px;
@@ -726,7 +726,7 @@
     }
     #help-content {
         top: 36px;
-        padding: 50px 10px 100px 16px;
+        padding: 50px 10px 30px 16px;
     }
     #help-content::-webkit-scrollbar {
         width: 6px;
@@ -772,17 +772,21 @@
     #main-buttons-div {
         flex-direction: row;
         top: 0;
-        border: none;
     }
     #main-buttons-div button {
         height: 36px;
         width: 36px;
         position: relative;
+        border: none;
     }
-    #main-buttons-div button:hover {
+    #main-buttons-div button:last-of-type {
+        border-radius: 0;
+        border: none;
+    }
+    /*#main-buttons-div button:hover {
         color: var(--themeReverseColor);
         background-color: inherit;
-    }
+    }*/
 
     #filter-main {
         display: flex;

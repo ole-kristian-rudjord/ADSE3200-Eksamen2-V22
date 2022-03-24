@@ -23,13 +23,13 @@
 -------------------------------------------------------*/
 
 
-
 $(function() {
 /*-----------------------
     Mouse table - start
 -----------------------*/
-    $.get("/Global/getAllMice", function (mouseList) {
-        formatTable(mouseList);
+    $.get("/Global/getAllMice", function (listOfMice) {
+        mouseList = listOfMice;
+        formatTable();
     }).fail(function (status) {
         formatTable('fail: loading');
     })
@@ -46,21 +46,15 @@ $(function() {
             'color': 'var(--primaryColor)',
             'background-color': 'var(--themeHoverColor)'
         });
-        const thisSpan = $(this).find('span');
-        thisSpan.css('display', 'flex');
-        setTimeout(function () {
-            thisSpan.css('left', '100%');
-        }, 10);
+        if (!isOnMobile()) {
+            $(this).find('span').css('left', '100%');
+        }
     }).bind('mouseleave focusout', function () {
         $(this).css({
             'color': 'var(--themeReverseColor)',
             'background-color': 'var(--themeBackgroundColor)'
         });
-        const thisSpan = $(this).find('span');
-        thisSpan.css('left', '-100%');
-        setTimeout(function () {
-            thisSpan.css('display', 'none');
-        }, 180);
+        $(this).find('span').css('left', '-100%');
     });
 
     $('#activate-filter-btn').on('click', function () {
@@ -133,8 +127,9 @@ $(function() {
             pollingRateMax: $('#filter-pollingRate-max').val()
         }
         console.log(filteredMouseSearch);
-        $.get("/SearchMouse/getFilteredMice", filteredMouseSearch, function(mouseList) {
-            formatTable(mouseList);
+        $.get("/SearchMouse/getFilteredMice", filteredMouseSearch, function(listOfMice) {
+            mouseList = listOfMice;
+            formatTable();
             closeFilter();
         }).fail(function (status) {
             formatTable('fail: filter-search');
@@ -387,17 +382,17 @@ $(function() {
 /*----------------------
     Checkmarks - Start
 ----------------------*/
-    $.get('/Global/getDistinctCategoryItems?category=' + 'brand', function (mouseList) {
+    $.get('/Global/getDistinctCategoryItems?category=' + 'brand', function (listOfMice) {
         let brandList = [];
-        for (const mouse of mouseList) {
+        for (const mouse of listOfMice) {
             brandList.push(mouse.brand);
         }
         formatChecklist(brandList, 'brand');
     });
 
-    $.get('/Global/getDistinctCategoryItems?category=' + 'sensor', function (mouseList) {
+    $.get('/Global/getDistinctCategoryItems?category=' + 'sensor', function (listOfMice) {
         let sensorList = [];
-        for (const mouse of mouseList) {
+        for (const mouse of listOfMice) {
             sensorList.push(mouse.sensor);
         }
         formatChecklist(sensorList, 'sensor');
@@ -655,7 +650,17 @@ function closeFilter() {
 /*---------------------
     Formating - start
 ---------------------*/
-function formatTable(mouseList) {
+let mouseList = [];
+
+function formatTableBy() {
+    return $('#format-table-select option:selected').val();
+}
+
+function formatTable() {
+    const formatBy = formatTableBy();
+    /*mouseList.sort((a, b) => a[formatBy ?? 'brand'] + b[formatBy ?? 'brand']);*/
+    mouseList.sort((a, b) => (a[formatBy] > b[formatBy]) ? 1 : -1);
+
     let result =
         "<thead>"+
         "<tr>" +
