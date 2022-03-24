@@ -100,13 +100,15 @@
 
 /*--- Outline(stroke) & fill ---*/
 .SVG-main path {
-    stroke-width: 6;
+    stroke-width: 7;
     stroke: var(--primaryColor);
     fill: none;
 }
+/*
 .SVG-main-side path {
     stroke-width: 7;
 }
+*/
 
 
 /*--- Top shape-view ---*/

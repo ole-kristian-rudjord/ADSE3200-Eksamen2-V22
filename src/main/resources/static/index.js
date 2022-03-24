@@ -391,8 +391,8 @@ $(function() {
   Call functions on load - start
 --------------------------------*/
     // Default shapes
-    addMouse('Zowie', 'FK1+-C');
     addMouse('Zowie', 'EC1-C');
+    addMouse('Zowie', 'ZA13-C');
     /*
     Lag en share shapes knapp for å lage custom URL med brand og model.
     Dersom noen åpner nettsiden med en vanlig URL, kjøp default addMouse(),
