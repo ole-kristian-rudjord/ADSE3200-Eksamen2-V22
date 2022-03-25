@@ -47,14 +47,58 @@ $(function() {
             'background-color': 'var(--themeHoverColor)'
         });
         if (!isOnMobile()) {
-            $(this).find('span').css('left', '100%');
+            const thisSpan = $(this).find('span');
+            thisSpan.css('display', 'flex');
+            setTimeout(function () {
+                thisSpan.css('transform', 'translateX(0)');
+            });
         }
     }).bind('mouseleave focusout', function () {
         $(this).css({
             'color': 'var(--themeReverseColor)',
             'background-color': 'var(--themeBackgroundColor)'
         });
-        $(this).find('span').css('left', '-100%');
+        const thisSpan = $(this).find('span');
+        thisSpan.css('transform', 'translateX(-100%)');
+        setTimeout(function () {
+            thisSpan.css('display', 'none');
+        });
+    });
+
+    $('#activate-sort').bind('mouseenter focusin', function () {
+        $(this).css({
+            'color': 'var(--primaryColor)',
+            'background-color': 'var(--themeHoverColor)'
+        });
+        if (!isOnMobile()) {
+            const thisSpan = $(this).find('span');
+            thisSpan.css('display', 'flex');
+            setTimeout(function () {
+                thisSpan.css('transform', 'translateX(0)');
+            });
+        }
+    }).on('mouseleave', function () {
+        if (!$(this).find('select').is(':focus')) {
+            $(this).css({
+                'color': 'var(--themeReverseColor)',
+                'background-color': 'var(--themeBackgroundColor)'
+            });
+            $(this).find('span').css({
+                'display': 'none',
+                'transform': 'translateX(-100%)'
+            });
+        }
+    });
+
+    $('#activate-sort select').bind('focusout change', function () {
+        $('#activate-sort').css({
+            'color': 'var(--themeReverseColor)',
+            'background-color': 'var(--themeBackgroundColor)'
+        });
+        $('#activate-sort').find('span').css({
+            'display': 'none',
+            'transform': 'translateX(-100%)'
+        });
     });
 
     $('#activate-filter-btn').on('click', function () {
@@ -66,6 +110,10 @@ $(function() {
         setTimeout(function () {
             $('#help-div').css('transform', 'translate(-50%, -50%)');
         }, 0);
+    });
+
+    $('#format-table-select').on('change', function () {
+        formatTable();
     });
 
     $('#help-close, #keyboard-close-help').on('click', function () {
@@ -652,13 +700,8 @@ function closeFilter() {
 ---------------------*/
 let mouseList = [];
 
-function formatTableBy() {
-    return $('#format-table-select option:selected').val();
-}
-
 function formatTable() {
-    const formatBy = formatTableBy();
-    /*mouseList.sort((a, b) => a[formatBy ?? 'brand'] + b[formatBy ?? 'brand']);*/
+    const formatBy = $('#format-table-select option:selected').val();
     mouseList.sort((a, b) => (a[formatBy] > b[formatBy]) ? 1 : -1);
 
     let result =

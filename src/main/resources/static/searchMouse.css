@@ -101,7 +101,7 @@
     user-select: none; /* Non-prefixed version, currently */
     z-index: 10;
 }
-#main-buttons-div button {
+.main-button {
     position: relative;
     border: none;
     font-size: 1.2rem;
@@ -114,15 +114,17 @@
     transition: 180ms ease;
     transition-property: background-color, color;
 }
-#main-buttons-div button:last-of-type {
+.main-button i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.main-button:last-child {
     border-bottom: 2px solid var(--themeBorderColor);
     border-radius: 0 0 6px 0;
 }
-/*#main-buttons-div button:hover {
-    background-color: var(--themeHoverColor);
-    color: var(--primaryColor);
-}*/
-#main-buttons-div button span {
+.main-button span {
     display: flex;
     align-items: center;
     position: absolute;
@@ -132,38 +134,17 @@
     height: 100%;
     padding: 0 10px;
     top: 0;
-    left: -100%;
+    left: 100%;
+    transform: translateX(-100%);
     transition: 180ms ease;
     z-index: -1;
 }
-/*#activate-filter-btn {
-    !*position: fixed;
-    top: 41px;
-    left: 0;
-    border: none;
-    border-right: 2px solid var(--themeBorderColor);
-    border-bottom: 2px solid var(--themeBorderColor);
-    border-radius: 0 0 6px 0;
-    font-size: 1rem;
-    font-weight: 500;
-    background-color: var(--themeBackgroundColor);
+#activate-sort select {
     color: var(--themeReverseColor);
-    padding: 14px 14px 12px 14px;
-    cursor: pointer;
-    transition: border-color 180ms ease, background-color 180ms ease;
-    -webkit-touch-callout: none; !* iOS Safari *!
-    -webkit-user-select: none; !* Safari *!
-    -khtml-user-select: none; !* Konqueror HTML *!
-    -moz-user-select: none; !* Old versions of Firefox *!
-    -ms-user-select: none; !* Internet Explorer/Edge *!
-    user-select: none; !* Non-prefixed version, currently *!*!
+    background-color: var(--themeBackgroundColor);
+    border: 2px solid var(--themeBorderColor);
+    border-radius: 4px;
 }
-#activate-filter-btn:hover {
-    background-color: var(--themeHoverColor);
-    border-color: var(--primaryColor);
-    !*border-right: 3px solid var(--primaryColor);
-    border-bottom: 3px solid var(--primaryColor);*!
-}*/
 
 
 #filter-main {
@@ -773,13 +754,13 @@
         flex-direction: row;
         top: 0;
     }
-    #main-buttons-div button {
+    .main-button {
         height: 36px;
         width: 36px;
         position: relative;
         border: none;
     }
-    #main-buttons-div button:last-of-type {
+    .main-button:last-of-type {
         border-radius: 0;
         border: none;
     }
