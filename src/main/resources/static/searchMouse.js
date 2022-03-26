@@ -90,7 +90,16 @@ $(function() {
         }
     });
 
-    $('#activate-sort select').bind('focusout change', function () {
+    $('#sort-toggle').on('click', function () {
+        if ($(this).is(':checked')) {
+            $(this).prev('label').text('A-Z | Low-High');
+        } else {
+            $(this).prev('label').text('Z-A | High-Low');
+        }
+        formatTable();
+    });
+
+    $('#activate-sort select').bind('change', function () {
         $('#activate-sort').css({
             'color': 'var(--themeReverseColor)',
             'background-color': 'var(--themeBackgroundColor)'
@@ -702,7 +711,12 @@ let mouseList = [];
 
 function formatTable() {
     const formatBy = $('#format-table-select option:selected').val();
-    mouseList.sort((a, b) => (a[formatBy] > b[formatBy]) ? 1 : -1);
+    if ($('#sort-toggle').is(':checked')) {
+        mouseList.sort((a, b) => (a[formatBy] > b[formatBy]) ? 1 : -1);
+    } else {
+        mouseList.sort((a, b) => (a[formatBy] < b[formatBy]) ? 1 : -1);
+    }
+
 
     let result =
         "<thead>"+
