@@ -89,6 +89,31 @@ $(function() {
         }
     });
 
+    /*$('#table-sort-select').on('focusout', function () {
+        setTimeout(function () {
+            if (!$('#table-sort-checkbox').is(':focus')) {
+                $('#table-sort-div').css('transform', 'translate(-100%, -100%)');
+                setTimeout(function () {
+                    $('#table-sort-div').css('display', 'none');
+                }, 180);
+            }
+        });
+    });
+    $('#table-sort-checkbox').on('focusout', function () {
+        setTimeout(function () {
+            if (!$('#table-sort-select').is(':focus')) {
+                $('#table-sort-div').css('transform', 'translate(-100%, -100%)');
+                setTimeout(function () {
+                    $('#table-sort-div').css('display', 'none');
+                }, 180);
+            }
+        });
+    });*/
+
+    /*$('#table-sort-close').on('click', function () {
+
+    });*/
+
     $('#table-sort-checkbox').on('click', function () {
         if ($(this).is(':checked')) {
             $(this).prev('label').text('A-Z | Low-High');
@@ -109,7 +134,7 @@ $(function() {
         }, 0);
     });
 
-    $('#format-table-select').on('change', function () {
+    $('#table-sort-select').on('change', function () {
         formatTable();
     });
 
