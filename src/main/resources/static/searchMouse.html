@@ -74,27 +74,25 @@
 <div id="main-buttons-div">
     <button id="activate-filter-btn" class="main-button"><i class="icon fa fa-filter"></i><span>Filter</span></button>
     <button id="activate-help-btn" class="main-button show-help-btn"><i class="icon fa-solid fa-circle-question"></i><span>Help</span></button>
-    <div id="activate-sort" class="main-button" tabindex="0">
-        <i class="icon fa-solid fa-sort"></i>
-        <span>
-            <div id="sort-toggle-div">
-                <label for="sort-toggle">A-Z | Low-High</label>
-                <input type="checkbox" checked id="sort-toggle">
-            </div>
-            <select name="" id="format-table-select">
-                <option value="brand" selected>Brand</option>
-                <option value="model">Model</option>
-                <option value="length">Length</option>
-                <option value="width">Width</option>
-                <option value="height">Height</option>
-                <option value="weight">Weight</option>
-                <option value="shape">Shape</option>
-                <option value="connectivity">Connectivity</option>
-                <option value="sensor">Sensor</option>
-                <option value="dpi">DPI</option>
-                <option value="pollingRate">Polling Rate</option>
-            </select>
-        </span>
+    <button id="table-sort-btn" class="main-button"><i class="icon fa-solid fa-sort"></i><span>Sort</span></button>
+    <div id="table-sort-div">
+        <div id="table-sort-toggle-div">
+            <label for="table-sort-checkbox">A-Z | Low-High</label>
+            <input type="checkbox" checked id="table-sort-checkbox">
+        </div>
+        <select name="" id="table-sort-select">
+            <option value="brand" selected>Brand</option>
+            <option value="model">Model</option>
+            <option value="length">Length</option>
+            <option value="width">Width</option>
+            <option value="height">Height</option>
+            <option value="weight">Weight</option>
+            <option value="shape">Shape</option>
+            <option value="connectivity">Connectivity</option>
+            <option value="sensor">Sensor</option>
+            <option value="dpi">DPI</option>
+            <option value="pollingRate">Polling Rate</option>
+        </select>
     </div>
 </div>
 

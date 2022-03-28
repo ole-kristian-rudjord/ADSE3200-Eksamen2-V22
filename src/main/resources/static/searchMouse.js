@@ -65,49 +65,37 @@ $(function() {
         });
     });
 
-    $('#activate-sort').bind('mouseenter focusin', function () {
-        $(this).css({
-            'color': 'var(--primaryColor)',
-            'background-color': 'var(--themeHoverColor)'
-        });
-        if (!isOnMobile()) {
-            const thisSpan = $(this).find('span');
-            thisSpan.css('display', 'flex');
+    $('#table-sort-btn').on('click', function () {
+        if ($('#table-sort-div').css('display') === 'none') {
+            $('#table-sort-div').css('display', 'flex');
             setTimeout(function () {
-                thisSpan.css('transform', 'translateX(0)');
-            });
-        }
-    }).on('mouseleave', function () {
-        if (!$(this).find('select').is(':focus')) {
-            $(this).css({
-                'color': 'var(--themeReverseColor)',
-                'background-color': 'var(--themeBackgroundColor)'
-            });
-            $(this).find('span').css({
-                'display': 'none',
-                'transform': 'translateX(-100%)'
-            });
+                $('#table-sort-div').css('transform', 'translate(50px, -100%)');
+            }, 0);
+        } else {
+            $('#table-sort-div').css('transform', 'translate(-100%, -100%)');
+            setTimeout(function () {
+                $('#table-sort-div').css('display', 'none');
+            }, 180);
         }
     });
 
-    $('#sort-toggle').on('click', function () {
+    $(document).on('mouseup', function (e) {
+        if ($('#table-sort-div').css('display') === 'flex'
+            && $('#table-sort-div').has(e.target).length === 0) {
+            $('#table-sort-div').css('transform', 'translate(-100%, -100%)');
+            setTimeout(function () {
+                $('#table-sort-div').css('display', 'none');
+            }, 180);
+        }
+    });
+
+    $('#table-sort-checkbox').on('click', function () {
         if ($(this).is(':checked')) {
             $(this).prev('label').text('A-Z | Low-High');
         } else {
             $(this).prev('label').text('Z-A | High-Low');
         }
         formatTable();
-    });
-
-    $('#activate-sort select').bind('change', function () {
-        $('#activate-sort').css({
-            'color': 'var(--themeReverseColor)',
-            'background-color': 'var(--themeBackgroundColor)'
-        });
-        $('#activate-sort').find('span').css({
-            'display': 'none',
-            'transform': 'translateX(-100%)'
-        });
     });
 
     $('#activate-filter-btn').on('click', function () {
@@ -710,8 +698,8 @@ function closeFilter() {
 let mouseList = [];
 
 function formatTable() {
-    const formatBy = $('#format-table-select option:selected').val();
-    if ($('#sort-toggle').is(':checked')) {
+    const formatBy = $('#table-sort-select option:selected').val();
+    if ($('#table-sort-checkbox').is(':checked')) {
         mouseList.sort((a, b) => (a[formatBy] > b[formatBy]) ? 1 : -1);
     } else {
         mouseList.sort((a, b) => (a[formatBy] < b[formatBy]) ? 1 : -1);
