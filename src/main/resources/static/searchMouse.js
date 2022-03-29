@@ -135,7 +135,34 @@ $(function() {
     });
 
     $('#table-sort-select').on('change', function () {
+        // console.log($('#table-sort-select option:selected').text());
         formatTable();
+        /*$('#mouse-table thead tr td').each(function () {
+            if ($(this).text() === $('#table-sort-select option:selected').text()) {
+                $(this).css({
+                    'text-decoration' :'underline',
+                    'text-decoration-color' : 'var(--primaryColor)',
+                    'text-decoration-thickness' : '2px'
+                });
+                return true;
+            }
+        });*/
+    });
+
+    $('body').on('click', '#mouse-table thead tr td button', function () {
+        const tableHeadText = $(this).text();
+        $('#table-sort-select option').each(function () {
+            if ($(this).text() === tableHeadText) {
+                $(this).prop('selected', true);
+                formatTable();
+                return false;
+            }
+        });
+        if ($('#table-sort-checkbox').is(':checked')) {
+            $('#table-sort-checkbox').prop('checked', false);
+        } else {
+            $('#table-sort-checkbox').prop('checked', true);
+        }
     });
 
     $('#help-close, #keyboard-close-help').on('click', function () {
@@ -733,19 +760,19 @@ function formatTable() {
 
     let result =
         "<thead>"+
-        "<tr>" +
-        "<td class='string'>Brand</td>" +
-        "<td class='string'>Name</td>" +
-        "<td class='number'>Length</td>" +
-        "<td class='number'>Width</td>" +
-        "<td class='number'>Height</td>" +
-        "<td class='number'>Weight</td>" +
-        "<td class='string'>Shape</td>" +
-        "<td class='string'>Connectivity</td>" +
-        "<td class='string'>Sensor</td>" +
-        "<td class='number'>DPI</td>" +
-        "<td class='number'>Polling Rate</td>" +
-        "</tr>" +
+            "<tr>" +
+                "<td><button class='string'>Brand</button></td>" +
+                "<td><button class='string'>Model</button></td>" +
+                "<td><button class='number'>Length</button></td>" +
+                "<td><button class='number'>Width</button></td>" +
+                "<td><button class='number'>Height</button></td>" +
+                "<td><button class='number'>Weight</button></td>" +
+                "<td><button class='string'>Shape</button></td>" +
+                "<td><button class='string'>Connectivity</button></td>" +
+                "<td><button class='string'>Sensor</button></td>" +
+                "<td><button class='number'>DPI</button></td>" +
+                "<td><button class='number'>Polling Rate</button></td>" +
+            "</tr>" +
         "</thead>";
     if (mouseList === 'fail: loading') {
         $('#mouse-table').html(result);
@@ -786,6 +813,16 @@ function formatTable() {
         }
         result += "</tbody>";
         $('#mouse-table').html(result);
+
+        $('#mouse-table thead tr td button').each(function () {
+            if ($(this).text() === $('#table-sort-select option:selected').text()) {
+                $(this).css({
+                    'text-decoration' :'underline',
+                    'text-decoration-color' : 'var(--primaryColor)',
+                    'text-decoration-thickness' : '2px'
+                });
+            }
+        });
     }
 }
 function formatChecklist(list, category) {
