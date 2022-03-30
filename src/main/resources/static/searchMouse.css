@@ -50,24 +50,6 @@
     color: var(--themeReverseColor);
 }
 
-/*#mouse-table thead tr {
-    font-size: 1rem;
-    font-weight: 500;
-    text-align: left;
-    color: var(--themeBackgroundColor);
-    background-color: var(--themeReverseColor);
-    cursor: pointer;
-    -webkit-user-select: none; !* Safari *!
-    -moz-user-select: none; !* Firefox *!
-    -ms-user-select: none; !* IE10+/Edge *!
-    user-select: none; !* Standard *!
-}*/
-
-#mouse-table button,
-#mouse-table tbody td {
-    padding: 8px 0.8vw;
-}
-
 #mouse-table button {
     font-size: 1rem;
     font-weight: 500;
@@ -75,10 +57,36 @@
     background-color: var(--themeReverseColor);
     cursor: pointer;
     width: 100%;
-    height: 100%;
+    padding: 12px 0.8vw;
     border: none;
     border-radius: 0;
+    white-space: nowrap;
+    position: relative;
 }
+/*#mouse-table button i {
+    opacity: 0;
+    margin: 0 2px;
+    font-size: 0.8rem;
+}*/
+/*#mouse-table button.string::after {
+    font-family: "Font Awesome 5 free";
+    font-weight: 900;
+    content: "\f107";
+    margin-left: 2px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}*/
+/*#mouse-table button .category-span {
+    position: relative;
+}
+#mouse-table button i {
+    position: absolute;
+    font-size: 0.7rem;
+    left: 50%;
+    transform: translate(-50%, 175%);
+    color: var(--themeBackgroundColor);
+}*/
 
 #mouse-table .string {
     text-align: left;
@@ -87,6 +95,9 @@
     text-align: right;
 }
 
+#mouse-table tbody tr td {
+    padding: 8px 0.8vw;
+}
 #mouse-table tbody tr:nth-of-type(even) {
     background-color: var(--themeHoverColor);
 }

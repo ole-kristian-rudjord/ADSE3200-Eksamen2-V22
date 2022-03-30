@@ -21,7 +21,7 @@ public class GlobalService {
     }
 
     public List<Mouse> getAllMice() {
-        String sql = "SELECT * FROM mice ORDER BY brand ASC";
+        String sql = "SELECT * FROM mice/* ORDER BY brand ASC*/";
 
         try {
             List<Mouse> mouseList = db.query(sql, new BeanPropertyRowMapper<>(Mouse.class));

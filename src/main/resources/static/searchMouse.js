@@ -79,50 +79,6 @@ $(function() {
         }
     });
 
-    $(document).on('mouseup', function (e) {
-        if ($('#table-sort-div').css('display') === 'flex'
-            && $('#table-sort-div').has(e.target).length === 0) {
-            $('#table-sort-div').css('transform', 'translate(-100%, -100%)');
-            setTimeout(function () {
-                $('#table-sort-div').css('display', 'none');
-            }, 180);
-        }
-    });
-
-    /*$('#table-sort-select').on('focusout', function () {
-        setTimeout(function () {
-            if (!$('#table-sort-checkbox').is(':focus')) {
-                $('#table-sort-div').css('transform', 'translate(-100%, -100%)');
-                setTimeout(function () {
-                    $('#table-sort-div').css('display', 'none');
-                }, 180);
-            }
-        });
-    });
-    $('#table-sort-checkbox').on('focusout', function () {
-        setTimeout(function () {
-            if (!$('#table-sort-select').is(':focus')) {
-                $('#table-sort-div').css('transform', 'translate(-100%, -100%)');
-                setTimeout(function () {
-                    $('#table-sort-div').css('display', 'none');
-                }, 180);
-            }
-        });
-    });*/
-
-    /*$('#table-sort-close').on('click', function () {
-
-    });*/
-
-    $('#table-sort-checkbox').on('click', function () {
-        if ($(this).is(':checked')) {
-            $(this).prev('label').text('A-Z | Low-High');
-        } else {
-            $(this).prev('label').text('Z-A | High-Low');
-        }
-        formatTable();
-    });
-
     $('#activate-filter-btn').on('click', function () {
         openFilter();
     });
@@ -134,35 +90,18 @@ $(function() {
         }, 0);
     });
 
-    $('#table-sort-select').on('change', function () {
-        // console.log($('#table-sort-select option:selected').text());
-        formatTable();
-        /*$('#mouse-table thead tr td').each(function () {
-            if ($(this).text() === $('#table-sort-select option:selected').text()) {
-                $(this).css({
-                    'text-decoration' :'underline',
-                    'text-decoration-color' : 'var(--primaryColor)',
-                    'text-decoration-thickness' : '2px'
-                });
-                return true;
-            }
-        });*/
-    });
-
     $('body').on('click', '#mouse-table thead tr td button', function () {
-        const tableHeadText = $(this).text();
-        $('#table-sort-select option').each(function () {
-            if ($(this).text() === tableHeadText) {
-                $(this).prop('selected', true);
-                formatTable();
-                return false;
+        if ($(this).val() === formatByCategory) {
+            if (formatAscending) {
+                formatAscending = false;
+            } else {
+                formatAscending = true;
             }
-        });
-        if ($('#table-sort-checkbox').is(':checked')) {
-            $('#table-sort-checkbox').prop('checked', false);
         } else {
-            $('#table-sort-checkbox').prop('checked', true);
+            formatAscending = true;
         }
+        formatByCategory = $(this).val();
+        formatTable();
     });
 
     $('#help-close, #keyboard-close-help').on('click', function () {
@@ -748,39 +687,26 @@ function closeFilter() {
     Formating - start
 ---------------------*/
 let mouseList = [];
+let formatByCategory = 'brand';
+let formatAscending = true;
 
 function formatTable() {
-    const formatBy = $('#table-sort-select option:selected').val();
-    if ($('#table-sort-checkbox').is(':checked')) {
-        mouseList.sort((a, b) => (a[formatBy] > b[formatBy]) ? 1 : -1);
+    if (formatAscending === true) {
+        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : -1);
     } else {
-        mouseList.sort((a, b) => (a[formatBy] < b[formatBy]) ? 1 : -1);
+        mouseList.sort((a, b) => (a[formatByCategory] < b[formatByCategory]) ? 1 : -1);
     }
+    console.log(formatAscending)
 
+    let result = "";
 
-    let result =
-        "<thead>"+
-            "<tr>" +
-                "<td><button class='string'>Brand</button></td>" +
-                "<td><button class='string'>Model</button></td>" +
-                "<td><button class='number'>Length</button></td>" +
-                "<td><button class='number'>Width</button></td>" +
-                "<td><button class='number'>Height</button></td>" +
-                "<td><button class='number'>Weight</button></td>" +
-                "<td><button class='string'>Shape</button></td>" +
-                "<td><button class='string'>Connectivity</button></td>" +
-                "<td><button class='string'>Sensor</button></td>" +
-                "<td><button class='number'>DPI</button></td>" +
-                "<td><button class='number'>Polling Rate</button></td>" +
-            "</tr>" +
-        "</thead>";
     if (mouseList === 'fail: loading') {
         $('#mouse-table').html(result);
         createErrorMessage('Mouse information failed to load, please try again later');
     } else if (mouseList === 'fail: filter-search') {
         createErrorMessage('Filters did not match mice from the database');
     } else {
-        result += "<tbody>";
+        /*result += "<tbody>";*/
         for (const mouse of mouseList) {
             let shape;
             if (mouse.shape) {
@@ -798,29 +724,44 @@ function formatTable() {
 
             result +=
                 "<tr>" +
-                "<td class='string'>" + mouse.brand + "</td>" +
-                "<td class='string'>" + mouse.model.replace(/-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
-                "<td class='number'>" + parseFloat(mouse.length) + "</td>" +
-                "<td class='number'>" + parseFloat(mouse.width) + "</td>" +
-                "<td class='number'>" + parseFloat(mouse.height) + "</td>" +
-                "<td class='number'>" + parseFloat(mouse.weight) + "</td>" +
-                "<td class='string'>" + shape + "</td>" +
-                "<td class='string'>" + connectivity + "</td>" +
-                "<td class='string'>" + mouse.sensor + "</td>" +
-                "<td class='number'>" + parseFloat(mouse.dpi) + "</td>" +
-                "<td class='number'>" + parseFloat(mouse.pollingRate) + "</td>" +
+                    "<td class='string'>" + mouse.brand + "</td>" +
+                    "<td class='string'>" + mouse.model.replace(/-/g, '&#8209;') + "</td>" + // &#8209; to avoid wrapping
+                    "<td class='number'>" + parseFloat(mouse.length) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.width) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.height) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.weight) + "</td>" +
+                    "<td class='string'>" + shape + "</td>" +
+                    "<td class='string'>" + connectivity + "</td>" +
+                    "<td class='string'>" + mouse.sensor + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.dpi) + "</td>" +
+                    "<td class='number'>" + parseFloat(mouse.pollingRate) + "</td>" +
                 "</tr>"
         }
-        result += "</tbody>";
-        $('#mouse-table').html(result);
+        /*result += "</tbody>";*/
+        $('#mouse-table tbody').html(result);
 
         $('#mouse-table thead tr td button').each(function () {
-            if ($(this).text() === $('#table-sort-select option:selected').text()) {
+            if ($(this).val() !== formatByCategory) {
                 $(this).css({
-                    'text-decoration' :'underline',
+                    'text-decoration' : 'none',
                     'text-decoration-color' : 'var(--primaryColor)',
-                    'text-decoration-thickness' : '2px'
+                    'text-decoration-thickness' : '2px',
+                    'text-underline-offset' : '1px'
                 });
+                $(this).find('i').css('opacity', '0');
+            } else {
+                $(this).css({
+                    'text-decoration' : 'underline',
+                    'text-decoration-color' : 'var(--primaryColor)',
+                    'text-decoration-thickness' : '2px',
+                    'text-underline-offset' : '1px'
+                });
+                /*$(this).find('i').css('opacity', '1');
+                if (formatAscending) {
+                    $(this).find('i').css('transform', 'rotate(180deg)');
+                } else {
+                    $(this).find('i').css('transform', 'rotate(0deg)');
+                }*/
             }
         });
     }
