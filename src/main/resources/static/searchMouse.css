@@ -63,30 +63,22 @@
     white-space: nowrap;
     position: relative;
 }
-/*#mouse-table button i {
-    opacity: 0;
-    margin: 0 2px;
-    font-size: 0.8rem;
-}*/
-/*#mouse-table button.string::after {
-    font-family: "Font Awesome 5 free";
-    font-weight: 900;
-    content: "\f107";
-    margin-left: 2px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}*/
-/*#mouse-table button .category-span {
-    position: relative;
+/*#mouse-table button.string {
+    padding-right: 10px;
 }
-#mouse-table button i {
-    position: absolute;
-    font-size: 0.7rem;
-    left: 50%;
-    transform: translate(-50%, 175%);
-    color: var(--themeBackgroundColor);
+#mouse-table button.number {
+    padding-left: 10px;
 }*/
+#mouse-table button i {
+    opacity: 0;
+    font-size: 0.7rem;
+}
+#mouse-table button.string i {
+    margin-left: 2px;
+}
+#mouse-table button.number i {
+    margin-right: 3px;
+}
 
 #mouse-table .string {
     text-align: left;

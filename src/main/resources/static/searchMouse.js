@@ -696,7 +696,6 @@ function formatTable() {
     } else {
         mouseList.sort((a, b) => (a[formatByCategory] < b[formatByCategory]) ? 1 : -1);
     }
-    console.log(formatAscending)
 
     let result = "";
 
@@ -706,7 +705,6 @@ function formatTable() {
     } else if (mouseList === 'fail: filter-search') {
         createErrorMessage('Filters did not match mice from the database');
     } else {
-        /*result += "<tbody>";*/
         for (const mouse of mouseList) {
             let shape;
             if (mouse.shape) {
@@ -737,7 +735,6 @@ function formatTable() {
                     "<td class='number'>" + parseFloat(mouse.pollingRate) + "</td>" +
                 "</tr>"
         }
-        /*result += "</tbody>";*/
         $('#mouse-table tbody').html(result);
 
         $('#mouse-table thead tr td button').each(function () {
@@ -748,6 +745,11 @@ function formatTable() {
                     'text-decoration-thickness' : '2px',
                     'text-underline-offset' : '1px'
                 });
+                if ($(this).attr('class') === 'string') {
+                    $(this).attr('title', 'Sort by ' + $(this).text() + ' | A-Z');
+                } else {
+                    $(this).attr('title', 'Sort by ' + $(this).text() + ' | Low-High');
+                }
                 $(this).find('i').css('opacity', '0');
             } else {
                 $(this).css({
@@ -756,12 +758,27 @@ function formatTable() {
                     'text-decoration-thickness' : '2px',
                     'text-underline-offset' : '1px'
                 });
-                /*$(this).find('i').css('opacity', '1');
+
                 if (formatAscending) {
-                    $(this).find('i').css('transform', 'rotate(180deg)');
+                    if ($(this).attr('class') === 'string') {
+                        $(this).attr('title', 'Sorted by ' + $(this).text() + ' | A-Z');
+                    } else {
+                        $(this).attr('title', 'Sorted by ' + $(this).text() + ' | Low-High');
+                    }
                 } else {
+                    if ($(this).attr('class') === 'string') {
+                        $(this).attr('title', 'Sorted by ' + $(this).text() + ' | Z-A');
+                    } else {
+                        $(this).attr('title', 'Sorted by ' + $(this).text() + ' | High-Low');
+                    }
+                }
+
+                $(this).find('i').css('opacity', '1');
+                if (formatAscending) {
                     $(this).find('i').css('transform', 'rotate(0deg)');
-                }*/
+                } else {
+                    $(this).find('i').css('transform', 'rotate(180deg)');
+                }
             }
         });
     }
