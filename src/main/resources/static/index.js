@@ -37,7 +37,7 @@ $(function() {
         type: 'get',
         async: false,
         success: function (allMice) {
-            mouseArray = allMice;
+            mouseArray = allMice.sort((a, b) => (a.brand > b.brand) ? 1 : -1);
         },
         error: function (status) {
             createErrorMessage("Error: " + status.status + "\nCloud not retrieve mice form the database.");
@@ -789,15 +789,17 @@ function addMouse(inputBrand, inputModel) {
 function getMatchingModels() {
     $('#add-new-shape-list-model').empty();
     const selectedBrand = $('#add-new-shape-brand').val();
+
+    let mouseArraySortModel = mouseArray.sort((a, b) => (a.model > b.model) ? 1 : -1);
     if (selectedBrand === "") {
-        for (const mouse of mouseArray) {
+        for (const mouse of mouseArraySortModel) {
             let modelOption = document.createElement('option');
             modelOption.value = mouse.model;
             modelOption.className = 'shape-tool-list-option';
             $('#add-new-shape-list-model').append(modelOption);
         }
     } else {
-        for (const mouse of mouseArray) {
+        for (const mouse of mouseArraySortModel) {
             if (mouse.brand === selectedBrand) {
                 let modelOption = document.createElement('option');
                 modelOption.value = mouse.model;
