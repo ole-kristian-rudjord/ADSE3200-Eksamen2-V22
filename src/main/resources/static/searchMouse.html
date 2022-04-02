@@ -70,100 +70,6 @@
     <button id="activate-help-btn" class="main-button show-help-btn"><i class="icon fa-solid fa-circle-question"></i><span>Help</span></button>
 </div>
 
-<div id="help-div">
-    <button id="help-move"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
-    <button id="help-close"><i class="fa-solid fa-xmark"></i></button>
-    <div id="help-content">
-        <h1>Help</h1>
-        <div>
-            <h2>Search Mouse page</h2>
-            <p>The "Search Mouse" page displays a table filled with mice from ES' current database. In the top left corner, is a button which allows for custom filters to be applied. This will let you search for mice that fit within certain specifications like size, weight, connectivity, etc.</p>
-            <h2>Mouse specifications:</h2>
-        </div>
-        <div class="help-content-div">
-            <h3>Brand</h3>
-            <p> refers to mice's producer or the company which sells the product.</p>
-        </div>
-        <div class="help-content-div">
-            <h3>Model</h3>
-            <p> specifies the name of specific mouse from a brand.</p>
-        </div>
-        <div class="help-content-div">
-            <h3>Length</h3>
-            <p> is measured in millimeters from the base of the mouse, to the very tip:</p>
-            <img src="" alt="">
-        </div>
-        <div class="help-content-div">
-            <h3>Width</h3>
-            <p> is measured in millimeters between the two widest points of the mouse:</p>
-            <img src="" alt="">
-        </div>
-        <div class="help-content-div">
-            <h3>Height</h3>
-            <p> is measured in millimeters from the bottom of the mouse, to the top:</p>
-            <img src="" alt="">
-        </div>
-        <div class="help-content-div">
-            <h3>Weight</h3>
-            <p> is measured in grams, preferably without the cable:</p>
-            <img src="" alt="">
-        </div>
-        <div class="help-content-div">
-            <h3>Shape</h3>
-            <p> points to whether a mouse is ambidextrous(left) or ergonomic(right):</p>
-            <img src="searchMouseImages/ambiVSergo.png" alt="Ambidextrous(left) vs Ergonomic(right)">
-        </div>
-        <div class="help-content-div">
-            <h3>Connectivity</h3>
-            <p> refers to whether a mouse is wired or wireless.</p>
-        </div>
-        <div class="help-content-div">
-            <h3>Sensor</h3>
-            <p> specifies the sensor-version that is used in a mouse.<br><span class="link-span">Learn more about mouse sensors <a href="https://en.wikipedia.org/wiki/Optical_mouse" target="_blank" title="Open link in new tab">here</a>.</span></p>
-        </div>
-        <div class="help-content-div">
-            <h3>DPI</h3>
-            <p> describes to the maximum Dots Per Inch (DPI) available for a mouse.<br><span class="link-span">Learn more about DPI <a href="https://en.wikipedia.org/wiki/Computer_mouse#Mouse_speed" target="_blank" title="Open link in new tab">here</a>.</span></p>
-        </div>
-        <div class="help-content-div">
-            <h3>Polling rate</h3>
-            <p> refers the maximum amount of times a mouse can send information per second.<br><span class="link-span">Learn more about polling rate <a
-                    href="https://switchandclick.com/whats-the-best-mouse-polling-rate/#:~:text=Polling%20rate%20is%20the%20speed,or%201000%20times%20per%20second." target="_blank" title="Open link in new tab">here</a>.</span></p>
-        </div>
-        <button id="keyboard-close-help">Close</button>
-    </div>
-</div>
-
-<table id="mouse-table">
-    <thead>
-        <tr>
-            <!--<td><button class="string" value="brand">Brand</button></td>
-            <td><button class="string" value="model">Model</button></td>
-            <td><button class="number" value="length">Length</button></td>
-            <td><button class="number" value="width">Width</button></td>
-            <td><button class="number" value="height">Height</button></td>
-            <td><button class="number" value="weight">Weight</button></td>
-            <td><button class="string" value="shape">Shape</button></td>
-            <td><button class="string" value="wireless">Connectivity</button></td>
-            <td><button class="string" value="sensor">Sensor</button></td>
-            <td><button class="number" value="dpi">DPI</button></td>
-            <td><button class="number" value="pollingRate">Polling Rate</button></td>-->
-            <td><button class="string" value="brand">Brand<i class="fa-solid fa-angle-down"></i></button></td>
-            <td><button class="string" value="model">Model<i class="fa-solid fa-angle-down"></i></button></td>
-            <td><button class="number" value="length"><i class="fa-solid fa-angle-down"></i>Length</button></td>
-            <td><button class="number" value="width"><i class="fa-solid fa-angle-down"></i>Width</button></td>
-            <td><button class="number" value="height"><i class="fa-solid fa-angle-down"></i>Height</button></td>
-            <td><button class="number" value="weight"><i class="fa-solid fa-angle-down"></i>Weight</button></td>
-            <td><button class="string" value="shape">Shape<i class="fa-solid fa-angle-down"></i></button></td>
-            <td><button class="string" value="wireless">Connectivity<i class="fa-solid fa-angle-down"></i></button></td>
-            <td><button class="string" value="sensor">Sensor<i class="fa-solid fa-angle-down"></i></button></td>
-            <td><button class="number" value="dpi"><i class="fa-solid fa-angle-down"></i>DPI</button></td>
-            <td><button class="number" value="pollingRate"><i class="fa-solid fa-angle-down"></i>Polling Rate</button></td>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
 <div id="screen-cover-filter"></div>
 
 <div id="filter-main">
@@ -252,7 +158,101 @@
         <button id="filter-btn-open">Open<span class="icon-span"><i class="icon fa fa-unlock"></i></span></button>
         <button id="filter-btn-collapse">Collapse<span class="icon-span"><i class="icon fa-solid fa-lock"></i></span></button>
         <button id="filter-btn-help" class="show-help-btn">Help<span class="icon-span"><i class="icon fa-solid fa-circle-question"></i></span></button>
+        <button id="filter-btn-keyboard-close">Close</button>
     </div>
 </div>
+
+<div id="help-div">
+    <button id="help-move"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+    <button id="help-close"><i class="fa-solid fa-xmark"></i></button>
+    <div id="help-content">
+        <h1>Help</h1>
+        <div>
+            <h2>Search Mouse page</h2>
+            <p>The "Search Mouse" page displays a table filled with mice from ES' current database. In the top left corner, is a button which allows for custom filters to be applied. This will let you search for mice that fit within certain specifications like size, weight, connectivity, etc.</p>
+            <h2>Mouse specifications:</h2>
+        </div>
+        <div class="help-content-div">
+            <h3>Brand</h3>
+            <p> refers to mice's producer or the company which sells the product.</p>
+        </div>
+        <div class="help-content-div">
+            <h3>Model</h3>
+            <p> specifies the name of specific mouse from a brand.</p>
+        </div>
+        <div class="help-content-div">
+            <h3>Length</h3>
+            <p> is measured in millimeters from the base, to the very tip:</p>
+            <div class="img-div">
+                <img src="searchMouseImages/LengthExample.png" alt="Example of how length is measured">
+            </div>
+        </div>
+        <div class="help-content-div">
+            <h3>Width</h3>
+            <p> is measured in millimeters between the two widest points:</p>
+            <div class="img-div">
+                <img src="searchMouseImages/WidthExample.png" alt="Example of how width is measured">
+            </div>
+        </div>
+        <div class="help-content-div">
+            <h3>Height</h3>
+            <p> is measured in millimeters from the bottom, to the top:</p>
+            <div class="img-div">
+                <img src="searchMouseImages/HeightExample.png" alt="Example of how height is measured">
+            </div>
+        </div>
+        <div class="help-content-div">
+            <h3>Weight</h3>
+            <p> is measured in grams, preferably without the cable:</p>
+            <div class="img-div">
+                <!--<img src="" alt="Example of how length is measured">-->
+            </div>
+        </div>
+        <div class="help-content-div">
+            <h3>Shape</h3>
+            <p> points to whether a mouse is ambidextrous(left) or ergonomic(right):</p>
+            <div class="img-div">
+                <img src="searchMouseImages/ambiVSergo.png" alt="Ambidextrous(left) vs Ergonomic(right) shapes">
+            </div>
+        </div>
+        <div class="help-content-div">
+            <h3>Connectivity</h3>
+            <p> refers to whether a mouse is wired or wireless.</p>
+        </div>
+        <div class="help-content-div">
+            <h3>Sensor</h3>
+            <p> specifies the sensor-version that is used in a mouse.<br><span class="link-span">Learn more about mouse sensors <a href="https://en.wikipedia.org/wiki/Optical_mouse" target="_blank" title="Open link in new tab">here</a>.</span></p>
+        </div>
+        <div class="help-content-div">
+            <h3>DPI</h3>
+            <p> describes to the maximum Dots Per Inch (DPI) available for a mouse.<br><span class="link-span">Learn more about DPI <a href="https://en.wikipedia.org/wiki/Computer_mouse#Mouse_speed" target="_blank" title="Open link in new tab">here</a>.</span></p>
+        </div>
+        <div class="help-content-div">
+            <h3>Polling rate</h3>
+            <p> refers the maximum amount of times a mouse can send information per second.<br><span class="link-span">Learn more about polling rate <a
+                    href="https://switchandclick.com/whats-the-best-mouse-polling-rate/#:~:text=Polling%20rate%20is%20the%20speed,or%201000%20times%20per%20second." target="_blank" title="Open link in new tab">here</a>.</span></p>
+        </div>
+        <button id="keyboard-close-help">Close</button>
+    </div>
+</div>
+
+<table id="mouse-table">
+    <thead>
+        <tr>
+            <td><button class="string" value="brand">Brand<i class="fa-solid fa-angle-down"></i></button></td>
+            <td><button class="string" value="model">Model<i class="fa-solid fa-angle-down"></i></button></td>
+            <td><button class="number" value="length"><i class="fa-solid fa-angle-down"></i>Length</button></td>
+            <td><button class="number" value="width"><i class="fa-solid fa-angle-down"></i>Width</button></td>
+            <td><button class="number" value="height"><i class="fa-solid fa-angle-down"></i>Height</button></td>
+            <td><button class="number" value="weight"><i class="fa-solid fa-angle-down"></i>Weight</button></td>
+            <td><button class="string" value="shape">Shape<i class="fa-solid fa-angle-down"></i></button></td>
+            <td><button class="string" value="wireless">Connectivity<i class="fa-solid fa-angle-down"></i></button></td>
+            <td><button class="string" value="sensor">Sensor<i class="fa-solid fa-angle-down"></i></button></td>
+            <td><button class="number" value="dpi"><i class="fa-solid fa-angle-down"></i>DPI</button></td>
+            <td><button class="number" value="pollingRate"><i class="fa-solid fa-angle-down"></i>Polling Rate</button></td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 </body>
 </html>

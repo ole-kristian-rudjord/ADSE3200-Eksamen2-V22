@@ -212,8 +212,11 @@ $(function() {
         });
     });
 
-    $('#filter-btn-close, #screen-cover-filter').on('click', function () {
+    $('#filter-btn-close, #screen-cover-filter, #filter-btn-keyboard-close').on('click', function () {
         closeFilter();
+        if (this.id === 'filter-btn-keyboard-close') {
+            $('#activate-help-btn').focus();
+        }
     });
 
     $('#filter-btn-open').on('click', function () {
@@ -666,17 +669,17 @@ function openFilter() {
         $('#filter-main').css('transform', 'translateX(0)');
         $('#screen-cover-filter').css('opacity', '1');
     });
-    $('#activate-filter-btn').css('display', 'none');
+    $('#main-buttons-div').css('display', 'none');
 }
 
 function closeFilter() {
-    $('#activate-filter-btn').css('display', 'block');
     $('#filter-main').css('transform', 'translateX(-110%)');
     $('#screen-cover-filter').css('opacity', '0');
     setTimeout(function () {
         $('#filter-main').css('display', 'none');
         $('#screen-cover-filter').css('display', 'none');
     }, 200);
+    $('#main-buttons-div').css('display', 'flex');
 }
 /*-----------------
     Filters - end

@@ -63,12 +63,11 @@
     white-space: nowrap;
     position: relative;
 }
-/*#mouse-table button.string {
-    padding-right: 10px;
+#mouse-table button:focus-visible {
+    color: var(--themeReverseColor);
+    background-color: var(--themeHoverColor);
+    z-index: 2;
 }
-#mouse-table button.number {
-    padding-left: 10px;
-}*/
 #mouse-table button i {
     opacity: 0;
     font-size: 0.7rem;
@@ -334,6 +333,27 @@
     width: 120px;
 }
 
+#filter-btn-keyboard-close {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 90%;
+    transform: translate(0, -50%);
+    border: 3px solid var(--primaryColor);
+    padding-left: 0;
+    padding-right: 0;
+    z-index: -2;
+    transition: 90ms ease;
+    opacity: 0;
+    pointer-events: none;
+}
+#filter-btn-keyboard-close:focus {
+    z-index: 2;
+    transform: translate(110%, -50%);
+    opacity: 1;
+    pointer-events: auto;
+}
+
 
 
 
@@ -352,6 +372,9 @@
     display: block;
     cursor: pointer;
     transition: 180ms ease;
+}
+.filter-heading-btn:focus-visible {
+    z-index: 2;
 }
 .filter-heading-btn:not(:first-of-type) {
     border-top: 2px solid var(--themeHoverColor);
@@ -389,6 +412,7 @@
     display: none;
     transition: 180ms ease;
 }
+
 
 
 .filter-checkmarks {
@@ -646,15 +670,12 @@
 
 
 
-
-
-
 #help-div {
     display: none;
     position: fixed;
     height: 82vh;
     width: 95vw;
-    max-width: 720px;
+    max-width: 700px;
     background-color: var(--themeBackgroundColor);
     border-radius: 8px;
     box-shadow: 0 0 15px 3px rgba(10,10,10,0.4);
@@ -678,7 +699,7 @@
     border-radius: 6px;
     opacity: 0.5;
     cursor: pointer;
-    transition: 180ms ease;
+    transition: 90ms ease;
     z-index: 52;
 }
 #help-move {
@@ -728,12 +749,19 @@
 #help-content p {
     display: inline;
 }
-#help-content img {
-    display: block;
+#help-content .img-div {
+    display: flex;
+    justify-content: center;
+    height: 400px;
     width: 100%;
-    padding: 30px 50px;
-    border-radius: 8px;
     background-color: gray;
+    border-radius: 8px;
+    padding: 20px 60px;
+}
+#help-content img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
 #help-content .link-span {
     font-size: 0.85rem;
@@ -813,8 +841,9 @@
         border-radius: 4px 0 0 4px;
         background-color: var(--themeReverseColor);
     }
-    #help-content img {
-        padding: 15px;
+    #help-div .img-div {
+        height: 350px;
+        padding: 15px 30px;
     }
 
     #error-messages-list {
