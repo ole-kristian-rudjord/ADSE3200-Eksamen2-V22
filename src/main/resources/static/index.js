@@ -391,8 +391,8 @@ $(function() {
   Call functions on load - start
 --------------------------------*/
     // Default shapes
-    addMouse('Zowie', 'EC1-C');
-    addMouse('Zowie', 'ZA13-C');
+    addMouse('Logitech', 'G703 Lightspeed');
+    addMouse('Glorious', 'Model O- Wireless');
     /*
     Lag en share shapes knapp for å lage custom URL med brand og model.
     Dersom noen åpner nettsiden med en vanlig URL, kjøp default addMouse(),
