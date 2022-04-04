@@ -43,11 +43,12 @@
     overflow: hidden;
     margin: 102px auto;
     max-width: 99%;
-    width: 1200px;
+    width: 1300px;
     border-collapse: collapse;
     font-size: 0.9rem;
     font-weight: 400;
     color: var(--themeReverseColor);
+    white-space: nowrap;
 }
 
 #mouse-table button {
@@ -776,28 +777,6 @@
     opacity: 1;
     z-index: 52;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
