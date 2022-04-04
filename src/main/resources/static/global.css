@@ -339,7 +339,8 @@ nav a:hover {
         height: 98vh;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: space-between;
+        font-size: 0.9rem;
     }
     #side-menu a {
         padding-top: 2vh;
