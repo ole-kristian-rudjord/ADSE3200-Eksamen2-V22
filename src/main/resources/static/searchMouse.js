@@ -693,7 +693,7 @@ let mouseList = [];
 let formatByCategory = 'brand';
 let formatAscending = true;
 
-Fixed function formatTable(status) {
+function formatTable(status) {
     if (formatAscending === true) {
         mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : -1);
     } else {
