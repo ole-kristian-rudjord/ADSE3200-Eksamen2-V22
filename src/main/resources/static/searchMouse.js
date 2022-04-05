@@ -693,7 +693,7 @@ let mouseList = [];
 let formatByCategory = 'brand';
 let formatAscending = true;
 
-function formatTable() {
+Fixed function formatTable(status) {
     if (formatAscending === true) {
         mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : -1);
     } else {
@@ -702,10 +702,10 @@ function formatTable() {
 
     let result = "";
 
-    if (mouseList === 'fail: loading') {
-        $('#mouse-table').html(result);
+    if (status === 'fail: loading') {
+        $('#mouse-table').html(status);
         createErrorMessage('Mouse information failed to load, please try again later');
-    } else if (mouseList === 'fail: filter-search') {
+    } else if (status === 'fail: filter-search') {
         createErrorMessage('Filters did not match mice from the database');
     } else {
         for (const mouse of mouseList) {
