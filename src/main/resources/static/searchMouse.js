@@ -29,7 +29,7 @@ $(function() {
 -----------------------*/
     $.get("/Global/getAllMice", function (listOfMice) {
         mouseList = listOfMice;
-        formatTable();
+        formatTable('');
     }).fail(function (status) {
         formatTable('fail: loading');
     })
@@ -101,7 +101,7 @@ $(function() {
             formatAscending = true;
         }
         formatByCategory = $(this).val();
-        formatTable();
+        formatTable('');
     });
 
     $('#help-close, #keyboard-close-help').on('click', function () {
@@ -128,7 +128,10 @@ $(function() {
 
 
     $('#filter-btn-apply').on('click', function () {
-        let brandList = [];
+        if (formatTable('')) {
+            closeFilter();
+        }
+        /*let brandList = [];
         $('.brand-option input').each(function () {
             if ($(this).prop('checked')) {
                 brandList.push($(this).next('label').text());
@@ -164,12 +167,12 @@ $(function() {
         }
         console.log(filteredMouseSearch);
         $.get("/SearchMouse/getFilteredMice", filteredMouseSearch, function(listOfMice) {
-            mouseList = listOfMice;
-            formatTable();
+            // mouseList = listOfMice;
+            formatTable('');
             closeFilter();
         }).fail(function (status) {
             formatTable('fail: filter-search');
-        });
+        });*/
     });
 
     $('#filter-btn-reset').on('click', function () {
@@ -681,6 +684,68 @@ function closeFilter() {
     }, 200);
     $('#main-buttons-div').css('display', 'flex');
 }
+
+function filterMice() {
+    let brandList = [];
+    $('.brand-option input').each(function () {
+        if ($(this).prop('checked')) {
+            brandList.push($(this).next('label').text());
+        }
+    });
+
+    let sensorList = [];
+    $('.sensor-option input').each(function () {
+        if ($(this).prop('checked')) {
+            sensorList.push($(this).next('label').text());
+        }
+    });
+
+    const filteredMouseSearch = {
+        brandList: brandList,
+        lengthMin: $('#filter-length-min').val(),
+        lengthMax: $('#filter-length-max').val(),
+        widthMin: $('#filter-width-min').val(),
+        widthMax: $('#filter-width-max').val(),
+        heightMin: $('#filter-height-min').val(),
+        heightMax: $('#filter-height-max').val(),
+        weightMin: $('#filter-weight-min').val(),
+        weightMax: $('#filter-weight-max').val(),
+        wired: $('#filter-shape-wired').prop('checked'),
+        wireless: $('#filter-shape-wireless').prop('checked'),
+        ambidextrous: $('#filter-shape-ambidextrous').prop('checked'),
+        ergonomic: $('#filter-shape-ergonomic').prop('checked'),
+        sensorList: sensorList,
+        dpiMin: $('#filter-dpi-min').val(),
+        dpiMax: $('#filter-dpi-max').val(),
+        pollingRateMin: $('#filter-pollingRate-min').val(),
+        pollingRateMax: $('#filter-pollingRate-max').val()
+    }
+
+    const filteredMouseList = [];
+    for (const mouse of mouseList) {
+        if (
+            brandList.isArray(mouse.brand)
+            && mouse.length >= ('#filter-length-min').val() && mouse.length <= $('#filter-length-max').val()
+            && mouse.width >= $('#filter-width-min').val() && mouse.width <= $('#filter-width-max').val()
+            && mouse.height >= $('#filter-height-min').val() && mouse.height <= $('#filter-height-max').val()
+            && mouse.weight >= $('#filter-weight-min').val() && mouse.weight <= $('#filter-weight-max').val()
+            && (($('#filter-shape-wired').prop('checked') && mouse.wireless === 1)
+                || $('#filter-shape-wireless').prop('checked') && mouse.wireless === 0)
+            && (($('#filter-shape-ambidextrous').prop('checked') && mouse.shape === 0)
+                || $('#filter-shape-ergonomic').prop('checked') && mouse.shape === 1)
+            && sensorList.isArray(mouse.sensor)
+            && mouse.dpi >= $('#filter-dpi-min').val() && mouse.dpi <= $('#filter-dpi-max').val()
+            && mouse.pollingRate >= $('#filter-pollingRate-min').val() && mouse.pollingRate <= $('#filter-pollingRate-max').val()
+        ) {
+            filteredMouseList.push(mouse);
+        }
+    }
+    if (filteredMouseList.length <= 0) {
+        formatTable('fail: filter-search');
+    } else {
+        formatTable('');
+    }
+}
 /*-----------------
     Filters - end
 -----------------*/
@@ -689,26 +754,96 @@ function closeFilter() {
 /*---------------------
     Formating - start
 ---------------------*/
+/*let mouseList = [];*/
 let mouseList = [];
 let formatByCategory = 'brand';
 let formatAscending = true;
+let firstTimeLoadingTable = true;
 
 function formatTable(status) {
-    if (formatAscending === true) {
-        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : -1);
+    /*let sortDirection;
+    if (formatAscending) {
+        sortDirection = '>';
     } else {
-        mouseList.sort((a, b) => (a[formatByCategory] < b[formatByCategory]) ? 1 : -1);
+        sortDirection = '<';
     }
-
-    let result = "";
+    if (formatByCategory === 'brand') {
+        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.model > b.model) ? 1 : -1) : -1);
+    } else if (formatByCategory === 'model') {
+        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : -1) : -1);
+    } else {
+        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : (a.brand === b.brand) ? ((a.model > b.model) ? 1 : -1) : -1) : -1);
+    }*/
+    if (formatAscending === true) {
+        if (formatByCategory === 'brand') {
+            mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.model > b.model) ? 1 : -1) : -1);
+        } else if (formatByCategory === 'model') {
+            mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : -1) : -1);
+        } else {
+            mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : (a.brand === b.brand) ? ((a.model > b.model) ? 1 : -1) : -1) : -1);
+        }
+    } else {
+        if (formatByCategory === 'brand') {
+            mouseList.sort((a, b) => (a[formatByCategory] < b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.model > b.model) ? 1 : -1) : -1);
+        } else if (formatByCategory === 'model') {
+            mouseList.sort((a, b) => (a[formatByCategory] < b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : -1) : -1);
+        } else {
+            mouseList.sort((a, b) => (a[formatByCategory] < b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : (a.brand === b.brand) ? ((a.model > b.model) ? 1 : -1) : -1) : -1);
+        }
+    }
 
     if (status === 'fail: loading') {
         $('#mouse-table').html(status);
         createErrorMessage('Mouse information failed to load, please try again later');
+        return false;
     } else if (status === 'fail: filter-search') {
         createErrorMessage('Filters did not match mice from the database');
+        return false;
     } else {
-        for (const mouse of mouseList) {
+        let filteredMouseList = [];
+        if (!firstTimeLoadingTable) {
+            let brandList = [];
+            $('.brand-option input').each(function () {
+                if ($(this).prop('checked')) {
+                    brandList.push($(this).next('label').text());
+                }
+            });
+
+            let sensorList = [];
+            $('.sensor-option input').each(function () {
+                if ($(this).prop('checked')) {
+                    sensorList.push($(this).next('label').text());
+                }
+            });
+
+            for (const mouse of mouseList) {
+                if (
+                    brandList.includes(mouse.brand)
+                    && mouse.length >= $('#filter-length-min').val() && mouse.length <= $('#filter-length-max').val()
+                    && mouse.width >= $('#filter-width-min').val() && mouse.width <= $('#filter-width-max').val()
+                    && mouse.height >= $('#filter-height-min').val() && mouse.height <= $('#filter-height-max').val()
+                    && mouse.weight >= $('#filter-weight-min').val() && mouse.weight <= $('#filter-weight-max').val()
+                    && (($('#filter-shape-wired').prop('checked') && !mouse.wireless)
+                        || $('#filter-shape-wireless').prop('checked') && mouse.wireless)
+                    && (($('#filter-shape-ambidextrous').prop('checked') && !mouse.shape)
+                        || $('#filter-shape-ergonomic').prop('checked') && mouse.shape)
+                    && sensorList.includes(mouse.sensor)
+                    && mouse.dpi >= $('#filter-dpi-min').val() && mouse.dpi <= $('#filter-dpi-max').val()
+                    && mouse.pollingRate >= $('#filter-pollingRate-min').val() && mouse.pollingRate <= $('#filter-pollingRate-max').val()
+                ) {
+                    filteredMouseList.push(mouse);
+                }
+            }
+            if (filteredMouseList.length <= 0) {
+                createErrorMessage('Filters did not match mice from the database');
+                return false;
+            }
+        } else {
+            filteredMouseList = mouseList;
+            firstTimeLoadingTable = false;
+        }
+        let result = '';
+        for (const mouse of filteredMouseList) {
             let shape;
             if (mouse.shape) {
                 shape = 'ergonomic';
@@ -727,17 +862,17 @@ function formatTable(status) {
 
             result +=
                 `<tr>` +
-                    `<td class='string' /*title='${mouseName}\nBrand: ${mouse.brand}'*/>${mouse.brand}</td>` +
-                    `<td class='string' /*title='${mouseName}\nModel: ${mouse.model}'*/>${mouse.model}</td>` +
-                    `<td class='number' title='${mouseName}\nLength: ${parseFloat(mouse.length)}mm'>${parseFloat(mouse.length)}</td>` +
-                    `<td class='number' title='${mouseName}\nWidth: ${parseFloat(mouse.width)}mm'>${parseFloat(mouse.width)}</td>` +
-                    `<td class='number' title='${mouseName}\nHeight: ${parseFloat(mouse.height)}mm'>${parseFloat(mouse.height)}</td>` +
-                    `<td class='number' title='${mouseName}\nWeight: ${parseFloat(mouse.weight)}g'>${parseFloat(mouse.weight)}</td>` +
-                    `<td class='string' title='${mouseName}\nShape: ${shape}'>${shape}</td>` +
-                    `<td class='string' title='${mouseName}\nConnectivity: ${connectivity}'>${connectivity}</td>` +
-                    `<td class='string' title='${mouseName}\nSensor: ${mouse.sensor}'>${mouse.sensor}</td>` +
-                    `<td class='number' title='${mouseName}\nDPI: ${parseFloat(mouse.dpi)}'>${parseFloat(mouse.dpi)}</td>` +
-                    `<td class='number' title='${mouseName}\nPolling Rate: ${parseFloat(mouse.pollingRate)}'>${parseFloat(mouse.pollingRate)}</td>` +
+                `<td class='string' /*title='${mouseName}\nBrand: ${mouse.brand}'*/>${mouse.brand}</td>` +
+                `<td class='string' /*title='${mouseName}\nModel: ${mouse.model}'*/>${mouse.model}</td>` +
+                `<td class='number' title='${mouseName}\nLength: ${parseFloat(mouse.length)}mm'>${parseFloat(mouse.length)}</td>` +
+                `<td class='number' title='${mouseName}\nWidth: ${parseFloat(mouse.width)}mm'>${parseFloat(mouse.width)}</td>` +
+                `<td class='number' title='${mouseName}\nHeight: ${parseFloat(mouse.height)}mm'>${parseFloat(mouse.height)}</td>` +
+                `<td class='number' title='${mouseName}\nWeight: ${parseFloat(mouse.weight)}g'>${parseFloat(mouse.weight)}</td>` +
+                `<td class='string' title='${mouseName}\nShape: ${shape}'>${shape}</td>` +
+                `<td class='string' title='${mouseName}\nConnectivity: ${connectivity}'>${connectivity}</td>` +
+                `<td class='string' title='${mouseName}\nSensor: ${mouse.sensor}'>${mouse.sensor}</td>` +
+                `<td class='number' title='${mouseName}\nDPI: ${parseFloat(mouse.dpi)}'>${parseFloat(mouse.dpi)}</td>` +
+                `<td class='number' title='${mouseName}\nPolling Rate: ${parseFloat(mouse.pollingRate)}'>${parseFloat(mouse.pollingRate)}</td>` +
                 `</tr>`
         }
         $('#mouse-table tbody').html(result);
@@ -745,10 +880,10 @@ function formatTable(status) {
         $('#mouse-table thead tr td button').each(function () {
             if ($(this).val() !== formatByCategory) {
                 $(this).css({
-                    'text-decoration' : 'none',
-                    'text-decoration-color' : 'var(--primaryColor)',
-                    'text-decoration-thickness' : '2px',
-                    'text-underline-offset' : '1px'
+                    'text-decoration': 'none',
+                    'text-decoration-color': 'var(--primaryColor)',
+                    'text-decoration-thickness': '2px',
+                    'text-underline-offset': '1px'
                 });
                 if ($(this).attr('class') === 'string') {
                     $(this).attr('title', 'Sort by ' + $(this).text() + ' | A-Z');
@@ -758,10 +893,10 @@ function formatTable(status) {
                 $(this).find('i').css('opacity', '0');
             } else {
                 $(this).css({
-                    'text-decoration' : 'underline',
-                    'text-decoration-color' : 'var(--primaryColor)',
-                    'text-decoration-thickness' : '2px',
-                    'text-underline-offset' : '1px'
+                    'text-decoration': 'underline',
+                    'text-decoration-color': 'var(--primaryColor)',
+                    'text-decoration-thickness': '2px',
+                    'text-underline-offset': '1px'
                 });
 
                 if (formatAscending) {
@@ -786,8 +921,10 @@ function formatTable(status) {
                 }
             }
         });
+        return true;
     }
 }
+
 function formatChecklist(list, category) {
     let selectAllDiv = document.createElement('div');
     selectAllDiv.id = category + '-select-all-div';
