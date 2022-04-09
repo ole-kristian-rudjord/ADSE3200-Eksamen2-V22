@@ -90,6 +90,20 @@ $(function() {
         }, 0);
     });
 
+    $('#activate-search-btn').on('click', function () {
+        if ($('#mouse-searching-div').css('display') === 'none') {
+            $('#mouse-searching-div').css('display', 'flex');
+            setTimeout(function () {
+                $('#mouse-searching-div').css('transform', 'translateX(100%)');
+            }, 0);
+        } else {
+            $('#mouse-searching-div').css('transform', 'translateX(0)');
+            setTimeout(function () {
+                $('#mouse-searching-div').css('display', 'none');
+            }, 180);
+        }
+    });
+
     $('body').on('click', '#mouse-table thead tr td button', function () {
         if ($(this).val() === formatByCategory) {
             if (formatAscending) {
@@ -685,7 +699,7 @@ function closeFilter() {
     $('#main-buttons-div').css('display', 'flex');
 }
 
-function filterMice() {
+/*function filterMice() {
     let brandList = [];
     $('.brand-option input').each(function () {
         if ($(this).prop('checked')) {
@@ -725,7 +739,7 @@ function filterMice() {
     for (const mouse of mouseList) {
         if (
             brandList.isArray(mouse.brand)
-            && mouse.length >= ('#filter-length-min').val() && mouse.length <= $('#filter-length-max').val()
+            && mouse.length >= $('#filter-length-min').val() && mouse.length <= $('#filter-length-max').val()
             && mouse.width >= $('#filter-width-min').val() && mouse.width <= $('#filter-width-max').val()
             && mouse.height >= $('#filter-height-min').val() && mouse.height <= $('#filter-height-max').val()
             && mouse.weight >= $('#filter-weight-min').val() && mouse.weight <= $('#filter-weight-max').val()
@@ -745,7 +759,7 @@ function filterMice() {
     } else {
         formatTable('');
     }
-}
+}*/
 /*-----------------
     Filters - end
 -----------------*/
@@ -754,7 +768,6 @@ function filterMice() {
 /*---------------------
     Formating - start
 ---------------------*/
-/*let mouseList = [];*/
 let mouseList = [];
 let formatByCategory = 'brand';
 let formatAscending = true;
@@ -862,17 +875,17 @@ function formatTable(status) {
 
             result +=
                 `<tr>` +
-                `<td class='string' /*title='${mouseName}\nBrand: ${mouse.brand}'*/>${mouse.brand}</td>` +
-                `<td class='string' /*title='${mouseName}\nModel: ${mouse.model}'*/>${mouse.model}</td>` +
-                `<td class='number' title='${mouseName}\nLength: ${parseFloat(mouse.length)}mm'>${parseFloat(mouse.length)}</td>` +
-                `<td class='number' title='${mouseName}\nWidth: ${parseFloat(mouse.width)}mm'>${parseFloat(mouse.width)}</td>` +
-                `<td class='number' title='${mouseName}\nHeight: ${parseFloat(mouse.height)}mm'>${parseFloat(mouse.height)}</td>` +
-                `<td class='number' title='${mouseName}\nWeight: ${parseFloat(mouse.weight)}g'>${parseFloat(mouse.weight)}</td>` +
-                `<td class='string' title='${mouseName}\nShape: ${shape}'>${shape}</td>` +
-                `<td class='string' title='${mouseName}\nConnectivity: ${connectivity}'>${connectivity}</td>` +
-                `<td class='string' title='${mouseName}\nSensor: ${mouse.sensor}'>${mouse.sensor}</td>` +
-                `<td class='number' title='${mouseName}\nDPI: ${parseFloat(mouse.dpi)}'>${parseFloat(mouse.dpi)}</td>` +
-                `<td class='number' title='${mouseName}\nPolling Rate: ${parseFloat(mouse.pollingRate)}'>${parseFloat(mouse.pollingRate)}</td>` +
+                    `<td class='string'>${mouse.brand}</td>` +
+                    `<td class='string'>${mouse.model}</td>` +
+                    `<td class='number' title='${mouseName}\nLength: ${parseFloat(mouse.length)}mm'>${parseFloat(mouse.length)}</td>` +
+                    `<td class='number' title='${mouseName}\nWidth: ${parseFloat(mouse.width)}mm'>${parseFloat(mouse.width)}</td>` +
+                    `<td class='number' title='${mouseName}\nHeight: ${parseFloat(mouse.height)}mm'>${parseFloat(mouse.height)}</td>` +
+                    `<td class='number' title='${mouseName}\nWeight: ${parseFloat(mouse.weight)}g'>${parseFloat(mouse.weight)}</td>` +
+                    `<td class='string' title='${mouseName}\nShape: ${shape}'>${shape}</td>` +
+                    `<td class='string' title='${mouseName}\nConnectivity: ${connectivity}'>${connectivity}</td>` +
+                    `<td class='string' title='${mouseName}\nSensor: ${mouse.sensor}'>${mouse.sensor}</td>` +
+                    `<td class='number' title='${mouseName}\nDPI: ${parseFloat(mouse.dpi)}'>${parseFloat(mouse.dpi)}</td>` +
+                    `<td class='number' title='${mouseName}\nPolling Rate: ${parseFloat(mouse.pollingRate)}'>${parseFloat(mouse.pollingRate)}</td>` +
                 `</tr>`
         }
         $('#mouse-table tbody').html(result);

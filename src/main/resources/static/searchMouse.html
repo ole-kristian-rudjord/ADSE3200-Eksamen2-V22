@@ -71,8 +71,19 @@
 <!-- Most of HTML above is default across all pages -->
 
 <div id="main-buttons-div">
-    <button id="activate-filter-btn" class="main-button"><i class="icon fa fa-filter"></i><span>Filter</span></button>
-    <button id="activate-help-btn" class="main-button show-help-btn"><i class="icon fa-solid fa-circle-question"></i><span>Help</span></button>
+    <button id="activate-search-btn" class="main-button">
+        <i class="icon fa-solid fa-magnifying-glass"></i><span>Search</span>
+    </button>
+    <div id="mouse-searching-div">
+        <input type="text" id="search-mouse-brand" placeholder="Brand">
+        <input type="text" id="search-mouse-model" placeholder="Model">
+    </div>
+    <button id="activate-filter-btn" class="main-button">
+        <i class="icon fa fa-filter"></i><span>Filter</span>
+    </button>
+    <button id="activate-help-btn" class="main-button show-help-btn">
+        <i class="icon fa-solid fa-circle-question"></i><span>Help</span>
+    </button>
 </div>
 
 <div id="screen-cover-filter"></div>
