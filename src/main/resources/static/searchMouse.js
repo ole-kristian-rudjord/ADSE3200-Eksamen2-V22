@@ -104,6 +104,72 @@ $(function() {
         }
     });
 
+    $('#mouse-searching-div input').on('keyup', function () {
+        $('#mouse-table tr').each(function () {
+            if ($(this).children(':first').text().toLowerCase().includes($('#search-mouse-brand').val().toLowerCase())
+                && $('#search-mouse-brand').val() !== ''
+                && $('#search-mouse-model').val() === '') {
+                console.log('brand');
+                $(this).children(':first').addClass('matching-search');
+            } else if ($(this).children(':nth-child(2)').text().toLowerCase().includes($('#search-mouse-model').val().toLowerCase())
+                && $('#search-mouse-model').val() === ''
+                && $('#search-mouse-brand').val() === '') {
+                console.log('model');
+                $(this).children(':nth-child(2)').addClass('matching-search');
+            } else if ($(this).children(':first').text().toLowerCase().includes($('#search-mouse-brand').val().toLowerCase())
+                && $(this).children(':nth-child(2)').text().toLowerCase().includes($('#search-mouse-model').val().toLowerCase())
+                && $('#search-mouse-brand').val() !== ''
+                && $('#search-mouse-model').val() !== '') {
+                console.log('both');
+                $(this).children().slice(0,2).addClass('matching-search');
+            } else {
+                $(this).children().slice(0,2).removeClass('matching-search');
+            }
+            /*$('html, body').animate({
+                scrollTop: $('.matching-search:first').offset()
+            }, 500);*/
+        });
+    });
+
+    /*$('#search-mouse-brand').on('keyup', function () {
+        $('#mouse-table tr td:first-child').each(function () {
+            if ($(this).text().toLowerCase() === ($('#search-mouse-brand').val().toLowerCase())/!* && $('#search-mouse-brand').val() !== ''*!/) {
+                $(this).addClass('matching-search');
+            } else {
+                $(this).removeClass('matching-search');
+            }
+        });
+    });
+
+    $('#search-mouse-model').on('keyup', function () {
+        $('#mouse-table tr td:nth-child(2)').each(function () {
+            if ($(this).text().toLowerCase() === ($('#search-mouse-model').val().toLowerCase())/!* && $('#search-mouse-brand').val() !== ''*!/) {
+                $(this).addClass('matching-search');
+            } else {
+                $(this).removeClass('matching-search');
+            }
+        });
+    });*/
+
+    $('#mouse-searching-reset').on('click', function () {
+        $('#mouse-searching-div input').val('');
+        $('#mouse-table tr').each(function () {
+            $(this).children().slice(0,2).removeClass('matching-search');
+        });
+    });
+
+    $('#mouse-searching-close').on('click', function () {
+        $('#mouse-searching-div input').val('');
+        $('#mouse-table tr td').children().slice(0,2).each(function () {
+            $(this).removeClass('matching-search');
+        });
+
+        $('#mouse-searching-div').css('transform', 'translateX(0)');
+        setTimeout(function () {
+            $('#mouse-searching-div').css('display', 'none');
+        }, 180);
+    });
+
     $('body').on('click', '#mouse-table thead tr td button', function () {
         if ($(this).val() === formatByCategory) {
             if (formatAscending) {
@@ -875,8 +941,8 @@ function formatTable(status) {
 
             result +=
                 `<tr>` +
-                    `<td class='string'>${mouse.brand}</td>` +
-                    `<td class='string'>${mouse.model}</td>` +
+                    `<td class='string brand'>${mouse.brand}</td>` +
+                    `<td class='string model'>${mouse.model}</td>` +
                     `<td class='number' title='${mouseName}\nLength: ${parseFloat(mouse.length)}mm'>${parseFloat(mouse.length)}</td>` +
                     `<td class='number' title='${mouseName}\nWidth: ${parseFloat(mouse.width)}mm'>${parseFloat(mouse.width)}</td>` +
                     `<td class='number' title='${mouseName}\nHeight: ${parseFloat(mouse.height)}mm'>${parseFloat(mouse.height)}</td>` +

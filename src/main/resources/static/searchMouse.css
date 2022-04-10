@@ -93,6 +93,12 @@
 #mouse-table tbody tr:nth-of-type(even) {
     background-color: var(--themeHoverColor);
 }
+.matching-search {
+    text-decoration: underline;
+    text-decoration-color: var(--primaryColor);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 1px;
+}
 
 #screen-cover-filter {
     z-index: 49;
@@ -163,30 +169,58 @@
 #mouse-searching-div {
     position: absolute;
     display: none;
-    height: 48px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
     top: 0;
     right: 0;
-    transition: 180ms;
+    transition: 90ms;
     background-color: var(--themeBackgroundColor);
+    z-index: -1;
 }
-#mouse-searching-div input {
-    display: inline-block;
+#mouse-searching-div #input-div {
+    display: flex;
+    flex-direction: row;
+}
+#mouse-searching-div #input-div input {
     background-color: var(--themeBackgroundColor);
     color: var(--themeReverseColor);
-    margin-left: 5px;
-    border: none;
+    margin-left: 4px;
     outline: none;
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid var(--themeBorderColor);
-    height: 100%;
+    border: 2px solid var(--themeBorderColor);
+    height: 38px;
     padding: 0 8px;
     transition: 180ms ease;
-}
-#mouse-searching-div input:focus {
-    background-color: var(--themeHoverColor);
-    border-bottom-color: var(--primaryColor);
     border-radius: 4px;
 }
+#mouse-searching-div #input-div input:focus {
+    background-color: var(--themeHoverColor);
+    border-color: var(--primaryColor);
+}
+#mouse-searching-div #button-div {
+    display: flex;
+    flex-direction: column;
+    height: 40px;
+    margin-left: 3px;
+}
+#mouse-searching-div #button-div button {
+    color: var(--themeReverseColor);
+    background-color: var(--themeBackgroundColor);
+    border: none;
+    width: 20px;
+    height: 20px;
+    transition: 90ms ease;
+    cursor: pointer;
+    border-radius: 4px;
+}
+#mouse-searching-reset {
+    font-size: 0.75rem;
+}
+#mouse-searching-close {
+    font-size:  0.82rem;
+}
+
 #search-mouse-brand {
     width: 80px;
 }
