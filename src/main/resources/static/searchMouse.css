@@ -115,7 +115,7 @@
 #main-buttons-div {
     position: fixed;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     top: 41px;
     left: 0;
     font-weight: 500;
@@ -136,10 +136,14 @@
     width: 50px;
     color: var(--themeReverseColor);
     background-color: var(--themeBackgroundColor);
-    border-right: 2px solid var(--themeBorderColor);
+    border-bottom: 2px solid var(--themeBorderColor);
     cursor: pointer;
     transition: 180ms ease;
     transition-property: background-color, color;
+}
+.main-button:last-of-type {
+    border-right: 2px solid var(--themeBorderColor);
+    border-radius: 0 0 4px 0;
 }
 .main-button i {
     position: absolute;
@@ -147,11 +151,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.main-button:last-of-type {
-    border-bottom: 2px solid var(--themeBorderColor);
-    border-radius: 0 0 4px 0;
-}
-.main-button span {
+/*.main-button span {
     display: flex;
     align-items: center;
     position: absolute;
@@ -165,6 +165,27 @@
     transform: translateX(-100%);
     transition: 180ms ease;
     z-index: -5;
+}*/
+.main-button span {
+    display: none;
+    align-items: center;
+    position: absolute;
+    background-color: var(--themeBackgroundColor);
+    color: var(--themeReverseColor);
+    border-radius: 6px;
+    height: 80%;
+    padding: 0 10px;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+    /*left: 0;
+    bottom: 100%;
+    transform: translateY(-100%);*/
+    font-size: 1rem;
+    opacity: 0;
+    transition: 180ms ease;
+    z-index: -5;
+    pointer-events: none;
 }
 #mouse-searching-div {
     position: absolute;
@@ -172,21 +193,18 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 4px;
+    padding-left: 4px;
     height: 50px;
     top: 0;
     right: 0;
-    transition: 90ms;
+    transition: 180ms;
     background-color: var(--themeBackgroundColor);
     z-index: -1;
 }
-#mouse-searching-div #input-div {
-    display: flex;
-    flex-direction: row;
-}
-#mouse-searching-div #input-div input {
+#mouse-searching-div input {
     background-color: var(--themeBackgroundColor);
     color: var(--themeReverseColor);
-    margin-left: 4px;
     outline: none;
     border: 2px solid var(--themeBorderColor);
     height: 38px;
@@ -194,33 +212,24 @@
     transition: 180ms ease;
     border-radius: 4px;
 }
-#mouse-searching-div #input-div input:focus {
+#mouse-searching-div input:focus {
     background-color: var(--themeHoverColor);
     border-color: var(--primaryColor);
 }
-#mouse-searching-div #button-div {
-    display: flex;
-    flex-direction: column;
-    height: 40px;
-    margin-left: 3px;
-}
-#mouse-searching-div #button-div button {
+#mouse-searching-div button {
     color: var(--themeReverseColor);
     background-color: var(--themeBackgroundColor);
     border: none;
-    width: 20px;
-    height: 20px;
-    transition: 90ms ease;
+    font-size: 0.9rem;
+    width: 30px;
+    height: 30px;
+    transition: 180ms ease;
     cursor: pointer;
     border-radius: 4px;
 }
-#mouse-searching-reset {
-    font-size: 0.75rem;
+#mouse-searching-div button i {
+    transition: 180ms ease;
 }
-#mouse-searching-close {
-    font-size:  0.82rem;
-}
-
 #search-mouse-brand {
     width: 80px;
 }
@@ -334,7 +343,6 @@
 #filter-content::-webkit-scrollbar {
     width: 0;
 }
-
 
 
 .filter-buttons-div {
@@ -885,6 +893,31 @@
         padding: 15px 30px;
     }
 
+    #mouse-searching-div {
+        height: 36px;
+    }
+    #mouse-searching-div #input-div input {
+        height: 32px;
+        border-width: 1px;
+        padding: 0 4px;
+        margin-left: 3px;
+        font-size: 0.8rem;
+    }
+    #mouse-searching-div #button-div {
+        height: 32px;
+        flex-direction: row;
+    }
+    #mouse-searching-div #button-div button {
+        height: 32px;
+        width: 24px;
+    }
+    #search-mouse-brand {
+        width: 65px;
+    }
+    #search-mouse-model {
+        width: 110px;
+    }
+
     #error-messages-list {
         width: 100%;
     }
@@ -912,7 +945,6 @@
     }
 
     #main-buttons-div {
-        flex-direction: row;
         top: 0;
     }
     .main-button {
