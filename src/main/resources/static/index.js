@@ -44,6 +44,12 @@ $(function() {
         }
     });
 
+    $(window).on('resize', function () {
+        if (isOnMobile()) {
+
+        }
+    });
+
 /*-------------------------
     Shape compare - start
 -------------------------*/
@@ -107,57 +113,59 @@ $(function() {
     });
 
     $('.shape-settings-align-btn').bind('mouseover focusin', function () {
-        if (this.id === 'shape-settings-align-vertical-btn-front') {
-            $('#shape-top-container .alignment-bar.horizontal').css({
-                'top' : '0%',
-                'opacity' : '1',
-                'transform' : 'translate(-50%, -100%)'
-            });
-            $('#shape-side-container .alignment-bar.vertical').css({
-                'left' : '0%',
-                'opacity' : '1',
-                'transform' : 'translate(-100%, -50%)'
-            });
-        } else if (this.id === 'shape-settings-align-vertical-btn-center') {
-            $('#shape-top-container .alignment-bar.horizontal').css({
-                'top' : '50%',
-                'opacity' : '1',
-                'transform' : 'translate(-50%, -50%)'
-            });
-            $('#shape-side-container .alignment-bar.vertical').css({
-                'left' : '50%',
-                'opacity' : '1',
-                'transform' : 'translate(-50%, -50%)'
-            });
-        } else if (this.id === 'shape-settings-align-vertical-btn-back') {
-            $('#shape-top-container .alignment-bar.horizontal').css({
-                'top' : '100%',
-                'opacity' : '1',
-                'transform' : 'translate(-50%, 0%)'
-            });
-            $('#shape-side-container .alignment-bar.vertical').css({
-                'left' : '100%',
-                'opacity' : '1',
-                'transform' : 'translate(0%, -50%)'
-            });
-        } else if (this.id === 'shape-settings-align-horizontal-btn-left') {
-            $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
-                'left' : '0%',
-                'opacity' : '1',
-                'transform' : 'translate(-100%, -50%)'
-            });
-        } else if (this.id === 'shape-settings-align-horizontal-btn-center') {
-            $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
-                'left' : '50%',
-                'opacity' : '1',
-                'transform' : 'translate(-50%, -50%)'
-            });
-        } else if (this.id === 'shape-settings-align-horizontal-btn-right') {
-            $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
-                'left' : '100%',
-                'opacity' : '1',
-                'transform' : 'translate(0%, -50%)'
-            });
+        if (!isOnMobile()) {
+            if (this.id === 'shape-settings-align-vertical-btn-front') {
+                $('#shape-top-container .alignment-bar.horizontal').css({
+                    'top' : '0%',
+                    'opacity' : '1',
+                    'transform' : 'translate(-50%, -100%)'
+                });
+                $('#shape-side-container .alignment-bar.vertical').css({
+                    'left' : '0%',
+                    'opacity' : '1',
+                    'transform' : 'translate(-100%, -50%)'
+                });
+            } else if (this.id === 'shape-settings-align-vertical-btn-center') {
+                $('#shape-top-container .alignment-bar.horizontal').css({
+                    'top' : '50%',
+                    'opacity' : '1',
+                    'transform' : 'translate(-50%, -50%)'
+                });
+                $('#shape-side-container .alignment-bar.vertical').css({
+                    'left' : '50%',
+                    'opacity' : '1',
+                    'transform' : 'translate(-50%, -50%)'
+                });
+            } else if (this.id === 'shape-settings-align-vertical-btn-back') {
+                $('#shape-top-container .alignment-bar.horizontal').css({
+                    'top' : '100%',
+                    'opacity' : '1',
+                    'transform' : 'translate(-50%, 0%)'
+                });
+                $('#shape-side-container .alignment-bar.vertical').css({
+                    'left' : '100%',
+                    'opacity' : '1',
+                    'transform' : 'translate(0%, -50%)'
+                });
+            } else if (this.id === 'shape-settings-align-horizontal-btn-left') {
+                $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
+                    'left' : '0%',
+                    'opacity' : '1',
+                    'transform' : 'translate(-100%, -50%)'
+                });
+            } else if (this.id === 'shape-settings-align-horizontal-btn-center') {
+                $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
+                    'left' : '50%',
+                    'opacity' : '1',
+                    'transform' : 'translate(-50%, -50%)'
+                });
+            } else if (this.id === 'shape-settings-align-horizontal-btn-right') {
+                $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
+                    'left' : '100%',
+                    'opacity' : '1',
+                    'transform' : 'translate(0%, -50%)'
+                });
+            }
         }
     }).bind('mouseout focusout', function () {
         $('.alignment-bar').css('opacity', '0');
@@ -916,8 +924,19 @@ function addSVG(id, svgCode, view) {
 
 // Adds padding on bottom of current mice div to make sure it does not under-/over-lap with shape-settings-grid
 function currentMiceBottomPadding() {
-    let shapeSettingsGridHeight = $('#shape-settings-grid').outerHeight() + 12;
-    $('#shape-tool-current-mice').css('padding-bottom', shapeSettingsGridHeight + 'px');
+    /*$('#shape-tool-current-mice').css('height', window.innerHeight - $('#shape-tool-current-mice').offset().top - $('#shape-settings-grid').outerHeight());*/
+    if (isOnMobile()) {
+        $('#shape-tool-current-mice').css({
+            'height' : window.innerHeight - $('#shape-tool-current-mice').offset().top - $('#shape-settings-grid').outerHeight(),
+            'padding-bottom' : '3vh'
+        });
+    } else {
+       /* let shapeSettingsGridHeight = $('#shape-settings-grid').outerHeight() + 12;*/
+        $('#shape-tool-current-mice').css({
+            'padding-bottom' : $('#shape-settings-grid').outerHeight() + 30,
+            'height' : 'inherit'
+        });
+    }
 }
 /*---------------------------
     Adding new shapes - end

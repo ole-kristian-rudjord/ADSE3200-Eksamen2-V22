@@ -341,7 +341,6 @@
     flex-direction: column;
     gap: 5vh;
 }
-/* Main div */
 .shape-information-div {
     position: relative;
     display: grid;
@@ -749,35 +748,27 @@
         right: inherit;
         left: 2vh;
         text-align: left;
-        /*border: 1px solid red;*/
     }
     .error-message-underline {
         right: inherit;
         left: 0;
     }
     #add-new-shape-div {
-        width: 240px;
+        width: 260px;
         margin-top: 3vh;
     }
     #add-new-shape-div input {
         font-size: 0.78rem;
     }
-    #add-new-shape-brand {
-        width: 76px;
-    }
-    #add-new-shape-model {
-        width: 126px;
-    }
     #add-new-shape-div button {
-        width: 32px;
+        width: 35px;
     }
     #shape-tool-current-mice {
         grid-row: 2/3;
-        width: 230px;
+        width: 260px;
         gap: 3vh;
-        padding-top: 3vh;
+        padding: 3vh 0;
         overflow-x: hidden;
-        /*overflow-y: scroll;*/
         scrollbar-color: var(--themeHoverColor) transparent;
         scrollbar-width: thin;
     }
@@ -791,13 +782,14 @@
         background-color: var(--themeHoverColor);
     }
     .shape-information-div {
+        width: 260px;
         grid-template-columns: 46px 1fr;
         padding: 0;
     }
     .shape-information-sub-div {
         grid-column: 2/3;
         display: grid;
-        grid-template-columns: 155px 1fr;
+        grid-template-columns: 180px;
     }
     .shape-tool-color {
         grid-column: 1/2;
@@ -821,6 +813,8 @@
     .shape-information-weight  {
         grid-column: 2/3;
         grid-row: 2/3;
+        text-align: right;
+        padding-right: 2px;
     }
 
     /* Shape settings */
@@ -873,38 +867,6 @@
     #shape-settings-size-slider {
         display: none;
     }
-    /*#shape-settings-size-text-mobile-remove {
-        display: none;
-    }*/
-    /*#shape-settings-size-text {
-        grid-column: inherit;
-        grid-row: inherit;
-        position: fixed;
-        display: flex;
-        flex-direction: column-reverse;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        margin: 0;
-        border: var(--themeHoverColor) solid 1px;
-        border-top: none;
-        border-right: none;
-        font-size: 1rem;
-        background-color: var(--themeBackgroundColor);
-    }
-    #shape-settings-size-text-minus {
-        margin: 0;
-    }
-    .shape-settings-size-btn {
-        padding: 7px 14px;
-    }
-    .shape-settings-size-btn:hover {
-        color: inherit;
-        background-color: inherit;
-    }
-    #shape-settings-size-slider {
-        display: none;
-    }*/
     #shape-settings-align-vertical-text {
         grid-column: 1/2;
         grid-row: 1/2;
