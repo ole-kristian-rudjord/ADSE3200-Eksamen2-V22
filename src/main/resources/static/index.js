@@ -93,6 +93,7 @@ $(function() {
         }
 
         // Horizontal alignment
+        // bytt til else if
         if (this.id === 'shape-settings-align-horizontal-btn-left') {
             horizontalAlign = 'left';
         } else if (this.id === 'shape-settings-align-horizontal-btn-center') {
@@ -103,8 +104,74 @@ $(function() {
 
         setAlignment();
         setAlignButtonColor();
+
+        if (this.id.includes('horizontal')) {
+            $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css('opacity', '1');
+            setTimeout(function () {
+                $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css('opacity', '0');
+            }, 180);
+        } else if (this.id.includes('vertical')) {
+            $('#shape-top-container .alignment-bar.horizontal, #shape-side-container .alignment-bar.vertical').css('opacity', '1');
+            setTimeout(function () {
+                $('#shape-top-container .alignment-bar.horizontal, #shape-side-container .alignment-bar.vertical').css('opacity', '0');
+            }, 180);
+        }
     });
 
+    $('.shape-settings-align-btn').bind('mouseover focusin', function () {
+        // Vertical alignment
+        if (this.id === 'shape-settings-align-vertical-btn-front') {
+            /*verticalAlign = 'front';*/
+            $('#shape-top-container .alignment-bar.horizontal').css({
+                'top' : '0%',
+                'opacity' : '0.5'
+            });
+            $('#shape-side-container .alignment-bar.vertical').css({
+                'left' : '0%',
+                'opacity' : '0.5'
+            });
+        } else if (this.id === 'shape-settings-align-vertical-btn-center') {
+            /*verticalAlign = 'center';*/
+            $('#shape-top-container .alignment-bar.horizontal').css({
+                'top' : '50%',
+                'opacity' : '0.5'
+            });
+            $('#shape-side-container .alignment-bar.vertical').css({
+                'left' : '50%',
+                'opacity' : '0.5'
+            });
+        } else if (this.id === 'shape-settings-align-vertical-btn-back') {
+            /*verticalAlign = 'back';*/
+            $('#shape-top-container .alignment-bar.horizontal').css({
+                'top' : '100%',
+                'opacity' : '0.5'
+            });
+            $('#shape-side-container .alignment-bar.vertical').css({
+                'left' : '100%',
+                'opacity' : '0.5'
+            });
+        } else if (this.id === 'shape-settings-align-horizontal-btn-left') {
+            /*horizontalAlign = 'left';*/
+            $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
+                'left' : '0%',
+                'opacity' : '0.5'
+            });
+        } else if (this.id === 'shape-settings-align-horizontal-btn-center') {
+            /*horizontalAlign = 'center';*/
+            $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
+                'left' : '50%',
+                'opacity' : '0.5'
+            });
+        } else if (this.id === 'shape-settings-align-horizontal-btn-right') {
+            /*horizontalAlign = 'right';*/
+            $('#shape-top-container .alignment-bar.vertical, #shape-back-container .alignment-bar.vertical').css({
+                'left' : '100%',
+                'opacity' : '0.5'
+            });
+        }
+    }).bind('mouseout focusout', function () {
+        $('.alignment-bar').css('opacity', '0');
+    });
 
     $('.shape-settings-align-btn').on('mouseover', function () {
         $(this).css('background-color', 'var(--themeHoverColor)');
@@ -531,6 +598,10 @@ function setAlignment() {
         'top' : verticalAlignTopPercentage + '%',
         'transform' : 'translateY(-' + verticalAlignTopPercentage + '%)'
     });
+    $('#shape-top-container .alignment-bar.horizontal').css({
+        'top' : verticalAlignTopPercentage + '%'/*,
+        'transform' : 'translate(-50%,-' + verticalAlignTopPercentage + '%)'*/
+    });
     $('#shape-back-container').css('justify-content', horizontalAlignPosition);
     $('#shape-side-container').css('justify-content', horizontalAlignSidePosition);
 }
@@ -566,6 +637,24 @@ function shapeSizeAndAlignmentReset() {
     $('#shape-settings-size-slider').val($('#shape-settings-size-slider').attr('value')); // Sets slider-value back to HTML default
     updateShapeSize();
     decreaseShapeSizeDesktop();
+}
+
+function updateAlignmentBars() {
+    if ($('#shape-top-container svg').length <= 0) {
+        $('#shape-top-container .alignment-bar').css('display', 'none');
+    } else {
+        $('#shape-top-container .alignment-bar').css('display', 'block');
+    }
+    if ($('#shape-back-container svg').length <= 0) {
+        $('#shape-back-container .alignment-bar').css('display', 'none');
+    } else {
+        $('#shape-back-container .alignment-bar').css('display', 'block');
+    }
+    if ($('#shape-side-container svg').length <= 0) {
+        $('#shape-side-container .alignment-bar').css('display', 'none');
+    } else {
+        $('#shape-side-container .alignment-bar').css('display', 'block');
+    }
 }
 /*-------------------
     Alignment - end
@@ -768,6 +857,7 @@ function addMouse(inputBrand, inputModel) {
                 updateShapeOutlineColor(mouse.id);
                 updateShapeSize();
                 setAlignment();
+                updateAlignmentBars();
                 // Decreases shape size until it fits on screen.
                 if (isOnMobile()) {
                     decreaseShapeSize();
@@ -866,6 +956,8 @@ function removeMouse(mouseId) {
     if (currentlyViewedMiceSVG.length > 0) {
         updateShapeContainerSize();
     }
+
+    updateAlignmentBars();
 }
 /*-------------------------
     Remove shapes - start
