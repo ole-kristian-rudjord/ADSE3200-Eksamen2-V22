@@ -189,17 +189,16 @@
     background-color: var(--themeBorderColor);
     border-radius: 4px;
     opacity: 0;
-    transition: opacity 180ms ease-out;
 }
 .alignment-bar.horizontal {
     width: calc(100% + 20px);
-    height: 4px;
+    height: 3px;
     left: 50%;
     transform: translateX(-50%);
 }
 .alignment-bar.vertical {
     height: calc(100% + 20px);
-    width: 4px;
+    width: 3px;
     top: 50%;
     transform: translateY(-50%);
 }
