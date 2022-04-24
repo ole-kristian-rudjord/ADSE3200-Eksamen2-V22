@@ -54,8 +54,9 @@
 
 /*--- :root (managed in JavaScript) ---*/
 :root {
-    --primaryColor:#FF3C19;
-    --primaryDarkColor:#B22A11;
+    /*--primaryColor:#FF3C19;*/
+    /*--primaryDarkColor:#B22A11;*/
+    --primaryColor:#1A72E9;
     --themeHoverColor: inherit;
     --themeBackgroundColor: inherit;
     --themeReverseColor: inherit;
@@ -142,18 +143,22 @@ nav li {
 }
 nav a {
     display: block;
-    padding: 8px 2vw;
+    padding: 6px 2vw;
     /*border-left: transparent solid 2px;
     border-right: transparent solid 2px;*/
     white-space: nowrap;
     text-decoration: none;
     color: var(--themeReverseColor);
+    border: transparent solid 2px;
     transition: 180ms ease;
     transition-property: border-color, background-color;
 }
 nav a:hover {
     /*border-color: var(--primaryColor);*/
     background-color: var(--themeHoverColor);
+}
+nav a.active-link {
+    border-bottom-color: var(--themeBorderColor);
 }
 .burger-icon {
     justify-content: space-between;

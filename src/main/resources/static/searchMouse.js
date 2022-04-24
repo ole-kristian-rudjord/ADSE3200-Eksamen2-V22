@@ -304,10 +304,10 @@ $(function() {
         });
         if (this.id === 'filter-btn-apply') {
             $(this).css({
-                'outline-color': 'rgb(39, 93, 219)'
+                'outline-color': 'var(--primaryColor)'
             });
             $(this).find('.icon').css({
-                'color': 'rgb(39, 93, 219)',
+                'color': 'var(--primaryColor)',
                 'font-size': '1.4rem'
             });
         } else if (this.id === 'filter-btn-reset') {
@@ -320,26 +320,26 @@ $(function() {
             });
         } else if (this.id === 'filter-btn-close') {
             $(this).css({
-                'outline-color': 'red'
+                'outline-color': 'rgb(224,36,36)'
             });
             $(this).find('.icon').css({
-                'color': 'red',
+                'color': 'rgb(224,36,36)',
                 'font-size': '1.3rem'
             });
         } else if (this.id === 'filter-btn-open') {
             $(this).css({
-                'outline-color': 'rgb(39, 93, 219)'
+                'outline-color': 'var(--primaryColor)'
             });
             $(this).find('.icon').css({
-                'color': 'rgb(39, 93, 219)',
+                'color': 'var(--primaryColor)',
                 'font-size': '1.2rem'
             });
         } else if (this.id === 'filter-btn-collapse') {
             $(this).css({
-                'outline-color': 'red'
+                'outline-color': 'rgb(224,36,36)'
             });
             $(this).find('.icon').css({
-                'color': 'red',
+                'color': 'rgb(224,36,36)',
                 'font-size': '1.2rem'
             });
         } else if (this.id === 'filter-btn-help') {
@@ -1004,13 +1004,13 @@ function activateCheckboxesShape() {
     $('.filter-checkbox-buttons input').each(function () {
         if ($(this).prop('checked') === true) {
             $(this).prev('label').css({
-                'border-color': 'var(--primaryColor)',
-                'box-shadow': '0 3px 0 0 var(--primaryDarkColor)'
+                'border-color': 'var(--primaryColor)'
+                /*'box-shadow': '0 3px 0 0 var(--primaryDarkColor)'*/
             });
         } else if ($(this).prop('checked') === false) {
             $(this).prev('label').css({
-                'border-color': 'var(--themeBorderColor)',
-                'box-shadow': '0 3px 0 0 gray'
+                'border-color': 'var(--themeBorderColor)'
+                /*'box-shadow': '0 3px 0 0 gray'*/
             });
         }
     });

@@ -327,7 +327,8 @@
 #add-new-shape-div button:hover,
 #add-new-shape-div button:focus-visible {
     outline: none;
-    background-color: var(--themeHoverColor);
+    color: white;
+    background-color: var(--primaryColor);
     border-color: var(--primaryColor);
     border-radius: 6px;
 }
@@ -365,29 +366,33 @@
 .shape-tool-close {
     grid-column: 1/2;
     left: 0;
-    height: 100%;
-    width: 80%;
+    /*height: 100%;
+    width: 80%;*/
+    height: 20px;
+    width: 20px;
     margin: auto;
     border: none;
-    border-radius: 3px;
     align-content: baseline;
     font-size: 0.7rem;
     text-align: center;
     color: var(--themeReverseColor);
     background-color: transparent;
-    opacity: 0.4;
+    opacity: 0;
     cursor: pointer;
 
     /*outline: red solid 1px;*/
 }
 /* View is missing, information icon */
 .view-missing-information {
+    height: 20px;
+    width: 20px;
     grid-column: 1/2;
     grid-row: 2/3;
-    margin-bottom: -5px;
+    margin: auto;
+    align-content: baseline;
     text-align: center;
     color: var(--themeReverseColor);
-    opacity: 0.3;
+    opacity: 0;
     cursor: pointer;
 }
 .view-missing-hover-text {
@@ -402,7 +407,6 @@
     color: var(--themeReverseColor);
     text-align: left;
     background-color: var(--themeHoverColor);
-    opacity: 0;
     cursor: text;
     transition: 400ms ease;
 }
@@ -423,6 +427,7 @@
     margin: auto 0;
     text-align: left;
     color: var(--themeReverseColor);
+    opacity: 0.7;
 
     /*outline: blue solid 1px;*/
 }
@@ -436,7 +441,7 @@
     margin: auto 0;
     text-align: left;
     color: var(--themeReverseColor);
-
+    opacity: 0.7;
     /*outline: green solid 1px;*/
 }
 /* Color selector */
@@ -492,7 +497,7 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    padding: 3px 10px 2vh 8px;
+    padding: 3px 10px 20px 8px;
     border-radius: 6px 6px 0 0;
     background-color: var(--themeBackgroundColor);
 
@@ -517,9 +522,10 @@
 #shape-settings-size-text {
     grid-column: 1/2;
     grid-row: 1/2;
-    margin: auto auto -2px auto;
+    margin: auto auto 3px auto;
     text-align: center;
     color: var(--themeReverseColor);
+    font-size: 0.9rem;
 }
 #shape-settings-size-text-minus {
     margin-right: 1px;
@@ -553,9 +559,9 @@
     grid-column: 1/2;
     grid-row: 2/3;
     -webkit-appearance: none;
-    height: 22px;
+    height: 24px;
     width: 180px; /* 3x btn-width */
-    margin-top: 4px;
+    /*margin-top: 4px;*/
     border: var(--themeBorderColor) solid 2px;
     border-radius: 4px;
     background-color: var(--themeBackgroundColor);
@@ -570,7 +576,7 @@
 #shape-settings-size-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    height: 18px;
+    height: 20px;
     width: 29px;
     outline: none;
     border: none;
@@ -595,25 +601,30 @@
 
 /* Text */
 .shape-settings-align-text {
-    margin: auto auto 1px auto;
+    margin: auto auto 3px auto;
     text-align: center;
     color: var(--themeReverseColor);
+    font-size: 0.9rem;
 }
 
 /* Div, containing buttons */
 .shape-settings-align-div {
     display: flex;
-    padding-top: 3px;
+    /*padding-top: 3px;*/
     color: var(--themeReverseColor);
 }
 
 /* Buttons */
 .shape-settings-align-btn {
     display: table-cell;
-    height: 22px;
+    height: 24px;
     width: 60px;
-    outline: var(--themeBorderColor) solid 2px;
-    border: none;
+    /*outline: var(--themeBorderColor) solid 2px;*/
+    border-color: var(--themeBorderColor);
+    border-style: solid;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    /*border: none;*/
     color: var(--themeReverseColor);
     background-color: var(--themeBackgroundColor);
     cursor: pointer;
@@ -624,10 +635,18 @@
     border-radius: 2px;
 }
 .shape-settings-align-btn-left-side {
-    border-radius: 2px 0 0 2px;
+    border-left-width: 2px;
+    border-right-width: 1px;
+    border-radius: 4px 0 0 4px;
+}
+.shape-settings-align-btn-middle {
+    border-left-width: 1px;
+    border-right-width: 1px;
 }
 .shape-settings-align-btn-right-side {
-    border-radius: 0 2px 2px 0;
+    border-left-width: 1px;
+    border-right-width: 2px;
+    border-radius: 0 4px 4px 0;
 }
 
 /* Text/Button positioning */

@@ -172,9 +172,13 @@ $(function() {
     });
 
     $('.shape-settings-align-btn').on('mouseover', function () {
-        $(this).css('background-color', 'var(--themeHoverColor)');
+        if ($(this).css('background-color' !== 'var(--primaryColor)')) {
+            $(this).css('background-color', 'var(--themeHoverColor)');
+        }
     }).on('mouseout', function () {
-        $(this).css('background-color', 'var(--themeBackgroundColor)');
+        if ($(this).css('background-color' !== 'var(--primaryColor)')) {
+            $(this).css('background-color', 'var(--themeBackgroundColor)');
+        }
     });
     /*-------------------
         Alignment - end
@@ -192,11 +196,11 @@ $(function() {
 
     // Shape-settings-reset hover effect
     $('#shape-settings-reset').bind('mouseenter focusin', function () {
-        $(this).css('background-color', 'var(--themeHoverColor)');
-        $(this).find('span').css('color', 'var(--primaryColor)');
+        $(this).css('background-color', 'var(--primaryColor)');
+        $(this).find('span').css('color', 'white');
     }).bind('mouseleave focusout', function () {
         $(this).css('background-color', 'var(--themeBackgroundColor)');
-        $(this).find('span').css('color', 'var(--themeTextColor)');
+        $(this).find('span').css('color', 'var(--themeReverseColor)');
     });
     /*--------------------------------
         Reset size & alignment - end
@@ -303,8 +307,68 @@ $(function() {
     /*-------------------------------------------
         Shape information interactivity - start
     -------------------------------------------*/
-    // Highlights close-button & shape information div on hover
-    $('body').on('mouseenter', '.shape-tool-close', function () {
+    $('body').on('mouseenter', '.shape-information-div', function () {
+        $(this).find('.shape-tool-close').css('opacity', '0.5');
+        $(this).find('.view-missing-information').css('opacity', '0.5');
+    }).on('mouseleave', '.shape-information-div', function () {
+        $(this).find('.shape-tool-close').css('opacity', '0');
+        $(this).find('.view-missing-information').css('opacity', '0');
+    });
+
+    $('body').on('mouseover', '.shape-tool-close', function () {
+        $(this).css({
+            'opacity' : '1',
+            'color' : 'red'
+        });
+    }).on('mouseleave', '.shape-tool-close', function () {
+        $(this).css({
+            'opacity' : '0.5',
+            'color' : 'var(--themeReverseColor)'
+        });
+    });
+
+    $('body').on('focusin', '.shape-tool-close', function () {
+        $(this).css({
+            'opacity' : '1',
+            'color' : 'red'
+        });
+    }).on('focusout', '.shape-tool-close', function () {
+        $(this).css({
+            'opacity' : '0',
+            'color' : 'var(--themeReverseColor)'
+        });
+    });
+
+    $('body').on('mouseover', '.view-missing-information', function () {
+        $(this).css({
+            'opacity' : '1',
+            'color' : 'orange'
+        });
+        $(this).find('span').css('display', 'inline-block');
+    }).on('mouseleave', '.view-missing-information', function () {
+        $(this).css({
+            'opacity' : '0.5',
+            'color' : 'var(--themeReverseColor)'
+        });
+        $(this).find('span').css('display', 'none');
+    });
+
+    $('body').on('focusin', '.view-missing-information', function () {
+        $(this).css({
+            'opacity' : '1',
+            'color' : 'orange'
+        });
+        $(this).find('span').css('display', 'inline-block');
+    }).on('focusout', '.view-missing-information', function () {
+        $(this).css({
+            'opacity' : '0',
+            'color' : 'var(--themeReverseColor)'
+        });
+        $(this).find('span').css('display', 'none');
+    });
+
+    /*// Highlights close-button & shape information div on hover
+    $('body').bind('mouseenter focusin', '.shape-tool-close', function () {
         $(this).css({
             'color' : 'red',
             'opacity' : '1'
@@ -312,10 +376,10 @@ $(function() {
         let closeBtnClass = ''+this.id;
         let mouseId = closeBtnClass.replace('shape-close-', '');
         $(`#shape-div-${mouseId}`).css('outline', 'var(--themeHoverColor) solid 3px');
-    }).on('mouseleave', '.shape-tool-close', function () {
+    }).bind('mouseleave focusout', '.shape-tool-close', function () {
         $(this).css({
             'color' : 'var(--themeReverseColor)',
-            'opacity' : '0.4'
+            'opacity' : '0.5'
         });
         let closeBtnClass = ''+this.id;
         let mouseId = closeBtnClass.replace('shape-close-', '');
@@ -339,7 +403,7 @@ $(function() {
     }).on('mouseleave', '.view-missing-information', function () {
         $(this).css({
             'color': 'var(--themeReverseColor)',
-            'opacity': '0.3'
+            'opacity': '0.5'
         });
         let thisId = '' + this.id;
         let viewMissingHoverTextId = thisId.replace(/information/g, 'hover-text');
@@ -373,7 +437,7 @@ $(function() {
             'display' : 'none',
             'opacity' : '0'
         });
-    });
+    });*/
 
 
     // Changes outline color on color-input
@@ -609,19 +673,27 @@ function setAlignment() {
 function setAlignButtonColor() {
     // First, sets all buttons back to default
     $('.shape-settings-align-btn').css({
-        'outline-color' : 'var(--themeBorderColor)',
+        /*'outline-color' : 'var(--themeBorderColor)',*/
+        'border-color' : 'var(--themeBorderColor)',
+        'background-color' : 'var(--themeBackgroundColor)',
+        'color' : 'var(--themeReverseColor)',
         'z-index' : '0'
     });
 
     // changes active button colors
     $('#shape-settings-align-vertical-btn-' + verticalAlign).css({
-        'outline-color' : 'var(--primaryColor)',
-        'background-color' : 'var(--themeBackgroundColor)',
+        'border-color' : 'var(--primaryColor)',
+        /*'background-color' : 'var(--themeBackgroundColor)',*/
+        'background-color' : 'var(--primaryColor)',
+        'color' : 'white',
         'z-index' : '1'
     });
     $('#shape-settings-align-horizontal-btn-' + horizontalAlign).css({
-        'outline-color' : 'var(--primaryColor)',
-        'background-color' : 'var(--themeBackgroundColor)',
+        /*'outline-color' : 'var(--primaryColor)',*/
+        /*'background-color' : 'var(--themeBackgroundColor)',*/
+        'border-color' : 'var(--primaryColor)',
+        'background-color' : 'var(--primaryColor)',
+        'color' : 'white',
         'z-index' : '1'
     });
 }
