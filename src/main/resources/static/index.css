@@ -692,11 +692,13 @@
     border: none;
     border-radius: 4px;
     text-align: center;
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 0.9rem;
     color: var(--themeReverseColor);
     background-color: var(--themeBackgroundColor);
     cursor: pointer;
+}
+#shape-settings-reset i {
+    transition: 180ms ease;
 }
 /*-----------------------------
     Shape-view settings - end

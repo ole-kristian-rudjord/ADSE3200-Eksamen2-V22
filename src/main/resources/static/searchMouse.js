@@ -67,8 +67,8 @@ $(function() {
 
     $('#main-buttons-div button').bind('mouseenter focusin', function () {
         $(this).css({
-            'color': 'var(--primaryColor)',
-            'background-color': 'var(--themeHoverColor)'
+            'color': 'white',
+            'background-color': 'var(--primaryColor)'
         });
         if (!isOnMobile()) {
             const thisSpan = $(this).find('span');
@@ -194,11 +194,13 @@ $(function() {
     });
 
     $('#mouse-searching-reset').bind('mouseover focusin', function () {
+        $(this).css('background-color', 'var(--primaryColor)');
         $(this).find('i').css({
-            'color' : 'orange',
-            'transform' : 'rotate(180deg)'
+            'color' : 'white',
+            'transform' : 'rotate(300deg)'
         });
     }).bind('mouseout focusout', function () {
+        $(this).css('background-color', 'var(--themeBackgroundColor)');
         $(this).find('i').css({
             'color' : 'var(--themeReverseColor)',
             'transform' : 'rotate(0deg)'
@@ -298,63 +300,87 @@ $(function() {
         });
     });
 
+    $('.filter-buttons-div button').on('click', function () {
+        const thisBtn = $(this);
+        thisBtn.css('outline', '6px solid var(--themeHoverColor)');
+        setTimeout(function() {
+            thisBtn.css('outline', '0px solid transparent');
+        },120);
+        /*setTimeout(function () {
+            $(this).css('outline', '0px solid transparent');
+        }, 200);*/
+    });
+
     $('.filter-buttons-div button').bind('mouseover focusin', function () {
         $(this).css({
             'background-color': 'var(--themeHoverColor)'
         });
         if (this.id === 'filter-btn-apply') {
             $(this).css({
-                'outline-color': 'var(--primaryColor)'
+                'color' : 'white',
+                'background-color': 'var(--primaryColor)',
+                'border-color': 'var(--primaryColor)'
             });
             $(this).find('.icon').css({
-                'color': 'var(--primaryColor)',
-                'font-size': '1.4rem'
+                'color': 'white',
+                'font-size': '1.2rem'
             });
         } else if (this.id === 'filter-btn-reset') {
             $(this).css({
-                'outline-color': 'orange'
+                'color' : 'white',
+                'background-color': 'orange',
+                'border-color': 'orange'
             });
             $(this).find('.icon').css({
-                'color': 'orange',
-                'transform': 'translate(-50%, -50%) rotate(180deg)'
+                'color': 'white',
+                'transform': 'translate(-50%, -50%) rotate(300deg)'
             });
         } else if (this.id === 'filter-btn-close') {
             $(this).css({
-                'outline-color': 'rgb(224,36,36)'
+                'color' : 'white',
+                'background-color': 'rgb(224,36,36)',
+                'border-color': 'rgb(224,36,36)'
             });
             $(this).find('.icon').css({
-                'color': 'rgb(224,36,36)',
+                'color': 'white',
                 'font-size': '1.3rem'
             });
         } else if (this.id === 'filter-btn-open') {
             $(this).css({
-                'outline-color': 'var(--primaryColor)'
+                'color' : 'white',
+                'background-color': 'var(--primaryColor)',
+                'border-color': 'var(--primaryColor)'
             });
             $(this).find('.icon').css({
-                'color': 'var(--primaryColor)',
+                'color': 'white',
                 'font-size': '1.2rem'
             });
         } else if (this.id === 'filter-btn-collapse') {
             $(this).css({
-                'outline-color': 'rgb(224,36,36)'
+                'color' : 'white',
+                'background-color': 'rgb(224,36,36)',
+                'border-color': 'rgb(224,36,36)'
             });
             $(this).find('.icon').css({
-                'color': 'rgb(224,36,36)',
+                'color': 'white',
                 'font-size': '1.2rem'
             });
         } else if (this.id === 'filter-btn-help') {
             $(this).css({
-                'outline-color': 'rgb(64,167,19)'
+                'color' : 'white',
+                'background-color': 'rgb(64,167,19)',
+                'border-color': 'rgb(64,167,19)'
             });
             $(this).find('.icon').css({
-                'color': 'rgb(64,167,19)',
+                'color': 'white',
                 'font-size': '1.2rem'
             });
         }
     }).bind('mouseout focusout', function () {
         $(this).css({
-            'outline-color': 'var(--themeBorderColor)',
-            'background-color': 'var(--themeBackgroundColor)'
+            'color' : 'var(--themeReverseColor)',
+            'background-color': 'var(--themeBackgroundColor)',
+            'border-color': 'var(--themeBorderColor)'
         });
         if (this.id === 'filter-btn-reset') {
             $(this).find('.icon').css({
@@ -460,17 +486,21 @@ $(function() {
 
     $('body').on('mouseover', '.checkmark-option, .checkmarks-select-all', function () {
         if (!isOnMobile()) {
-            $(this).find('input').css({
-                'border-width': '2px',
-                'background-color': 'var(--themeHoverColor)'
-            });
+            $(this).find('input').css('outline', '2px solid var(--themeBorderColor)');
         }
     }).on('mouseleave', '.checkmark-option, .checkmarks-select-all', function () {
         if (!isOnMobile()) {
-            $(this).find('input').css({
-                'border-width': '1px',
-                'background-color': 'var(--themeBackgroundColor)'
-            });
+            $(this).find('input').css('outline', '0 solid transparent');
+        }
+    });
+    // duplicate due to .bind not working
+    $('body').on('focusin', '.checkmark-option, .checkmarks-select-all', function () {
+        if (!isOnMobile()) {
+            $(this).find('input').css('outline', '2px solid var(--themeBorderColor)');
+        }
+    }).on('focusout', '.checkmark-option, .checkmarks-select-all', function () {
+        if (!isOnMobile()) {
+            $(this).find('input').css('outline', '0 solid transparent');
         }
     });
 /*--------------------
@@ -618,6 +648,24 @@ $(function() {
 /*--------------------------
     Checkbox-buttons - End
 --------------------------*/
+    $('.filter-checkbox-buttons label').on('mouseover', function () {
+        $(this).css('outline', '2px solid var(--themeBorderColor)');
+    }).on('mouseleave', function () {
+        $(this).css('outline', '0 solid transparent');
+    });
+
+    /*$('.filter-checkbox-buttons label').on('click', function () {
+        const thisLabel = $(this);
+        /!*thisLabel.css('outline', '6px solid var(--themeHoverColor)');*!/
+        setTimeout(function () {
+            if (thisLabel.is(':hover')) {
+                thisLabel.css('outline', '2px solid var(--themeBorderColor)');
+            } else {
+                thisLabel.css('outline', '0px solid transparent');
+            }
+        }, 120);
+    });*/
+
     $('.filter-checkbox-buttons input').on('change', function () {
         activateCheckboxesShape();
     });
@@ -1004,13 +1052,15 @@ function activateCheckboxesShape() {
     $('.filter-checkbox-buttons input').each(function () {
         if ($(this).prop('checked') === true) {
             $(this).prev('label').css({
+                'color' : 'white',
+                'background-color' : 'var(--primaryColor)',
                 'border-color': 'var(--primaryColor)'
-                /*'box-shadow': '0 3px 0 0 var(--primaryDarkColor)'*/
             });
         } else if ($(this).prop('checked') === false) {
             $(this).prev('label').css({
+                'color' : 'var(--themeReverseColor)',
+                'background-color' : 'var(--themeBackgroundColor)',
                 'border-color': 'var(--themeBorderColor)'
-                /*'box-shadow': '0 3px 0 0 gray'*/
             });
         }
     });

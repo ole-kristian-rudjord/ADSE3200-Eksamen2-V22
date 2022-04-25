@@ -109,7 +109,7 @@ function setTheme() {
         borderColor = 'black';
         hoverColor = 'rgb(230,230,230)';
     } else if (theme === 'gray') {
-        backgroundColor = 'rgb(32,32,32)';
+        backgroundColor = 'rgb(34,34,34)';
         reverseColor = 'rgb(220,220,220)';
         borderColor = 'rgb(220,220,220)';
         hoverColor = 'rgb(45,45,45)';

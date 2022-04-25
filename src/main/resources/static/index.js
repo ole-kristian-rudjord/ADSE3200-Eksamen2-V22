@@ -40,7 +40,7 @@ $(function() {
             mouseArray = allMice.sort((a, b) => (a.brand > b.brand) ? 1 : -1);
         },
         error: function (status) {
-            createErrorMessage("Error: " + status.status + "\nCloud not retrieve mice form the database.");
+            createErrorMessage("Error: " + status.status + "\nCloud not retrieve mice from the database.");
         }
     });
 
@@ -197,10 +197,16 @@ $(function() {
     // Shape-settings-reset hover effect
     $('#shape-settings-reset').bind('mouseenter focusin', function () {
         $(this).css('background-color', 'var(--primaryColor)');
-        $(this).find('span').css('color', 'white');
+        $(this).find('i').css({
+            'color' : 'white',
+            'transform' : 'rotate(300deg)'
+        });
     }).bind('mouseleave focusout', function () {
         $(this).css('background-color', 'var(--themeBackgroundColor)');
-        $(this).find('span').css('color', 'var(--themeReverseColor)');
+        $(this).find('i').css({
+            'color' : 'var(--themeReverseColor)',
+            'transform' : 'rotate(0deg)'
+        });
     });
     /*--------------------------------
         Reset size & alignment - end
