@@ -58,9 +58,9 @@ $(function () {
 /*-----------------------
     Burger menu - start
 -----------------------*/
-    $(':root').css('--bodyHeight', ($(window).outerHeight() - $('nav').outerHeight()) + 'px');
+    $(':root').css('--bodyHeight', ($(window).height() - $('nav').height()) + 'px');
     $(window).resize(function () {
-        $(':root').css('--bodyHeight', ($(window).outerHeight() - $('nav').outerHeight()) + 'px');
+        $(':root').css('--bodyHeight', ($(window).height() - $('nav').height()) + 'px');
     });
     console.log($(':root').css('--bodyHeight'));
 
