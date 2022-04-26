@@ -58,6 +58,12 @@ $(function () {
 /*-----------------------
     Burger menu - start
 -----------------------*/
+    $(':root').css('--bodyHeight', ($(window).outerHeight() - $('nav').outerHeight()) + 'px');
+    $(window).resize(function () {
+        $(':root').css('--bodyHeight', ($(window).outerHeight() - $('nav').outerHeight()) + 'px');
+    });
+    console.log($(':root').css('--bodyHeight'));
+
     // Changes burger icon lines color on hover
     $('.burger-icon').on('mouseover', function () {
         $('.burger-lines').css('background-color', 'var(--primaryColor)');

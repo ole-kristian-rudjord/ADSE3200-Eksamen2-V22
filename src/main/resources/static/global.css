@@ -61,6 +61,7 @@
     --themeBackgroundColor: inherit;
     --themeReverseColor: inherit;
     --themeBorderColor: inherit;
+    --bodyHeight: 0;
 }
 
 
@@ -179,7 +180,7 @@ nav a.active-link {
 .burger-lines {
     height: 2px;
     width: 100%;
-    border-radius: 2px;
+    /*border-radius: 2px;*/
     background-color: var(--themeReverseColor);
     transition: 180ms ease;
 }

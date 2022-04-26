@@ -324,32 +324,44 @@
 #filter-main {
     transition: transform 200ms ease;
     transform: translateX(-110%);
-    height: 100vh;
+    height: var(--bodyHeight);
     max-width: 450px;
     width: 100vw;
     position: fixed;
-    top: 41px;
+    /*top: 41px;*/
     left: 0;
     background-color: var(--themeBackgroundColor);
     border-right: 2px solid var(--themeBorderColor);
-    display: none;
-    flex-direction: column;
+    /*display: none;
+    flex-direction: column;*/
+    display: grid;
+    grid-template-rows: 80px 1fr 80px;
     z-index: 50;
 }
+#filter-buttons-top {
+    grid-row: 1/2;
+    border-bottom: 2px solid var(--themeHoverColor);
+}
 #filter-content {
+    grid-row: 2/3;
     overflow-y: scroll;
-    padding-bottom: 20vh;
 }
 #filter-content::-webkit-scrollbar {
     width: 0;
 }
+#filter-buttons-bottom {
+    grid-row: 3/4;
+    border-top: 2px solid var(--themeHoverColor);
+}
+
 
 
 .filter-buttons-div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
-    padding: 24px 32px;
+    padding: 0 32px;
     z-index: 10;
     background-color: var(--themeBackgroundColor);
 }
@@ -357,13 +369,14 @@
     position: relative;
     font-size: 0.95rem;
     width: 90px;
+    height: 40px;
     padding: 6px 32px 6px 12px;
     /*padding: 6px 32px 8px 12px;*/
     border-radius: 6px;
     color: var(--themeReverseColor);
     /*color: var(--themeBackgroundColor);*/
     /*border: none;*/
-    outline: 0px solid transparent;
+    outline: 0 solid transparent;
     border: 2px solid var(--themeBorderColor);
     /*box-shadow: 0 3px 0 2px gray;*/
     /*box-shadow: 0 0 0 0 transparent;*/
@@ -413,14 +426,14 @@
 .filter-buttons-div .show-help-btn .icon-span {
     right: 10px;
 }
-#filter-buttons-top {
+/*#filter-buttons-top {
     border-bottom: 2px solid var(--themeHoverColor);
-}
-#filter-buttons-bottom {
+}*/
+/*#filter-buttons-bottom {
     position: fixed;
     bottom: 41px;
     border-top: 2px solid var(--themeHoverColor);
-}
+}*/
 
 #filter-btn-collapse {
     width: 120px;
@@ -916,9 +929,9 @@
     #mouse-searching-div {
         height: 36px;
     }
-    #mouse-searching-div #input-div input {
-        height: 32px;
-        border-width: 1px;
+    #mouse-searching-div input {
+        height: 34px;
+        /*border-width: 2px;*/
         padding: 0 4px;
         margin-left: 3px;
         font-size: 0.8rem;
@@ -927,10 +940,10 @@
         height: 32px;
         flex-direction: row;
     }
-    #mouse-searching-div #button-div button {
+    /*#mouse-searching-div #button-div button {
         height: 32px;
         width: 24px;
-    }
+    }*/
     #search-mouse-brand {
         width: 65px;
     }
@@ -980,8 +993,8 @@
 
 
     #filter-main {
-        display: flex;
         top: 0;
+        height: 100vh;
         max-width: none;
         border: none;
     }

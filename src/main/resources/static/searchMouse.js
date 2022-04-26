@@ -690,7 +690,7 @@ $(function() {
 -------------------*/
 function openFilter() {
     $('#main-buttons-div button, #main-buttons-div input').attr('disabled', true);
-    $('#filter-main').css('display', 'flex');
+    $('#filter-main').css('display', 'grid');
     $('#screen-cover-filter').css('display', 'block');
     setTimeout(function () {
         $('#filter-main').css('transform', 'translateX(0)');
@@ -928,6 +928,10 @@ function formatTable(status) {
                     'text-decoration-thickness': '2px',
                     'text-underline-offset': '1px'
                 });
+                /*$(this).css({
+                    'color' : 'var(--themeBackgroundColor)',
+                    'background-color' : 'var(--themeBorderColor)'
+                });*/
                 if ($(this).attr('class') === 'string') {
                     $(this).attr('title', 'Sort by ' + $(this).text() + ' | A-Z');
                 } else {
@@ -941,6 +945,10 @@ function formatTable(status) {
                     'text-decoration-thickness': '2px',
                     'text-underline-offset': '1px'
                 });
+                /*$(this).css({
+                    'color' : 'white',
+                    'background-color' : 'var(--primaryColor)'
+                });*/
 
                 if (formatAscending) {
                     if ($(this).attr('class') === 'string') {
