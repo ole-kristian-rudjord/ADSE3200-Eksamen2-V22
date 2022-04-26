@@ -83,11 +83,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /*outline: black dotted 1px;*/
 }
 .shapes-div svg {
-    /*filter: drop-shadow(0px 1px 0 white) drop-shadow(0px -1px 0 white)
-    drop-shadow(1px 0px 0 white) drop-shadow(-1px 0px 0 white);*/
     user-drag: none;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -104,18 +101,11 @@
     stroke: var(--primaryColor);
     fill: none;
 }
-/*
-.SVG-main-side path {
-    stroke-width: 7;
-}
-*/
-
 
 /*--- Top shape-view ---*/
 #shape-top {
     position: relative;
 
-    /*outline: blue solid 1px;*/
 }
 #shape-top-container {
     position: absolute;
@@ -124,7 +114,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    /*outline: rgba(255,255,50,0.4) dotted 3px;*/
 }
 #shape-top-container svg {
     position: absolute;
@@ -142,8 +131,6 @@
 #shape-back {
     position: relative;
     height: 50%;
-
-    /*outline: red solid 1px;*/
 }
 #shape-back-container {
     position: absolute;
@@ -153,8 +140,6 @@
     transform: translateX(-50%);
     height: 100%;
     width: 90%;
-
-    /*outline: rgba(255,255,50,0.4) dotted 3px;*/
 }
 #shape-back-container svg {
     position: absolute;
@@ -166,8 +151,6 @@
     position: relative;
     height: 50%;
     width: 100%;
-
-    /*outline: green solid 1px;*/
 }
 #shape-side-container {
     position: absolute;
@@ -175,8 +158,6 @@
     bottom: 0;
     width: 100%;
     height: 100%;
-
-    /*outline: rgba(255,255,50,0.4) dotted 3px;*/
 }
 #shape-side-container svg {
     position: absolute;
@@ -226,8 +207,6 @@
     padding-right: 2vw;
     border-radius: 4px;
     background-color: var(--themeBackgroundColor);
-
-    /*outline: purple solid 2px;*/
 }
 
 /*--- Error messages ---*/
@@ -240,22 +219,14 @@
     right: 2vw;
     height: 17%;
     text-align: right;
-
-    /*outline: red solid 1px;*/
 }
 .error-message-li {
     display: block;
     position: relative;
     border-radius: 4px;
-    /*transform: translateY(-300%);*/
     font-size: 0.86rem;
-    /*text-decoration: underline;
-    text-decoration-color: var(--primaryColor);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;*/
     color: var(--themeReverseColor);
     background-color: var(--themeBackgroundColor);
-    /*opacity: 0;*/
     transition: 650ms ease;
     transition-property: transform, opacity;
 }
@@ -275,17 +246,7 @@
 #add-new-shape-div {
     width: 275px;
     display: flex;
-    /*gap: 3px;*/
     justify-content: space-between;
-    /*padding: 6px 8px;
-    border: none;
-    border-top: transparent solid 2px;
-    border-bottom: var(--themeBorderColor) solid 2px;
-    cursor: pointer;
-    color: var(--themeReverseColor);
-    background-color: var(--themeBackgroundColor);
-    transition: 180ms ease;
-    transition-property: outline, border-bottom-color, background-color, border-radius;*/
 }
 #add-new-shape-div input {
     padding: 6px 4px;
@@ -366,8 +327,6 @@
 .shape-tool-close {
     grid-column: 1/2;
     left: 0;
-    /*height: 100%;
-    width: 80%;*/
     height: 20px;
     width: 20px;
     margin: auto;
@@ -379,8 +338,6 @@
     background-color: transparent;
     opacity: 0;
     cursor: pointer;
-
-    /*outline: red solid 1px;*/
 }
 /* View is missing, information icon */
 .view-missing-information {
@@ -417,8 +374,6 @@
     margin: auto 0;
     text-align: left;
     color: var(--themeReverseColor);
-
-    /*outline: red solid 1px;*/
 }
 /* Mouse dimensions */
 .shape-information-dimensions {
@@ -428,8 +383,6 @@
     text-align: left;
     color: var(--themeReverseColor);
     opacity: 0.7;
-
-    /*outline: blue solid 1px;*/
 }
 .shape-information-dimensions span {
     font-family: "Roboto Mono";
@@ -442,7 +395,6 @@
     text-align: left;
     color: var(--themeReverseColor);
     opacity: 0.7;
-    /*outline: green solid 1px;*/
 }
 /* Color selector */
 .shape-tool-color {
@@ -500,8 +452,6 @@
     padding: 3px 10px 20px 8px;
     border-radius: 6px 6px 0 0;
     background-color: var(--themeBackgroundColor);
-
-    /*border: yellow solid 1px;*/
 }
 
 
@@ -561,7 +511,6 @@
     -webkit-appearance: none;
     height: 24px;
     width: 180px; /* 3x btn-width */
-    /*margin-top: 4px;*/
     border: var(--themeBorderColor) solid 2px;
     border-radius: 4px;
     background-color: var(--themeBackgroundColor);
@@ -619,12 +568,10 @@
     display: table-cell;
     height: 24px;
     width: 60px;
-    /*outline: var(--themeBorderColor) solid 2px;*/
     border-color: var(--themeBorderColor);
     border-style: solid;
     border-top-width: 2px;
     border-bottom-width: 2px;
-    /*border: none;*/
     color: var(--themeReverseColor);
     background-color: var(--themeBackgroundColor);
     cursor: pointer;
@@ -711,17 +658,6 @@
 /*-------------------------
     Media queries - start
 -------------------------*/
-
-/*--- Laptops / smaller monitors ---*/
-/*@media only screen and (max-width: 1400px) and (min-width: 850px) {
-    .shapes-div {
-        gap: 2vw;
-        left: 15vw;
-        transform: translate(0, -50%); !* try vw! *!
-    }
-}*/
-
-
 /*--- Mobile ---*/
 @media only screen and (max-width: 850px) {
 
@@ -744,8 +680,6 @@
         width: 100%;
         border-top: var(--themeHoverColor) solid 1px;
         background-color: var(--themeBackgroundColor);
-
-        /*outline: red solid 1px;*/
     }
 
     /* Shape tool */

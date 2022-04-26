@@ -1,38 +1,21 @@
-/*-------------------------------------------------------
----------------------------------------------------------
-
-                JS content: Search Mouse
-
----------------------------------------------------------
----------------------------------------------------------
-
-    Checks user device
-
-    Burger menu
-
-    Theme
-
----------------------------------------------------------
-
-
-
----------------------------------------------------------
-
-    Call functions on load
-
--------------------------------------------------------*/
-
-
 $(function() {
 /*-----------------------
     Mouse table - start
 -----------------------*/
-    $.get("/Global/getAllMice", function (listOfMice) {
-        mouseList = listOfMice;
-        formatTable();
-    }).fail(function () {
-        formatTable('fail: loading');
-    })
+    $.ajax({
+        url: "/Global/getAllMice",
+        datatype: 'json',
+        type: 'get',
+        async: false,
+        success: function (allMice) {
+            mouseList = allMice.sort((a, b) => (a.brand > b.brand) ? 1 : -1);
+            formatTable();
+        },
+        error: function (status) {
+            formatTable('fail: loading');
+            createErrorMessage("Error: " + status.status + "\nCloud not retrieve mice from the database.");
+        }
+    });
 /*---------------------
     Mouse table - End
 ---------------------*/
@@ -41,30 +24,6 @@ $(function() {
 /*-------------------------------
     Filter main buttons - Start
 -------------------------------*/
-    /*$('#main-buttons-div button').bind('mouseenter focusin', function () {
-        $(this).css({
-            'color': 'var(--primaryColor)',
-            'background-color': 'var(--themeHoverColor)'
-        });
-        if (!isOnMobile()) {
-            const thisSpan = $(this).find('span');
-            thisSpan.css('display', 'flex');
-            setTimeout(function () {
-                thisSpan.css('transform', 'translateX(0)');
-            });
-        }
-    }).bind('mouseleave focusout', function () {
-        $(this).css({
-            'color': 'var(--themeReverseColor)',
-            'background-color': 'var(--themeBackgroundColor)'
-        });
-        const thisSpan = $(this).find('span');
-        thisSpan.css('transform', 'translateX(-100%)');
-        setTimeout(function () {
-            thisSpan.css('display', 'none');
-        });
-    });*/
-
     $('#main-buttons-div button').bind('mouseenter focusin', function () {
         $(this).css({
             'color': 'white',
@@ -160,33 +119,6 @@ $(function() {
 
     $('#mouse-searching-div input').on('keyup', function () {
         underlineMatchingSearch();
-        /*$('#mouse-table tr').each(function () {
-            if ($(this).children(':first').text().toLowerCase().includes($('#search-mouse-brand').val().toLowerCase())
-                && $('#search-mouse-brand').val() !== ''
-                && $('#search-mouse-model').val() === '') {
-                /!*console.log('brand');*!/
-                $(this).children(':first').addClass('matching-search');
-                $(this).children(':nth-child(2)').removeClass('matching-search');
-            } else if ($(this).children(':nth-child(2)').text().toLowerCase().includes($('#search-mouse-model').val().toLowerCase())
-                && $('#search-mouse-model').val() !== ''
-                && $('#search-mouse-brand').val() === '') {
-                /!*console.log('model');*!/
-                $(this).children(':first').removeClass('matching-search');
-                $(this).children(':nth-child(2)').addClass('matching-search');
-            } else if ($(this).children(':first').text().toLowerCase().includes($('#search-mouse-brand').val().toLowerCase())
-                && $(this).children(':nth-child(2)').text().toLowerCase().includes($('#search-mouse-model').val().toLowerCase())
-                && $('#search-mouse-brand').val() !== ''
-                && $('#search-mouse-model').val() !== '') {
-                /!*console.log('both');*!/
-                $(this).children().slice(0,2).addClass('matching-search');
-            } else {
-                $(this).children().slice(0,2).removeClass('matching-search');
-            }
-            /!*console.log($('.matching-search').first().text());
-            $('html, body').animate({
-                scrollTop: $('body').find('.matching-search').first().offset().top - ($(window).height() / 2)
-            }, 0);*!/
-        });*/
     });
 
     $('#mouse-searching-reset').on('click', function () {
@@ -206,14 +138,6 @@ $(function() {
             'transform' : 'rotate(0deg)'
         });
     });
-
-    /*$('#mouse-searching-close').on('click', function () {
-        resetMouseSearch();
-        $('#mouse-searching-div').css('transform', 'translateX(0)');
-        setTimeout(function () {
-            $('#mouse-searching-div').css('display', 'none');
-        }, 90);
-    });*/
 
     $('body').on('click', '#mouse-table thead tr td button', function () {
         if ($(this).val() === formatByCategory) {
@@ -306,9 +230,6 @@ $(function() {
         setTimeout(function() {
             thisBtn.css('outline', '0px solid transparent');
         },120);
-        /*setTimeout(function () {
-            $(this).css('outline', '0px solid transparent');
-        }, 200);*/
     });
 
     $('.filter-buttons-div button').bind('mouseover focusin', function () {
@@ -425,21 +346,33 @@ $(function() {
 /*----------------------
     Checkmarks - Start
 ----------------------*/
-    $.get('/Global/getDistinctCategoryItems?category=' + 'brand', function (listOfMice) {
-        let brandList = [];
-        for (const mouse of listOfMice) {
-            brandList.push(mouse.brand);
+    const mouseListSortedByBrand = mouseList;
+    mouseListSortedByBrand.sort((a, b) => (a.brand > b.brand) ? 1 : -1);
+    const brandList = [];
+    let previousBrand = null;
+    let brandListCounter = 0
+    do {
+        if (mouseListSortedByBrand[brandListCounter].brand !== previousBrand) {
+            brandList.push(mouseListSortedByBrand[brandListCounter].brand);
+            previousBrand = mouseListSortedByBrand[brandListCounter].brand;
         }
-        formatChecklist(brandList, 'brand');
-    });
+        brandListCounter++;
+    } while (brandListCounter < mouseListSortedByBrand.length);
+    formatChecklist(brandList, 'brand');
 
-    $.get('/Global/getDistinctCategoryItems?category=' + 'sensor', function (listOfMice) {
-        let sensorList = [];
-        for (const mouse of listOfMice) {
-            sensorList.push(mouse.sensor);
+    const mouseListSortedBySensor = mouseList;
+    mouseListSortedBySensor.sort((a, b) => (a.sensor > b.sensor) ? 1 : -1);
+    const sensorList = [];
+    let previousSensor = null;
+    let sensorListCounter = 0
+    do {
+        if (mouseListSortedBySensor[sensorListCounter].sensor !== previousSensor) {
+            sensorList.push(mouseListSortedBySensor[sensorListCounter].sensor);
+            previousSensor = mouseListSortedBySensor[sensorListCounter].sensor;
         }
-        formatChecklist(sensorList, 'sensor');
-    });
+        sensorListCounter++;
+    } while (sensorListCounter < mouseListSortedBySensor.length);
+    formatChecklist(sensorList, 'sensor');
 
     $('body').on('click', '.checkmark-option, .checkmarks-select-all', function (x) {
         if (!$(x.target).is('input') && !$(x.target).is('label')) {
@@ -654,18 +587,6 @@ $(function() {
         $(this).css('outline', '0 solid transparent');
     });
 
-    /*$('.filter-checkbox-buttons label').on('click', function () {
-        const thisLabel = $(this);
-        /!*thisLabel.css('outline', '6px solid var(--themeHoverColor)');*!/
-        setTimeout(function () {
-            if (thisLabel.is(':hover')) {
-                thisLabel.css('outline', '2px solid var(--themeBorderColor)');
-            } else {
-                thisLabel.css('outline', '0px solid transparent');
-            }
-        }, 120);
-    });*/
-
     $('.filter-checkbox-buttons input').on('change', function () {
         activateCheckboxesShape();
     });
@@ -728,68 +649,6 @@ function resetMouseSearch() {
         $(this).children().slice(0,2).removeClass('matching-search');
     });
 }
-
-/*function filterMice() {
-    let brandList = [];
-    $('.brand-option input').each(function () {
-        if ($(this).prop('checked')) {
-            brandList.push($(this).next('label').text());
-        }
-    });
-
-    let sensorList = [];
-    $('.sensor-option input').each(function () {
-        if ($(this).prop('checked')) {
-            sensorList.push($(this).next('label').text());
-        }
-    });
-
-    const filteredMouseSearch = {
-        brandList: brandList,
-        lengthMin: $('#filter-length-min').val(),
-        lengthMax: $('#filter-length-max').val(),
-        widthMin: $('#filter-width-min').val(),
-        widthMax: $('#filter-width-max').val(),
-        heightMin: $('#filter-height-min').val(),
-        heightMax: $('#filter-height-max').val(),
-        weightMin: $('#filter-weight-min').val(),
-        weightMax: $('#filter-weight-max').val(),
-        wired: $('#filter-shape-wired').prop('checked'),
-        wireless: $('#filter-shape-wireless').prop('checked'),
-        ambidextrous: $('#filter-shape-ambidextrous').prop('checked'),
-        ergonomic: $('#filter-shape-ergonomic').prop('checked'),
-        sensorList: sensorList,
-        dpiMin: $('#filter-dpi-min').val(),
-        dpiMax: $('#filter-dpi-max').val(),
-        pollingRateMin: $('#filter-pollingRate-min').val(),
-        pollingRateMax: $('#filter-pollingRate-max').val()
-    }
-
-    const filteredMouseList = [];
-    for (const mouse of mouseList) {
-        if (
-            brandList.isArray(mouse.brand)
-            && mouse.length >= $('#filter-length-min').val() && mouse.length <= $('#filter-length-max').val()
-            && mouse.width >= $('#filter-width-min').val() && mouse.width <= $('#filter-width-max').val()
-            && mouse.height >= $('#filter-height-min').val() && mouse.height <= $('#filter-height-max').val()
-            && mouse.weight >= $('#filter-weight-min').val() && mouse.weight <= $('#filter-weight-max').val()
-            && (($('#filter-shape-wired').prop('checked') && mouse.wireless === 1)
-                || $('#filter-shape-wireless').prop('checked') && mouse.wireless === 0)
-            && (($('#filter-shape-ambidextrous').prop('checked') && mouse.shape === 0)
-                || $('#filter-shape-ergonomic').prop('checked') && mouse.shape === 1)
-            && sensorList.isArray(mouse.sensor)
-            && mouse.dpi >= $('#filter-dpi-min').val() && mouse.dpi <= $('#filter-dpi-max').val()
-            && mouse.pollingRate >= $('#filter-pollingRate-min').val() && mouse.pollingRate <= $('#filter-pollingRate-max').val()
-        ) {
-            filteredMouseList.push(mouse);
-        }
-    }
-    if (filteredMouseList.length <= 0) {
-        formatTable('fail: filter-search');
-    } else {
-        formatTable('');
-    }
-}*/
 /*-----------------
     Filters - end
 -----------------*/
@@ -804,19 +663,6 @@ let formatAscending = true;
 let firstTimeLoadingTable = true;
 
 function formatTable(status) {
-    /*let sortDirection;
-    if (formatAscending) {
-        sortDirection = '>';
-    } else {
-        sortDirection = '<';
-    }
-    if (formatByCategory === 'brand') {
-        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.model > b.model) ? 1 : -1) : -1);
-    } else if (formatByCategory === 'model') {
-        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : -1) : -1);
-    } else {
-        mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.brand > b.brand) ? 1 : (a.brand === b.brand) ? ((a.model > b.model) ? 1 : -1) : -1) : -1);
-    }*/
     if (formatAscending === true) {
         if (formatByCategory === 'brand') {
             mouseList.sort((a, b) => (a[formatByCategory] > b[formatByCategory]) ? 1 : (a[formatByCategory] === b[formatByCategory]) ? ((a.model > b.model) ? 1 : -1) : -1);
@@ -928,10 +774,6 @@ function formatTable(status) {
                     'text-decoration-thickness': '2px',
                     'text-underline-offset': '1px'
                 });
-                /*$(this).css({
-                    'color' : 'var(--themeBackgroundColor)',
-                    'background-color' : 'var(--themeBorderColor)'
-                });*/
                 if ($(this).attr('class') === 'string') {
                     $(this).attr('title', 'Sort by ' + $(this).text() + ' | A-Z');
                 } else {
@@ -945,10 +787,6 @@ function formatTable(status) {
                     'text-decoration-thickness': '2px',
                     'text-underline-offset': '1px'
                 });
-                /*$(this).css({
-                    'color' : 'white',
-                    'background-color' : 'var(--primaryColor)'
-                });*/
 
                 if (formatAscending) {
                     if ($(this).attr('class') === 'string') {
@@ -983,28 +821,21 @@ function underlineMatchingSearch() {
             if ($(this).children(':first').text().toLowerCase().includes($('#search-mouse-brand').val().toLowerCase())
                 && $('#search-mouse-brand').val() !== ''
                 && $('#search-mouse-model').val() === '') {
-                /*console.log('brand');*/
                 $(this).children(':first').addClass('matching-search');
                 $(this).children(':nth-child(2)').removeClass('matching-search');
             } else if ($(this).children(':nth-child(2)').text().toLowerCase().includes($('#search-mouse-model').val().toLowerCase())
                 && $('#search-mouse-model').val() !== ''
                 && $('#search-mouse-brand').val() === '') {
-                /*console.log('model');*/
                 $(this).children(':first').removeClass('matching-search');
                 $(this).children(':nth-child(2)').addClass('matching-search');
             } else if ($(this).children(':first').text().toLowerCase().includes($('#search-mouse-brand').val().toLowerCase())
                 && $(this).children(':nth-child(2)').text().toLowerCase().includes($('#search-mouse-model').val().toLowerCase())
                 && $('#search-mouse-brand').val() !== ''
                 && $('#search-mouse-model').val() !== '') {
-                /*console.log('both');*/
                 $(this).children().slice(0, 2).addClass('matching-search');
             } else {
                 $(this).children().slice(0, 2).removeClass('matching-search');
             }
-            /*console.log($('.matching-search').first().text());
-            $('html, body').animate({
-                scrollTop: $('body').find('.matching-search').first().offset().top - ($(window).height() / 2)
-            }, 0);*/
         });
     }
 }

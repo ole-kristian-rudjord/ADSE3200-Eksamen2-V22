@@ -62,7 +62,6 @@ $(function () {
     $(window).resize(function () {
         $(':root').css('--bodyHeight', ($(window).height() - $('nav').height()) + 'px');
     });
-    console.log($(':root').css('--bodyHeight'));
 
     // Changes burger icon lines color on hover
     $('.burger-icon').on('mouseover', function () {

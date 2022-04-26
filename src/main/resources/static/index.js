@@ -1,34 +1,3 @@
-/*-------------------------------------------------------
----------------------------------------------------------
-
-                JS content: Compare Shapes
-
----------------------------------------------------------
----------------------------------------------------------
-
-    Checks user device
-
-    Burger menu
-
-    Theme
-
----------------------------------------------------------
-
-    Shape Compare
-        -Slider, shape size, shape container
-        -Alignment
-        -Reset size & alignment
-        -Adding new shapes
-        -Remove shapes
-        -Shape information interactivity
-        -Automatic shape resizing
-
----------------------------------------------------------
-
-    Call functions on load
-
--------------------------------------------------------*/
-
 $(function() {
 
     $.ajax({
@@ -170,16 +139,6 @@ $(function() {
     }).bind('mouseout focusout', function () {
         $('.alignment-bar').css('opacity', '0');
     });
-
-    $('.shape-settings-align-btn').on('mouseover', function () {
-        if ($(this).css('background-color' !== 'var(--primaryColor)')) {
-            $(this).css('background-color', 'var(--themeHoverColor)');
-        }
-    }).on('mouseout', function () {
-        if ($(this).css('background-color' !== 'var(--primaryColor)')) {
-            $(this).css('background-color', 'var(--themeBackgroundColor)');
-        }
-    });
     /*-------------------
         Alignment - end
     -------------------*/
@@ -240,12 +199,6 @@ $(function() {
         getMatchingModels();
     });
 
-    /*$('#add-new-shape-div input').on('focusin', function () {
-        let length = $('#add-new-shape-div input');
-        $(this).attr('size', 3);
-    }).on('focusout', function () {
-        $(this).attr('size', 0);
-    });*/
 
     $('#add-new-shape-div input').on('change', function () {
         const brand = $('#add-new-shape-brand').val();
@@ -273,13 +226,6 @@ $(function() {
             model.val('');
             $(this).prop('title', 'Add mouse');
         }
-
-        /*if (brand.val() !== '' && model.val() !== '') {
-            addMouse(brand.val(), model.val());
-            brand.val('');
-            model.val('');
-            $(this).prop('title', 'Add mouse');
-        }*/
     });
     /*---------------------------
         Adding new shapes - end
@@ -373,79 +319,6 @@ $(function() {
         $(this).find('span').css('display', 'none');
     });
 
-    /*// Highlights close-button & shape information div on hover
-    $('body').bind('mouseenter focusin', '.shape-tool-close', function () {
-        $(this).css({
-            'color' : 'red',
-            'opacity' : '1'
-        });
-        let closeBtnClass = ''+this.id;
-        let mouseId = closeBtnClass.replace('shape-close-', '');
-        $(`#shape-div-${mouseId}`).css('outline', 'var(--themeHoverColor) solid 3px');
-    }).bind('mouseleave focusout', '.shape-tool-close', function () {
-        $(this).css({
-            'color' : 'var(--themeReverseColor)',
-            'opacity' : '0.5'
-        });
-        let closeBtnClass = ''+this.id;
-        let mouseId = closeBtnClass.replace('shape-close-', '');
-        $(`#shape-div-${mouseId}`).css('outline', 'transparent solid 0');
-        $(`.${mouseId}-class`).css('filter', 'none');
-    });
-
-
-    // Shows exclamation-mark information on hover
-    $('body').on('mouseenter', '.view-missing-information', function () {
-        $(this).css({
-            'color' : 'var(--primaryColor)',
-            'opacity' : '1'
-        });
-        let thisId = ''+this.id;
-        let viewMissingHoverTextId = thisId.replace(/information/g, 'hover-text');
-        $('#'+viewMissingHoverTextId).css('display', 'inline-block');
-        setTimeout(function () {
-            $('#'+viewMissingHoverTextId).css('opacity', '1');
-        }, 0);
-    }).on('mouseleave', '.view-missing-information', function () {
-        $(this).css({
-            'color': 'var(--themeReverseColor)',
-            'opacity': '0.5'
-        });
-        let thisId = '' + this.id;
-        let viewMissingHoverTextId = thisId.replace(/information/g, 'hover-text');
-        $('#' + viewMissingHoverTextId).css({
-            'display' : 'none',
-            'opacity' : '0'
-        });
-    });
-
-
-    // Shows information on exclamation-mark focus (duplicate due to .bind not working above).
-    $('body').on('focusin', '.view-missing-information', function () {
-        $(this).css({
-            'color' : 'var(--primaryColor)',
-            'opacity' : '1'
-        });
-        let thisId = ''+this.id;
-        let viewMissingHoverTextId = thisId.replace(/information/g, 'hover-text');
-        $('#'+viewMissingHoverTextId).css('display', 'inline-block');
-        setTimeout(function () {
-            $('#'+viewMissingHoverTextId).css('opacity', '1');
-        }, 0);
-    }).on('focusout', '.view-missing-information', function () {
-        $(this).css({
-            'color': 'var(--themeReverseColor)',
-            'opacity': '0.3'
-        });
-        let thisId = ''+this.id;
-        let viewMissingHoverTextId = thisId.replace(/information/g, 'hover-text');
-        $('#' + viewMissingHoverTextId).css({
-            'display' : 'none',
-            'opacity' : '0'
-        });
-    });*/
-
-
     // Changes outline color on color-input
     $('body').on('input', '.shape-tool-color', function () {
         let thisId = ''+this.id;
@@ -526,8 +399,8 @@ $(function() {
   Call functions on load - start
 --------------------------------*/
     // Default shapes
-    addMouse('Logitech', 'G703 Lightspeed');
     addMouse('Glorious', 'Model O- Wireless');
+    addMouse('Zowie', 'EC1-C');
     /*
     Lag en share shapes knapp for å lage custom URL med brand og model.
     Dersom noen åpner nettsiden med en vanlig URL, kjøp default addMouse(),
@@ -667,8 +540,7 @@ function setAlignment() {
         'transform' : 'translateY(-' + verticalAlignTopPercentage + '%)'
     });
     $('#shape-top-container .alignment-bar.horizontal').css({
-        'top' : verticalAlignTopPercentage + '%'/*,
-        'transform' : 'translate(-50%,-' + verticalAlignTopPercentage + '%)'*/
+        'top' : verticalAlignTopPercentage + '%'
     });
     $('#shape-back-container').css('justify-content', horizontalAlignPosition);
     $('#shape-side-container').css('justify-content', horizontalAlignSidePosition);
@@ -679,7 +551,6 @@ function setAlignment() {
 function setAlignButtonColor() {
     // First, sets all buttons back to default
     $('.shape-settings-align-btn').css({
-        /*'outline-color' : 'var(--themeBorderColor)',*/
         'border-color' : 'var(--themeBorderColor)',
         'background-color' : 'var(--themeBackgroundColor)',
         'color' : 'var(--themeReverseColor)',
@@ -689,14 +560,11 @@ function setAlignButtonColor() {
     // changes active button colors
     $('#shape-settings-align-vertical-btn-' + verticalAlign).css({
         'border-color' : 'var(--primaryColor)',
-        /*'background-color' : 'var(--themeBackgroundColor)',*/
         'background-color' : 'var(--primaryColor)',
         'color' : 'white',
         'z-index' : '1'
     });
     $('#shape-settings-align-horizontal-btn-' + horizontalAlign).css({
-        /*'outline-color' : 'var(--primaryColor)',*/
-        /*'background-color' : 'var(--themeBackgroundColor)',*/
         'border-color' : 'var(--primaryColor)',
         'background-color' : 'var(--primaryColor)',
         'color' : 'white',
@@ -1002,7 +870,6 @@ function addSVG(id, svgCode, view) {
 
 // Adds padding on bottom of current mice div to make sure it does not under-/over-lap with shape-settings-grid
 function currentMiceBottomPadding() {
-    /*$('#shape-tool-current-mice').css('height', window.innerHeight - $('#shape-tool-current-mice').offset().top - $('#shape-settings-grid').outerHeight());*/
     if (isOnMobile()) {
         $('#shape-tool-current-mice').css({
             'height' : window.innerHeight - $('#shape-tool-current-mice').offset().top - $('#shape-settings-grid').outerHeight(),
@@ -1094,7 +961,6 @@ function increaseShapeSizeDesktop() {
     && $('.shapes-div').offset().left >= 0) {
         slider.val(+$('#shape-settings-size-slider').val() + +stepValue);
         updateShapeSize();
-        console.log('+++');
     }
 }
 
@@ -1107,7 +973,6 @@ function decreaseShapeSizeDesktop() {
     && slider.val() > slider.attr('min')) {
         slider.val($('#shape-settings-size-slider').val() - stepValue);
         updateShapeSize();
-        console.log('---');
     }
 }
 
