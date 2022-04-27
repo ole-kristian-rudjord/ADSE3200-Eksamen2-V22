@@ -698,10 +698,11 @@
         background-color: inherit;
     }
     #error-messages-list {
-        bottom: 50%;
+        flex-direction: column;
+        top: 5px;
         height: inherit;
         right: inherit;
-        left: 2vh;
+        left: 5px;
         text-align: left;
     }
     .error-message-underline {

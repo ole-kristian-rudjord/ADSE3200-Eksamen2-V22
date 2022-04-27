@@ -1,4 +1,16 @@
 $(function () {
+    setBodyHeightVariable();
+    $(window).resize(function () {
+        setBodyHeightVariable();
+    });
+
+    function setBodyHeightVariable() {
+        if (isOnMobile()) {
+            $(':root').css('--bodyHeight', $(window).innerHeight() + 'px');
+        } else {
+            $(':root').css('--bodyHeight', ($(window).height() - $('nav').height()) + 'px');
+        }
+    }
 /*-----------------
     Theme - start
 -----------------*/
@@ -58,11 +70,6 @@ $(function () {
 /*-----------------------
     Burger menu - start
 -----------------------*/
-    $(':root').css('--bodyHeight', ($(window).height() - $('nav').height()) + 'px');
-    $(window).resize(function () {
-        $(':root').css('--bodyHeight', ($(window).height() - $('nav').height()) + 'px');
-    });
-
     // Changes burger icon lines color on hover
     $('.burger-icon').on('mouseover', function () {
         $('.burger-lines').css('background-color', 'var(--primaryColor)');
