@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ES - Compare Shapes</title>
+    <title>EloShapes - Search Mouse</title>
+    <link rel="icon" type="image/ico" href="EloShapesFaviconPlaceholder.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!--CSS: Font Awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -26,11 +27,11 @@
 
 <!-- Navbar -->
 <nav>
-    <div id="logo">Logo</div>
+    <div id="logo"><i class="fa-solid fa-computer-mouse"></i> EloShapes</div>
     <ul>
         <li><a href="index.html">Compare Shapes</a></li>
         <li><a href="searchMouse.html" class="active-link">Search Mouse</a></li>
-        <li><a href="">Find Similar Shape</a></li>
+        <!--<li><a href="">Find Similar Shape</a></li>-->
     </ul>
     <button id="burger-icon-desktop" class="burger-icon">
         <div class="burger-lines"></div>
@@ -58,11 +59,11 @@
         </div>
         <li class="mobile-navbar-item"><a href="index.html">Compare Shapes</a></li>
         <li class="mobile-navbar-item"><a href="searchMouse.html">Search Mouse</a></li>
-        <li class="mobile-navbar-item"><a href="">Find Similar Shape</a></li>
-        <li><a href="">Contact</a></li>
-        <li><a href="">Report error</a></li>
-        <li><a href="">Suggest<br>new shape</a></li>
-        <li><a href="">Updates &<br>announcements</a></li>
+        <!--<li class="mobile-navbar-item"><a href="">Find Similar Shape</a></li>-->
+        <li><a>Contact</a></li>
+        <li><a>Report error</a></li>
+        <li><a>Suggest<br>new shape</a></li>
+        <li><a>Updates &<br>announcements</a></li>
         <button id="side-menu-close">Close<br>side-menu</button>
     </ul>
 </div>
@@ -185,7 +186,7 @@
         <h1>Help</h1>
         <div>
             <h2>Search Mouse page</h2>
-            <p>The "Search Mouse" page displays a table filled with mice from ES' current database. In the top left corner, is a button which allows for custom filters to be applied. This will let you search for mice that fit within certain specifications like size, weight, connectivity, etc.</p>
+            <p>The "Search Mouse" page displays a table filled with mice from EloShapes current database. In the top left corner, is a button which allows for custom filters to be applied <i class="fa fa-filter"></i>. This will let you filter based on specifications like size, weight, connectivity, etc. A button for directly searching through brands and models is also available <i class="fa-solid fa-magnifying-glass"></i>.</p>
             <h2>Mouse specifications:</h2>
         </div>
         <div class="help-content-div">
@@ -219,10 +220,10 @@
         </div>
         <div class="help-content-div">
             <h3>Weight</h3>
-            <p> is measured in grams, preferably without the cable:</p>
-            <div class="img-div">
-                <!--<img src="" alt="Example of how length is measured">-->
-            </div>
+            <p> is measured in grams, preferably without the cable.</p>
+            <!--<div class="img-div">
+                &lt;!&ndash;<img src="" alt="Example of how length is measured">&ndash;&gt;
+            </div>-->
         </div>
         <div class="help-content-div">
             <h3>Shape</h3>
@@ -233,7 +234,7 @@
         </div>
         <div class="help-content-div">
             <h3>Connectivity</h3>
-            <p> refers to whether a mouse is wired or wireless.</p>
+            <p> refers to whether a mouse is wired or wireless. Many of the wireless mice are also able to connect through a wire, but do not fall under the category of wired.</p>
         </div>
         <div class="help-content-div">
             <h3>Sensor</h3>
@@ -241,11 +242,11 @@
         </div>
         <div class="help-content-div">
             <h3>DPI</h3>
-            <p> describes to the maximum Dots Per Inch (DPI) available for a mouse.<br><span class="link-span">Learn more about DPI <a href="https://en.wikipedia.org/wiki/Computer_mouse#Mouse_speed" target="_blank" title="Open link in new tab">here</a>.</span></p>
+            <p> describes to the maximum Dots Per Inch (DPI) available for a mouse. DPI is used to measure the amount of pixels/dots the cursor travels on screen per inch the mouse is moved. Most mice are able to change their DPI in increments up to the maximum listed here.<br><span class="link-span">Learn more about DPI <a href="https://en.wikipedia.org/wiki/Computer_mouse#Mouse_speed" target="_blank" title="Open link in new tab">here</a>.</span></p>
         </div>
         <div class="help-content-div">
             <h3>Polling rate</h3>
-            <p> refers the maximum amount of times a mouse can send information per second.<br><span class="link-span">Learn more about polling rate <a
+            <p> refers the maximum amount of times a mouse can send information per second. Similar to DPI, the polling rate is often changeable, though usually only a few presets are available.<br><span class="link-span">Learn more about polling rate <a
                     href="https://switchandclick.com/whats-the-best-mouse-polling-rate/#:~:text=Polling%20rate%20is%20the%20speed,or%201000%20times%20per%20second." target="_blank" title="Open link in new tab">here</a>.</span></p>
         </div>
         <button id="keyboard-close-help">Close</button>
