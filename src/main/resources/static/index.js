@@ -12,13 +12,6 @@ $(function() {
             createErrorMessage("Error: " + status.status + "\nCloud not retrieve mice from the database.");
         }
     });
-
-    $(window).on('resize', function () {
-        if (isOnMobile()) {
-
-        }
-    });
-
 /*-------------------------
     Shape compare - start
 -------------------------*/
