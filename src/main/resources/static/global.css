@@ -54,8 +54,6 @@
 
 /*--- :root (managed in JavaScript) ---*/
 :root {
-    /*--primaryColor:#FF3C19;*/
-    /*--primaryDarkColor:#B22A11;*/
     --primaryColor:#1A72E9;
     --themeHoverColor: inherit;
     --themeBackgroundColor: inherit;
@@ -130,14 +128,17 @@ nav {
 }
 #logo {
     margin-left: 2vw;
+    font-size: 1.2rem;
     color: var(--themeReverseColor);
+    white-space: nowrap;
+}
+#logo i {
+    color: var(--primaryColor);
 }
 nav ul {
     display: flex;
-    justify-content: space-around;
-    max-width: 1000px;
-    width: 80%;
-    margin: auto;
+    gap: 10vw;
+    margin-left: -120px;
 }
 nav li {
     list-style: none;
@@ -145,18 +146,16 @@ nav li {
 nav a {
     display: block;
     padding: 6px 2vw;
-    /*border-left: transparent solid 2px;
-    border-right: transparent solid 2px;*/
     white-space: nowrap;
     text-decoration: none;
     color: var(--themeReverseColor);
     border: transparent solid 2px;
     transition: 180ms ease;
-    transition-property: border-color, background-color;
+    transition-property: color, background-color, border-color;
 }
 nav a:hover {
-    /*border-color: var(--primaryColor);*/
-    background-color: var(--themeHoverColor);
+    color: white;
+    background-color: var(--primaryColor);
 }
 nav a.active-link {
     border-bottom-color: var(--themeBorderColor);
@@ -180,7 +179,6 @@ nav a.active-link {
 .burger-lines {
     height: 2px;
     width: 100%;
-    /*border-radius: 2px;*/
     background-color: var(--themeReverseColor);
     transition: 180ms ease;
 }
@@ -191,9 +189,8 @@ nav a.active-link {
     z-index: 99;
     position: fixed;
     display: none;
-    top: 30px;
     right: 0;
-    height: 100vh;
+    height: var(--bodyHeight);
     transform: translateX(110%);
     align-items: center;
     border-left: var(--themeBorderColor) solid 2px;
@@ -203,7 +200,6 @@ nav a.active-link {
 #side-menu ul {
     display: flex;
     flex-direction: column;
-    /*justify-content: space-evenly;*/
     height: 95vh;
 }
 #side-menu li {
@@ -213,8 +209,6 @@ nav a.active-link {
 #side-menu a {
     display: block;
     padding: /*15px */35px;
-    /*border-top: transparent solid 2px;
-    border-bottom: transparent solid 2px;*/
     white-space: nowrap;
     text-decoration: none;
     color: var(--themeReverseColor);
@@ -222,7 +216,6 @@ nav a.active-link {
     transition-property: border-color, background-color;
 }
 #side-menu a:hover {
-    /*border-color: var(--primaryColor);*/
     background-color: var(--themeHoverColor);
 }
 #theme-options {
@@ -342,7 +335,7 @@ nav a.active-link {
         top: 0;
     }
     #side-menu ul {
-        height: 98vh;
+        height: 90%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
