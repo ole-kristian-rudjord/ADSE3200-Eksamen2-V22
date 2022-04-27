@@ -311,7 +311,7 @@
     left: 0;
     background-color: var(--themeBackgroundColor);
     border-right: 2px solid var(--themeBorderColor);
-    display: grid;
+    display: none;
     grid-template-rows: 80px 1fr 80px;
     z-index: 50;
 }
@@ -926,7 +926,6 @@
 
     #filter-main {
         top: 0;
-        height: 100vh;
         max-width: none;
         border: none;
     }
