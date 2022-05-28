@@ -131,9 +131,15 @@ nav {
     font-size: 1.2rem;
     color: var(--themeReverseColor);
     white-space: nowrap;
+    height: 30px;
+    display: flex;
+    align-items: center;
 }
-#logo i {
-    color: var(--primaryColor);
+#logo img {
+    height: 100%;
+}
+#logo span {
+    margin-left: 8px;
 }
 nav ul {
     display: flex;
