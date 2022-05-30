@@ -701,16 +701,44 @@ function addMouse(inputBrand, inputModel) {
                 // Dimensions
                 let newInformationDimensions = document.createElement('span');
                 newInformationDimensions.className = 'shape-information-dimensions';
+                let mouseLengthTitle = mouse.length;
+                if (mouseLengthTitle !== null) {
+                    mouseLengthTitle += 'mm';
+                } else {
+                    mouseLengthTitle = 'Not Available';
+                }
+                let mouseWidthTitle = mouse.width;
+                if (mouseWidthTitle !== null) {
+                    mouseWidthTitle += 'mm';
+                } else {
+                    mouseWidthTitle = 'Not Available';
+                }
+                let mouseHeightTitle = mouse.height;
+                if (mouseHeightTitle !== null) {
+                    mouseHeightTitle += 'mm';
+                } else {
+                    mouseHeightTitle = 'Not Available';
+                }
+                let mouseWeightTitle = mouse.weight;
+                if (mouseWeightTitle !== null) {
+                    mouseWeightTitle += ' grams';
+                } else {
+                    mouseWeightTitle = 'Not Available';
+                }
+                newInformationDimensions.title = "Length: " + mouseLengthTitle +
+                                                "\nWidth: " + mouseWidthTitle +
+                                                "\nHeight: " + mouseHeightTitle +
+                                                "\nWeight: " + mouseWeightTitle;
 
                 // Length
                 let mouseLengthSpan = document.createElement('span');
                 let mouseLength = mouse.length;
                 if (mouseLength !== null) {
                     mouseLength = Math.round(mouseLength);
-                    mouseLengthSpan.title = 'Length:\n' + mouse.length + ' mm';
+                    // mouseLengthSpan.title = 'Length:\n' + mouse.length + ' mm';
                 } else {
                     mouseLength = 'N/A';
-                    mouseLengthSpan.title = 'Length is currently not available';
+                    // mouseLengthSpan.title = 'Length is currently not available';
                     titleText += 'Length is currently not available\n';
                 }
                 mouseLengthSpan.innerText = mouseLength;
@@ -720,10 +748,10 @@ function addMouse(inputBrand, inputModel) {
                 let mouseWidth = mouse.width;
                 if (mouseWidth !== null) {
                     mouseWidth = Math.round(mouseWidth);
-                    mouseWidthSpan.title = 'Width:\n' + mouse.width + ' mm';
+                    // mouseWidthSpan.title = 'Width:\n' + mouse.width + ' mm';
                 } else {
                     mouseWidth = 'N/A';
-                    mouseWidthSpan.title = 'Width is currently not available';
+                    // mouseWidthSpan.title = 'Width is currently not available';
                     titleText += 'Width is currently not available\n';
                 }
                 mouseWidthSpan.innerText = mouseWidth;
@@ -733,10 +761,10 @@ function addMouse(inputBrand, inputModel) {
                 let mouseHeight = mouse.height;
                 if (mouseHeight !== null) {
                     mouseHeight = Math.round(mouseHeight);
-                    mouseHeightSpan.title = 'Height:\n' + mouse.height + ' mm';
+                    // mouseHeightSpan.title = 'Height:\n' + mouse.height + ' mm';
                 } else {
                     mouseHeight = 'N/A';
-                    mouseHeightSpan.title += 'Height is currently not available';
+                    // mouseHeightSpan.title += 'Height is currently not available';
                     titleText += 'Height is currently not available\n';
                 }
                 mouseHeightSpan.innerText = mouseHeight;
@@ -744,7 +772,7 @@ function addMouse(inputBrand, inputModel) {
                 // Measurement
                 let measurement = document.createElement('span');
                 measurement.innerText = ' mm';
-                measurement.title = 'Measured in:\nmillimeters';
+                // measurement.title = 'Measured in:\nmillimeters';
 
                 newInformationDimensions.append(mouseLengthSpan, ' x ', mouseWidthSpan, ' x ', mouseHeightSpan, measurement);
                 newInformationSubDiv.append(newInformationDimensions);
@@ -755,10 +783,10 @@ function addMouse(inputBrand, inputModel) {
                 let mouseWeight = mouse.weight;
                 if (mouseWeight !== null) {
                     mouseWeight = Math.round(mouseWeight) + 'g'; // mouseWeight = Math.round(mouse.weight) + 'g';
-                    newInformationWeight.title = 'Weight:\n' + mouse.weight + ' grams';
+                    // newInformationWeight.title = 'Weight:\n' + mouse.weight + ' grams';
                 } else {
                     mouseWeight = 'N/A';
-                    newInformationWeight.title += 'Weight is currently not available';
+                    // newInformationWeight.title += 'Weight is currently not available';
                     titleText += 'Weight is currently not available\n';
                 }
                 newInformationWeight.innerText = mouseWeight;
