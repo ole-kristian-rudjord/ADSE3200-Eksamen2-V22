@@ -915,14 +915,8 @@ function removeMouse(mouseId) {
     // Removes shape images
     $(`.${mouseId}-class`).remove();
 
-    // Removes information-div
-    let fadeOutTime = 180;
-    if (isOnMobile()) {
-        fadeOutTime = 0;
-    }
-    $(`#shape-div-${mouseId}`).fadeOut(fadeOutTime, function () {
-        $(this).remove();
-    });
+    // Removed information div
+    $(`#shape-div-${mouseId}`).remove();
 
     // Removes mouse from currentlyViewedMice[]
     currentlyViewedMiceSVG = currentlyViewedMiceSVG.filter(function(Mouse) {
