@@ -473,6 +473,7 @@
 
 .filter-checkmarks {
     flex-direction: column;
+    max-height: 300px;
 }
 .checkmark-option, .checkmarks-select-all {
     padding: 2px;
