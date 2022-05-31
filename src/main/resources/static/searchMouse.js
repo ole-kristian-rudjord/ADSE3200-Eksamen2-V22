@@ -461,12 +461,12 @@ $(function() {
     })
 
     $('#slider-range-length').prev('input').val(0);
-    $('#slider-range-length').next('input').val(maxValues.length);
+    $('#slider-range-length').next('input').val(Math.ceil(maxValues.length));
     $('#slider-range-length').slider({
         range: true,
         min: 0,
-        max: maxValues.length,
-        values: [0, maxValues.length],
+        max: Math.ceil(maxValues.length),
+        values: [0, Math.ceil(maxValues.length)],
         slide:function(event, ui) {
             $('#filter-length-min').val(ui.values[0]);
             $('#filter-length-max').val(ui.values[1]);
@@ -478,12 +478,12 @@ $(function() {
     });
 
     $('#slider-range-width').prev('input').val(0);
-    $('#slider-range-width').next('input').val(maxValues.width);
+    $('#slider-range-width').next('input').val(Math.ceil(maxValues.width));
     $('#slider-range-width').slider({
         range: true,
         min: 0,
-        max: maxValues.width,
-        values: [0, maxValues.width],
+        max: Math.ceil(maxValues.width),
+        values: [0, Math.ceil(maxValues.width)],
         slide:function(event, ui) {
             $('#filter-width-min').val(ui.values[0]);
             $('#filter-width-max').val(ui.values[1]);
@@ -495,12 +495,12 @@ $(function() {
     });
 
     $('#slider-range-height').prev('input').val(0);
-    $('#slider-range-height').next('input').val(maxValues.height);
+    $('#slider-range-height').next('input').val(Math.ceil(maxValues.height));
     $('#slider-range-height').slider({
         range: true,
         min: 0,
-        max: maxValues.height,
-        values: [0, maxValues.height],
+        max: Math.ceil(maxValues.height),
+        values: [0, Math.ceil(maxValues.height)],
         slide:function(event, ui) {
             $('#filter-height-min').val(ui.values[0]);
             $('#filter-height-max').val(ui.values[1]);
@@ -512,12 +512,12 @@ $(function() {
     });
 
     $('#slider-range-weight').prev('input').val(0);
-    $('#slider-range-weight').next('input').val(maxValues.weight);
+    $('#slider-range-weight').next('input').val(Math.ceil(maxValues.weight));
     $('#slider-range-weight').slider({
         range: true,
         min: 0,
-        max: maxValues.weight,
-        values: [0, maxValues.weight],
+        max: Math.ceil(maxValues.weight),
+        values: [0, Math.ceil(maxValues.weight)],
         slide:function(event, ui) {
             $('#filter-weight-min').val(ui.values[0]);
             $('#filter-weight-max').val(ui.values[1]);
