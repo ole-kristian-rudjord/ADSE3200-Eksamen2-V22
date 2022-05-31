@@ -170,16 +170,16 @@ $(function() {
             let maxValue;
             switch (specificFilter) {
                 case 'length':
-                    maxValue = maxValues.length;
+                    maxValue = Math.ceil(maxValues.length);
                     break;
                 case 'width':
-                    maxValue = maxValues.width;
+                    maxValue = Math.ceil(maxValues.width);
                     break;
                 case 'height':
-                    maxValue = maxValues.height;
+                    maxValue = Math.ceil(maxValues.height);
                     break;
                 case 'weight':
-                    maxValue = maxValues.weight;
+                    maxValue = Math.ceil(maxValues.weight);
                     break;
                 case 'dpi':
                     maxValue = maxValues.dpi;
